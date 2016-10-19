@@ -52,7 +52,7 @@ gulp.task('empujar', ['build'],
 );
 
 
-// Comentado el 18.10 por Jacobo
+// Comentado el 18.10 por Jacobo error en let
 // var deploygh = function() {
 //   "use strict";
 //   let gh = require('gh-pages');
