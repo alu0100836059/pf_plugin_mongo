@@ -20,7 +20,7 @@
   "repository": {
     "type": "git",
     "url": "git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git",
-    "wiki": "https://github.com/ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.wiki.git"
+    "wiki": "git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.wiki.git"
   },
   "keywords": [
     "gitbook",
