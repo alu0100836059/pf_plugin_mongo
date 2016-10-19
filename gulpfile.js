@@ -14,10 +14,10 @@ gulp.task('iaas',shell.task(['./scripts/ssh']));
 
 
 //empujar a gh-pages el directorio book
-gulp.task('deploy-gh-pages', function() {
-      return gulp.src('./gh-pages/*')
-        .pipe(ghPages());
-});
+// gulp.task('deploy-gh-pages', function() {
+//       return gulp.src('./gh-pages/*')
+//         .pipe(ghPages());
+// });
 
 
 //  "deploy-gitbook": "./scripts/losh deploy-gitbook",
