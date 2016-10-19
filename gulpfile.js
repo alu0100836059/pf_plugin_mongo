@@ -32,7 +32,7 @@ gulp.task('build', function() {
   return gulp.src(' ').pipe(shell(['./scripts/generate-gitbook']));
 });
 
-// Comentado Jacobo 19.10 problema autorización ?!
+// Comentado Jacobo 19.10 problema autorización ?
 // gulp.task('deployWiki', function(){
 //   return gulp.src('').pipe(shell(["./scripts/deploy-wiki"]));
 // });
