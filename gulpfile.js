@@ -10,7 +10,7 @@ gulp.task('iaas',shell.task(['./scripts/ssh']));
 // gulp.task('iaas', function(){
 //     return run(path.join(__dirname,'scripts','ssh')).exec();
 // });
-//---------------------------------------------------------------------------
+//-----------------------------------------------------------------
 
 
 //empujar a gh-pages el directorio book
