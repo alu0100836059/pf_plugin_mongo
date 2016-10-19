@@ -24,7 +24,7 @@ gulp.task('deploy-gh-pages', function() {
 // gulp.task('deploy', deploy-gh-pages);
 
 
-gulp.task('deploy', ['empujar', 'deployWiki'], function () {
+gulp.task('deploy', ['empujar'], function () {
 return gulp.src('').pipe(shell(["./scripts/deploy-gitbook"]));
 });
 //  "generate-gitbook": "./scripts/generate-gitbook",
@@ -32,9 +32,10 @@ gulp.task('build', function() {
   return gulp.src(' ').pipe(shell(['./scripts/generate-gitbook']));
 });
 
-gulp.task('deployWiki', function(){
-  return gulp.src('').pipe(shell(["./scripts/deploy-wiki"]));
-});
+// Comentado Jacobo 19.10 problema autorización ?!?!?
+// gulp.task('deployWiki', function(){
+//   return gulp.src('').pipe(shell(["./scripts/deploy-wiki"]));
+// });
 
 gulp.task('empujar', ['build'],
  shell.task(
