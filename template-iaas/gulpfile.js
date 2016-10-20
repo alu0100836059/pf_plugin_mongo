@@ -7,3 +7,5 @@ gulp.task('deploy', function() {
       return gulp.src('./template/_book/*')
         .pipe(ghPages());
 });
+
+gulp.task('deploy-iaas',shell.task(['./scripts/ssh1.sh']));
