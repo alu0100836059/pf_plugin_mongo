@@ -1,5 +1,5 @@
 {
-  "name": "gitbook-start-team-noejaco2017",
+  "name": "gitbook-start-plugin-iaas-ull-es-noejaco2017",
   "version": "0.0.4",
   "description": "Despliegue en Heroku e Iaas",
   "main": "./bin/linea-comando-npm.js",
