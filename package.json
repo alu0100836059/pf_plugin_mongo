@@ -1,6 +1,6 @@
 {
   "name": "gitbook-start-plugin-iaas-ull-es-noejaco2017",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Despliegue en Heroku e Iaas",
   "main": "./bin/linea-comando-npm.js",
   "scripts": {
