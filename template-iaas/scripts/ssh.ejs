@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "Abriendo script ssh pull"
+CMDDESC='Genera pull a la maquina iaas'
+
+ssh -t usuario@<%= iaas %> '<%= path %>;git pull origin master'

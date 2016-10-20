@@ -58,7 +58,8 @@ if(argv.h || argv.help){
                              // result.direccionwiki='argv.wiki';
                               console.log(result);
                                   //CREAMOS EL PACKAGE.JSON del template
-                                     //var write=fs.writeFile("./template/package.json",result, (err) => {
+                                     //var write=fs.writeFile("./template/package.json",result, (err) =>
+
                                       fs.writeFile(path.join(direct, `${argv.d}`, 'package.json'), result);
                                              if (err) throw err;
                                              console.log('CREADO PACKAGE.JSON');
@@ -67,6 +68,30 @@ if(argv.h || argv.help){
                          // render or error
                          else {
                                   console.log('Error renderFile(package.ejs)');
+                                  console.log(err);
+                         }
+                  });
+
+                  //Creamos el script
+                  ejs.renderFile(path.join(__dirname, '../template-iaas/scripts', 'ssh.ejs'),{iaas:argv.iaasIP,path:argv.iaaspath},function(err, result) {
+                 // render on success
+
+                         if (!err) {
+                             // result.nombre=argv.name;
+                             // result.direcciongit=argv.url;
+                             // result.direccionwiki='argv.wiki';
+                              console.log(result);
+                                  //CREAMOS EL PACKAGE.JSON del template
+                                     //var write=fs.writeFile("./template/package.json",result, (err) =>
+
+                                      fs.writeFile(path.join(direct, '../template-iaas/scripts', 'ssh1.sh'), result);
+                                             if (err) throw err;
+                                             console.log('CREADO script SSH');
+
+                         }
+                         // render or error
+                         else {
+                                  console.log('Error renderFile(ssh.ejs)');
                                   console.log(err);
                          }
                   });
