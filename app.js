@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var app = express();
 var path = require('path');
@@ -32,28 +33,28 @@ app.get('/',function(req, res){
 
 app.post('/sync',function(req,res){
   // Probando con el clone en el directorio actual
-  exec("git clone git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git .", (err, stdout, stderr) => {
-    if (err) {
-       console.log("HA OCURRIDO UN ERROR");
-      console.error(err);
-      return;
-    }
-    console.log("Después del pull de heroku");
-    console.log(stdout);
-    return;
-  });
+  // exec("git clone git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git .", (err, stdout, stderr) => {
+  //   if (err) {
+  //      console.log("HA OCURRIDO UN ERROR");
+  //     console.error(err);
+  //     return;
+  //   }
+  //   console.log("Después del pull de heroku");
+  //   console.log(stdout);
+  //   return;
+  // });
 
-    
-    // console.log("Antes de la funcion");
-    // function puts(err,stdout,stderr){
-    //   if(err)
-    //   console.log("HA OCURRIDO UN ERROR"+err);
-    //   }
-    //   //proceso.exec('git clone git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git',puts);
-    //   exec('git pull git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git master',puts);
-    //   //response.redirect('/');
-    //
-    //   console.log("Después del pull de heroku");
+
+    console.log("Antes de la funcion");
+    function puts(err,stdout,stderr){
+      if(err)
+      console.log("HA OCURRIDO UN ERROR"+err);
+      }
+      //proceso.exec('git clone git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git',puts);
+      exec('git pull git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017 .',puts);
+      //response.redirect('/');
+
+      console.log("Después del pull de heroku");
 
 });
 
