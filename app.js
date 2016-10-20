@@ -43,7 +43,7 @@ app.post('/sync',function(req,res){
     return;
   });
 
-    //
+    
     // console.log("Antes de la funcion");
     // function puts(err,stdout,stderr){
     //   if(err)
