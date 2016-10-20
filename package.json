@@ -15,7 +15,8 @@
     "ssh": "./ssh pull-iaas"
   },
   "bin": {
-    "gitbook-start": "./bin/linea-comando-npm.js"
+    "linea-comando-npm": "./bin/linea-comando-npm.js",
+    "gitbook-start-iaas": "./bin/linea-comando-iaas.js"
   },
   "repository": {
     "type": "git",
