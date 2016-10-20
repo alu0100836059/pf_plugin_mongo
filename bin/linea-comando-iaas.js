@@ -5,7 +5,7 @@ var fs= require('fs-extra');
 var ejs=require('ejs');
 
 //DIRECTORIO CON TEMPLATES
-app.set('views', path.join(__dirname, 'template'));
+app.set('views', path.join(__dirname, 'template-iaas'));
 app.set('view engine', 'ejs');
 
 //MINIMIST
