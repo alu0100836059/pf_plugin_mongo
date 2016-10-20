@@ -23,7 +23,7 @@ console.dir(argv);
 
 
 if(argv.h || argv.help){
-    
+
     //MENU
     console.log("gitbook-start [OPTIONS]\n"+
     "--autor: autor del libro a crear node gitbook-star -a AutorDelLibro\n"+
@@ -33,20 +33,20 @@ if(argv.h || argv.help){
     "--wiki: direccion web de la wiki en github -w github.com/repo.wiki.git\n"+
     "--directorio: nombre del directorio a crear\n"+
     "--help: muestra ayuda sobre las opciones disponibles\n");
-    
-    
+
+
 }else{
-    
+
 //EJS RENDERFILE cargamos la plantilla
 var direct = process.cwd() + '/template/';
 
     //Creamos el directorio
     fs.mkdirsSync(direct + argv.directorio);
-    
+
     //Creamos una copia de los scripts
     fs.copy(path.join(__dirname, '../template', 'scripts') , path.join(direct, `${argv.directorio}`,'scripts'), function(err){
         if(err) return console.error(err)
-    }); 
+    });
     //Creamos una copia de los txt
     fs.copy(path.join(__dirname, '../template', 'txt') , path.join(direct, `${argv.directorio}`,'txt'), function(err){
         if(err) return console.error(err)
@@ -59,13 +59,21 @@ var direct = process.cwd() + '/template/';
     fs.copy(path.join(__dirname, '../template', 'gulpfile.js') , path.join(direct, `${argv.directorio}`,'gulpfile.js'), function(err){
         if(err) return console.error(err)
     });
-    
+    //Creamos una copia de app.js
+    fs.copy(path.join(__dirname, '../template', 'app.js') , path.join(direct, `${argv.directorio}`,'app.js'), function(err){
+        if(err) return console.error(err)
+    });
+    //Creamos una copia de book.json
+    fs.copy(path.join(__dirname, '../template', 'book.json') , path.join(direct, `${argv.directorio}`,'book.json'), function(err){
+        if(err) return console.error(err)
+    });
 
-    
+
+
     //Creamos el packeage.json a traves de la plantilla
     ejs.renderFile(path.join(__dirname, '../template', 'package.ejs'),{nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email},function(err, result) {
    // render on success
-   
+
            if (!err) {
                // result.nombre=argv.name;
                // result.direcciongit=argv.url;
@@ -76,7 +84,7 @@ var direct = process.cwd() + '/template/';
                         fs.writeFile(path.join(direct, `${argv.directorio}`, 'package.json'), result);
                                if (err) throw err;
                                console.log('CREADO PACKAGE.JSON');
-                     
+
            }
            // render or error
            else {
@@ -84,7 +92,4 @@ var direct = process.cwd() + '/template/';
                     console.log(err);
            }
     });
-}   
-
-
-
+}
