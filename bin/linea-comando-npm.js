@@ -38,7 +38,7 @@ if(argv.h || argv.help){
 }else{
 
 //EJS RENDERFILE cargamos la plantilla
-var direct = process.cwd() + '/template/';
+var direct = process.cwd() + '/template_npm/';
 
     //Creamos el directorio
     fs.mkdirsSync(direct + argv.directorio);
