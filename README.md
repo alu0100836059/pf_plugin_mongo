@@ -1,21 +1,18 @@
 #
-# Práctica: Despliegue en iaas y Heroku
+# Práctica: Nueva funcionalidad para el paquete NPM plugins
 
 
-![alt text][logo] ![imagen2][logo1]
-[logo]: http://www.codecheese.com/wp-content/uploads/heroku-logo.png
-[logo1]: http://quersystem.com/wp-content/uploads/2015/03/IaaS-Cloud1-300x268.jpg
+![imagen1][logo]
+[logo]: https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQmTdns2SIHRywqRrwjOmWCewbAPJKjv5s_iblApWlTryhkwB1n
+
 ### Requisitos
 
 Descripción
 
-El objetivo de esta práctica es proporcionar un mecanismo de despliegue de un libro gitbook de manera que un deploy a github produzca la actualización automática de los otros sites de despliegue:
-
-* gitboook.com
-* Heroku
-Para lograr este objetivo usaremos la técnica descrita en el artículo Colaboración: The Perfect Work-flow with Git, GitHub, and SSH.
-
-En iaas.ull.es, debido a que la IP de la máquina virtual es privada a la red de la ULL. Para sincronizar con iaas.ull.es disponga un script que utilice ssh y/o scp para actualizar los ficheros necesarios al repositorio del libro en la máquina virtual.
+El objetivo de esta práctica es extender el package NodeJS publicado en npm en una práctica anterior con una nueva funcionalidad que permita
+* Obtener el email y el nombre del autor
+* Crear el repositorio del libro en GitHub
+* Hacer un push del repositorio inicial para actualizar los ficheros necesarios al repositorio del libro en la máquina virtual.
 
 ## Enlace a github gh-pages
 [gh-pages](https://ull-esit-sytw-1617.github.io/tareas-iniciales-noejaco2017/)
@@ -26,9 +23,30 @@ En iaas.ull.es, debido a que la IP de la máquina virtual es privada a la red de
 ## Enlace a npm
 [npm](https://www.npmjs.com/package/gitbook-start-team-noejaco2017)
 
+## Enlace al paquete npm iaas
+[npm-plugin-iaas](https://www.npmjs.com/package/gitbook-start-plugin-iaas-ull-es-noejaco2017)
+
 ## Enlace a la aplicación desplegada en heroku
 [heroku](https://herokuiaass.herokuapp.com/)
 
+
+
+# Instalación de plugin npm iaas
+
+## Instalar nuestro paquete NPM
+_npm install -g gitbook-start-plugin-iaas-ull-es-noejaco2017_
+
+## Ejecutar nuestro paquete
+_gitbook-start-iaas --iaasIP 172.42.2.3 --iaaspath /src/chuchu -d caca_
+
+## Manual de ayuda
+_gitbook-start --h || --help_
+````````````````````
+gitbook-start-iaas [OPTIONS]
+--iaasIP: Direccion de la maquina virtual
+--iaaspath: repositorio que va a contener el libro en iaas
+--d: directorio a crear con el nombre que quiera
+````````````````````
 
 
 # Instalación
