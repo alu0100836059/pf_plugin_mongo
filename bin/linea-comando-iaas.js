@@ -24,7 +24,52 @@ if(argv.h || argv.help){
             if(!argv.iaasIP || !argv.iaaspath || !argv.d ){
               console.log("Falta el argumento IP, path o directorio");
             }else{
-              console.log("Entramos a crear archivos");
+              var direct = process.cwd() + '/template-iaas/';
+
+                  //Creamos el directorio
+                  fs.mkdirsSync(direct + argv.d);
+
+                  //Creamos una copia de los scripts
+                  fs.copy(path.join(__dirname, '../template-iaas', 'scripts') , path.join(direct, `${argv.d}`,'scripts'), function(err){
+                      if(err) return console.error(err)
+                  });
+                  //Creamos una copia de los txt
+                  fs.copy(path.join(__dirname, '../template-iaas', 'txt') , path.join(direct, `${argv.d}`,'txt'), function(err){
+                      if(err) return console.error(err)
+                  });
+                  //Creamos una copia de Readme
+                  fs.copy(path.join(__dirname, '../template-iaas', 'README.md') , path.join(direct, `${argv.d}`,'README.md'), function(err){
+                      if(err) return console.error(err)
+                  });
+                  //Creamos gulpfile
+                  fs.copy(path.join(__dirname, '../template-iaas', 'gulpfile.js') , path.join(direct, `${argv.d}`,'gulpfile.js'), function(err){
+                      if(err) return console.error(err)
+                  });
+
+
+
+                  //Creamos el packeage.json a traves de la plantilla
+                  ejs.renderFile(path.join(__dirname, '../template-iaas', 'package.ejs'),{direccionip:argv.iaasIP,direccionpath:argv.iaaspath},function(err, result) {
+                 // render on success
+
+                         if (!err) {
+                             // result.nombre=argv.name;
+                             // result.direcciongit=argv.url;
+                             // result.direccionwiki='argv.wiki';
+                              console.log(result);
+                                  //CREAMOS EL PACKAGE.JSON del template
+                                     //var write=fs.writeFile("./template/package.json",result, (err) => {
+                                      fs.writeFile(path.join(direct, `${argv.d}`, 'package.json'), result);
+                                             if (err) throw err;
+                                             console.log('CREADO PACKAGE.JSON');
+
+                         }
+                         // render or error
+                         else {
+                                  console.log('Error renderFile(package.ejs)');
+                                  console.log(err);
+                         }
+                  });
             }
 }
 //EJS RENDERFILE cargamos la plantilla
