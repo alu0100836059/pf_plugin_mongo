@@ -33,6 +33,10 @@ if(argv.h || argv.help){
                   fs.copy(path.join(__dirname, '../template-iaas', 'scripts') , path.join(direct, `${argv.d}`,'scripts'), function(err){
                       if(err) return console.error(err)
                   });
+                  //Creamos una copia de los gh-pages html
+                  fs.copy(path.join(__dirname, '../template-iaas', 'gh-pages') , path.join(direct, `${argv.d}`,'gh-pages'), function(err){
+                      if(err) return console.error(err)
+                  });
                   //Creamos una copia de los txt
                   fs.copy(path.join(__dirname, '../template-iaas', 'txt') , path.join(direct, `${argv.d}`,'txt'), function(err){
                       if(err) return console.error(err)

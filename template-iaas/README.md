@@ -1,27 +1,16 @@
-# GitBook Boilerplate
+# Instalación de plugin npm iaas
 
-# Installation
+## Instalar nuestro paquete NPM
+_npm install -g gitbook-start-plugin-iaas-ull-es-noejaco2017_
 
-```shell
-cd ~/code
+## Ejecutar nuestro paquete
+_gitbook-start-iaas --iaasIP 172.42.2.3 --iaaspath /src/chuchu -d caca_
 
-git clone https://github.com/enten/gitbook-boilerplate.git awesome-project
-
-cd awesome-project
-
-rm -fr .git
-
-vi package.json
-# edit repository.url and repository.wiki
-
-git remote add origin <url>
-
-npm run build
-# or
-# npm run generate-gitbook && npm run generate-wiki
-
-npm run deploy
-# or
-# npm run deploy-gitbook && npm run deploy-wiki
-```
-__Important__: Wiki must be created on Github
+## Manual de ayuda
+_gitbook-start --h || --help_
+````````````````````
+gitbook-start-iaas [OPTIONS]
+--iaasIP: Direccion de la maquina virtual
+--iaaspath: repositorio que va a contener el libro en iaas
+--d: directorio a crear con el nombre que quiera
+````````````````````
