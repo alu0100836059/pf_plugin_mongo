@@ -17,8 +17,8 @@ if(argv.h || argv.help){
     //MENU
     console.log("gitbook-start-iaas [OPTIONS]\n"+
     "--iaasIP: Direccion de la maquina virtual\n"+
-    "--iaaspath: repositorio que va a contener el libro en iaas\n"+
-    "--d: directorio a crear con el nombre que quiera\n");
+    "--iaaspath: Repositorio que va a contener el libro en iaas\n"+
+    "--d: Crea la estructura del directorio\n");
 
 }else{
             if(!argv.iaasIP || !argv.iaaspath || !argv.d ){
@@ -33,10 +33,6 @@ if(argv.h || argv.help){
                   fs.copy(path.join(__dirname, '../template-iaas', 'scripts') , path.join(direct, `${argv.d}`,'scripts'), function(err){
                       if(err) return console.error(err)
                   });
-                  //Creamos una copia de los gh-pages html
-                  fs.copy(path.join(__dirname, '../template-iaas', 'gh-pages') , path.join(direct, `${argv.d}`,'gh-pages'), function(err){
-                      if(err) return console.error(err)
-                  });
                   //Creamos una copia de los txt
                   fs.copy(path.join(__dirname, '../template-iaas', 'txt') , path.join(direct, `${argv.d}`,'txt'), function(err){
                       if(err) return console.error(err)
@@ -49,58 +45,89 @@ if(argv.h || argv.help){
                   fs.copy(path.join(__dirname, '../template-iaas', 'gulpfile.js') , path.join(direct, `${argv.d}`,'gulpfile.js'), function(err){
                       if(err) return console.error(err)
                   });
-
-
-
-                  //Creamos el packeage.json a traves de la plantilla
+                  //Creamos book.json
+                  fs.copy(path.join(__dirname, '../template-iaas', 'book.json') , path.join(direct, `${argv.d}`,'book.json'), function(err){
+                      if(err) return console.error(err)
+                  });
+                  //Creamos server
+                  fs.copy(path.join(__dirname, '../template-iaas', 'app.js') , path.join(direct, `${argv.d}`,'app.js'), function(err){
+                      if(err) return console.error(err)
+                  });
                   ejs.renderFile(path.join(__dirname, '../template-iaas', 'package.ejs'),{direccionip:argv.iaasIP,direccionpath:argv.iaaspath},function(err, result) {
-                 // render on success
+                                   // render on success
 
-                         if (!err) {
-                             // result.nombre=argv.name;
-                             // result.direcciongit=argv.url;
-                             // result.direccionwiki='argv.wiki';
-                              console.log(result);
-                                  //CREAMOS EL PACKAGE.JSON del template
-                                     //var write=fs.writeFile("./template/package.json",result, (err) =>
+                                           if (!err) {
+                                               // result.nombre=argv.name;
+                                               // result.direcciongit=argv.url;
+                                               // result.direccionwiki='argv.wiki';
+                                                console.log(result);
+                                                    //CREAMOS EL PACKAGE.JSON del template
+                                                       //var write=fs.writeFile("./template/package.json",result, (err) =>
 
-                                      fs.writeFile(path.join(direct, `${argv.d}`, 'package.json'), result);
-                                             if (err) throw err;
-                                             console.log('CREADO PACKAGE.JSON');
+                                                        fs.writeFile(path.join(direct, `${argv.d}`, 'package.json'), result);
+                                                               if (err) throw err;
+                                                               console.log('CREADO PACKAGE.JSON');
 
-                         }
-                         // render or error
-                         else {
-                                  console.log('Error renderFile(package.ejs)');
-                                  console.log(err);
-                         }
-                  });
+                                           }
+                                           // render or error
+                                           else {
+                                                    console.log('Error renderFile(package.ejs)');
+                                                    console.log(err);
+                                           }
+                                    });
 
-                  //Creamos el script
-                  ejs.renderFile(path.join(__dirname, '../template-iaas/scripts', 'ssh.ejs'),{iaas:argv.iaasIP,path:argv.iaaspath},function(err, result) {
-                 // render on success
-
-                         if (!err) {
-                             // result.nombre=argv.name;
-                             // result.direcciongit=argv.url;
-                             // result.direccionwiki='argv.wiki';
-                              console.log(result);
-                                  //CREAMOS EL PACKAGE.JSON del template
-                                     //var write=fs.writeFile("./template/package.json",result, (err) =>
-
-                                      fs.writeFile(path.join(direct, '../template-iaas/scripts', 'ssh1.sh'), result);
-                                             if (err) throw err;
-                                             console.log('CREADO script SSH');
-
-                         }
-                         // render or error
-                         else {
-                                  console.log('Error renderFile(ssh.ejs)');
-                                  console.log(err);
-                         }
-                  });
             }
 }
+//
+//                   //Creamos el packeage.json a traves de la plantilla
+//                   ejs.renderFile(path.join(__dirname, '../template-iaas', 'package.ejs'),{direccionip:argv.iaasIP,direccionpath:argv.iaaspath},function(err, result) {
+//                  // render on success
+//
+//                          if (!err) {
+//                              // result.nombre=argv.name;
+//                              // result.direcciongit=argv.url;
+//                              // result.direccionwiki='argv.wiki';
+//                               console.log(result);
+//                                   //CREAMOS EL PACKAGE.JSON del template
+//                                      //var write=fs.writeFile("./template/package.json",result, (err) =>
+//
+//                                       fs.writeFile(path.join(direct, `${argv.d}`, 'package.json'), result);
+//                                              if (err) throw err;
+//                                              console.log('CREADO PACKAGE.JSON');
+//
+//                          }
+//                          // render or error
+//                          else {
+//                                   console.log('Error renderFile(package.ejs)');
+//                                   console.log(err);
+//                          }
+//                   });
+//
+//                   //Creamos el script
+//                   ejs.renderFile(path.join(__dirname, '../template-iaas/scripts', 'ssh.ejs'),{iaas:argv.iaasIP,path:argv.iaaspath},function(err, result) {
+//                  // render on success
+//
+//                          if (!err) {
+//                              // result.nombre=argv.name;
+//                              // result.direcciongit=argv.url;
+//                              // result.direccionwiki='argv.wiki';
+//                               console.log(result);
+//                                   //CREAMOS EL PACKAGE.JSON del template
+//                                      //var write=fs.writeFile("./template/package.json",result, (err) =>
+//
+//                                       fs.writeFile(path.join(direct, '../template-iaas/scripts', 'ssh1.sh'), result);
+//                                              if (err) throw err;
+//                                              console.log('CREADO script SSH');
+//
+//                          }
+//                          // render or error
+//                          else {
+//                                   console.log('Error renderFile(ssh.ejs)');
+//                                   console.log(err);
+//                          }
+//                   });
+//             }
+// }
 //EJS RENDERFILE cargamos la plantilla
 // var direct = process.cwd() + '/template/';
 //

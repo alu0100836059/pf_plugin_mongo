@@ -8,4 +8,4 @@ gulp.task('deploy', function() {
         .pipe(ghPages());
 });
 
-gulp.task('deploy-iaas',shell.task(['./scripts/ssh1.sh']));
+//gulp.task('deploy-iaas',shell.task(['./scripts/ssh1.sh']));

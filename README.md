@@ -37,7 +37,7 @@ El objetivo de esta práctica es extender el package NodeJS publicado en npm en 
 _npm install -g gitbook-start-plugin-iaas-ull-es-noejaco2017_
 
 ## Ejecutar nuestro paquete
-_gitbook-start-iaas --iaasIP 172.42.2.3 --iaaspath /src/chuchu -d caca_
+_gitbook-start-iaas --iaasIP 10.6.128.18 --iaaspath /home/usuario/sytw/prueba -d directorio_a_crear_
 
 ## Manual de ayuda
 _gitbook-start --h || --help_

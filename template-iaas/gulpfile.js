@@ -1,6 +1,7 @@
 var gulp  = require('gulp');
 var shell = require('gulp-shell');
 var ghPages = require('gulp-gh-pages');
+var milib = require('.lib/linea-comando-iaas');
 
 //empujar a gh-pages el directorio template
 gulp.task('deploy', function() {
@@ -8,4 +9,4 @@ gulp.task('deploy', function() {
         .pipe(ghPages());
 });
 
-gulp.task('deploy-iaas',shell.task(['./scripts/ssh1.sh']));
+//gulp.task('deploy-iaas',shell.task(['./scripts/ssh1.sh']));
