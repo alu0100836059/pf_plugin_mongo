@@ -15,7 +15,7 @@
     "ssh": "./ssh pull-iaas"
   },
   "bin": {
-    "gitbook-start-iaas": "./bin/linea-comando-iaas.js"
+    "gitbook-start": "./bin/linea-comando-npm.js"
   },
   "repository": {
     "type": "git",
@@ -57,7 +57,10 @@
     "gulp-shell": "~0.5.2",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "simple-git": "^1.51.0",
+    "git-url-parse": "^6.0.7",
+    "ssh-exec": "^2.0.0"
   },
   "dependencies": {
     "async": "^1.4.0",
@@ -78,7 +81,8 @@
     "minimatch": "^3.0.3",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "ssh-exec": "^2.0.0"
   },
   "engines": {
     "node": "0.10.x"
