@@ -31,7 +31,7 @@ function initialize(directorio) {
         if (err) {
             return console.error(err);
         }
-        console.log("Añadiendo tarea gulp")
+        console.log("Añadiendo tarea gulp de node modules")
     });
     //
     //
@@ -43,17 +43,18 @@ function initialize(directorio) {
     //
     //
     // //copiamos gulpfile a nuestro directorio
-    fs.copyFile(path.join(process.cwd(), 'node_modules','gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), directorio , 'gulpfile.js'),function(err){
-        if(err)
-          console.log(err);
-         console.log("Tarea gulp añadida a gulpfile")
-    });
-
-    // fs.copy(path.join(process.cwd(),'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join('..', directorio , 'gulpfile.js'),function(err){
-    //   if(err)
-    //     console.log(err);
-    //     console.log("Tarea gulp añadida a gulpfile");
+    console.log("VARIABLE CWD AQUIIIIIIIIIIII: "+process.cwd());
+    // fs.copyFile(path.join(process.cwd(), 'node_modules','gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), directorio , 'gulpfile.js'),function(err){
+    //     if(err)
+    //       console.log(err);
+    //      console.log("Tarea gulp añadida a gulpfile")
     // });
+
+    fs.copy(path.join(process.cwd(),'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.pwd(), directorio , 'gulpfile.js'),function(err){
+      if(err)
+        console.log(err);
+        console.log("Tarea gulp añadida a gulpfile");
+    });
 
 
     console.log("\n\n---------Instalando los plugins, espere por favor ...");

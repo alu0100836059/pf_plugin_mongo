@@ -1,6 +1,6 @@
 {
   "name": "gitbook-start-plugin-iaas-ull-es-noejaco2017",
-  "version": "0.0.28",
+  "version": "0.0.31",
   "description": "Despliegue plugin Iaas",
   "main": "linea-comando-iaas.js",
   "scripts": {
