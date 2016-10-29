@@ -9,33 +9,54 @@ function initialize(directorio) {
     console.log("\nFuncion initialize");
 
     var contenido='\ngulp.task("deploy-iaas-ull", function () {'+
-        '\n\tvar iaas = require("gitbook-start-plugin-iaas-ull-es-noejaco2017");'+//Creamos una funcion para añadir en el gulpfile a crear
-        '\n\tvar url = paquete.repository.url;'+
-        '\n\tvar iaas_ip = paquete.iaas.IP;'+
+        '\n\tvar iaas = require("gitbook-start-plugin-iaas-ull-es-noejaco2017");'+//Creamos una variable que contiene una
+        '\n\tvar url = paquete.repository.url;'+//funcion para añadir en el gulpfile a crear(nuestro plugin), donde tmb guardamos
+        '\n\tvar iaas_ip = paquete.iaas.IP;'+//la ip path y url
         '\n\tvar iaas_path = paquete.iaas.PATH;'+
 
-        '\n\n\tiaas.deploy(iaas_ip, iaas_path, url);'+
+        '\n\n\tiaas.deploy(iaas_ip, iaas_path, url);'+//y pasamos los valores a la funcion deploy luego de hacer el initialize
         '\n});\n\n';
 
+        fs.appendFile('gulpfile.js', contenido, function(err) {
+        if (err)
+            console.error(err);
+            console.log("Añadiendo tarea gulp")
+    });
 
-    fs.existsSync(path.join(process.cwd(), 'node_modules','gitbook-start-team-noejaco2017','gulpfile.js')) ? console.log("Existe") : console.log("No existe");
-
-
-    //añadimos la tarea
-    fs.writeFileSync(path.join(process.cwd(), 'gitbook-start-team-noejaco2017','gulpfile.js'), contenido,  {'flag':'a'},  function(err) {
+     fs.existsSync(path.join(process.cwd(), 'node_modules','gitbook-start-team-noejaco2017','gulpfile.js')) ? console.log("Existe") : console.log("No existe");
+    //
+    //
+    // //añadimos la tarea
+    fs.writeFileSync(path.join(process.cwd(),'node_modules', 'gitbook-start-team-noejaco2017','gulpfile.js'), contenido,  {'flag':'a'},  function(err) {
         if (err) {
             return console.error(err);
         }
         console.log("Añadiendo tarea gulp")
     });
-
-    //copiamos gulpfile a nuestro directorio
+    //
+    //
+    // // fs.appendFile('gulpfile.js', contenido, function(err) {
+    // //     if (err)
+    // //         console.error(err);
+    // // });
+    //
+    //
+    //
+    // //copiamos gulpfile a nuestro directorio
     fs.copyFile(path.join(process.cwd(), 'node_modules','gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), directorio , 'gulpfile.js'),function(err){
         if(err)
           console.log(err);
          console.log("Tarea gulp añadida a gulpfile")
     });
-    console.log("\nInstalando plugin para despliegue en iaas, espere por favor ...");
+
+    // fs.copy(path.join(process.cwd(),'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join('..', directorio , 'gulpfile.js'),function(err){
+    //   if(err)
+    //     console.log(err);
+    //     console.log("Tarea gulp añadida a gulpfile");
+    // });
+
+
+    console.log("\n\n---------Instalando los plugins, espere por favor ...");
 
 };
 
@@ -50,29 +71,15 @@ function deploy(ip, ruta, url) {
 
 
 
-    exec('cd '+ruta+';git clone '+url+'',{
-          user: 'usuario',
-          host: ip,
-          key: 'fs.readFileSync(`${process.env.HOME}/.ssh/id_rsa`)'
-
-      },function(err){
-       if(err){
-      	console.log('Haciendo pull del repositorio!');
-        exec('cd '+ruta+'/'+carpeta.name+'; git pull',{
-            user: 'usuario',
-            host: ip,
-            key: 'fs.readFileSync(`${process.env.HOME}/.ssh/id_rsa`)'
-          },function(err){
-            if(err)
-                console.log("Ha habido un error con el pull");
-            else
-                console.log("Actualizacion carpeta confirmada");
-            });
-        }
-        else {
-            console.log("Clonación del repositorio confirmada");
-        }
-    });
+    function puts(error, stdout, stderr) {
+      if(stdout){
+        console.log(stdout);
+      }
+      if(stderr){
+        console.log(stderr);
+      }
+    }
+    exec("ssh usuario@" + ip + " 'cd " + ruta + "; git pull'", puts);
 };
 
 module.exports = {

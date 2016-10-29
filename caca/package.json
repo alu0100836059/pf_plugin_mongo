@@ -1,7 +1,7 @@
 {
-  "name": "gitbook-start-team-noejaco2017",
-  "version": "0.0.10",
-  "description": "Despliegue en Heroku e Iaas",
+  "name": "  ",
+  "version": "  ",
+"description": "Creacion de un paquete npm",
   "main": "./bin/linea-comando-npm.js",
   "scripts": {
     "generate-gitbook": "./scripts/losh generate-gitbook",
@@ -11,26 +11,30 @@
     "deploy-wiki": "./scripts/losh deploy-wiki",
     "deploy": "npm run build && npm run deploy-gitbook && npm run deploy-wiki",
     "version": "./scripts/losh version",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "ssh": "./ssh pull-iaas"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "gitbook-start": "./bin/linea-comando-npm.js"
+    "linea-comando-npm": "./bin/linea-comando-npm.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:ULL-ESIT-SYTW-1617/nueva-funcionalidad-para-el-paquete-npm-plugins-noejaco2017.git",
-    "wiki": "https://github.com/ULL-ESIT-SYTW-1617/nueva-funcionalidad-para-el-paquete-npm-plugins-noejaco2017.wiki.git"
+    "url": "",
+    "wiki": ""
   },
+  "iaas":{
+    "IP": "192.162.30.50",
+    "PATH": "./MyPath"
+  },
+
   "keywords": [
     "gitbook",
     "boilerplate",
     "starter"
   ],
   "author": {
-    "name": "alu0100622492",
-    "email": "alu0100622492@ull.edu.es",
-    "url": "http://dsi1516.github.io/Practica1/"
+    "name": "",
+    "email": "",
+    "url": ""
   },
   "contributors": {
     "name": "alu0100836059",
@@ -84,8 +88,5 @@
     "path": "^0.12.7",
     "underscore": "^1.8.3",
     "ssh-exec": "^2.0.0"
-  },
-  "engines": {
-    "node": "0.10.x"
   }
 }

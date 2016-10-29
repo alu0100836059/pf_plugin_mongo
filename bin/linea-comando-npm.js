@@ -48,13 +48,15 @@ function estructura(directorio){
 
       //Creamos una copia de los scripts
       console.log("LLEGOOOOOOOOOOO SCRIPTS");
-             fs.copy(path.join(__dirname, '..', 'scripts') , path.join(direct, `${directorio}`,'scripts'), function(err){
-                 if(err) return console.error(err)
-             });
+      fs.copy(path.join(__dirname,'..','scripts'), path.join(process.cwd(), directorio , 'scripts'),function(err){
+        if(err)
+          console.log(err);
+      });
              console.log("LLEGOOOOOOOOOOO TXT");
              //Creamos una copia de los txt
-             fs.copy(path.join(__dirname, '..', 'txt') , path.join(direct, `${directorio}`,'txt'), function(err){
-                 if(err) return console.error(err)
+             fs.copy(path.join(__dirname,'..','txt'), path.join(process.cwd(), directorio , 'txt'),function(err){
+               if(err)
+                 console.log(err);
              });
 
       //COPIAMOS NUESTROS ARCHIVOS AL NUEVO DIRECTORIO
@@ -180,20 +182,51 @@ if(argv.h || argv.help){
 
                          console.log("TAREA GULP");
                          //añadir las tareas al gulp
-                         var iaas = require(path.join(__dirname,'../..','gitbook-start-plugin-iaas-ull-es-noejaco2017','linea-comando-iaas'));
-                         iaas.initialize(directorio);
+                         var iaas = require(path.join(__dirname,'../node_modules','gitbook-start-plugin-iaas-ull-es-noejaco2017','linea-comando-iaas'));
+                         iaas.initialize(argv.directorio);
 
                          console.log("LLEGOOOOOOOOOOO PACKAGE");
                          //renderizando package.json con opciones de iaas
-                         ejs.renderFile(path.join(__dirname,'./template_npm','template','package.ejs'),{ nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath},
-                           function(err,data){
-                               if(err) {
-                                   console.error(err);
-                               }
-                               if(data) {
-                                   fs.writeFile(path.join(process.cwd(),directorio,'package.json'), data);
-                               }
-                           });
+
+
+
+
+                        //  ejs.renderFile(path.join(__dirname,'../template','package.ejs'),{ nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath},
+                        //    function(err,data){
+                        //        if(err) {
+                        //            console.error(err);
+                        //        }
+                        //        if(data) {
+                        //            fs.writeFile(path.join(process.cwd(),directorio,'package.json'), data);
+                        //        }
+                        //    });
+
+
+                           ejs.renderFile(path.join(__dirname, '../template_npm', 'package.ejs'),{nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath},function(err, result) {
+                              // render on success
+
+                                      if (!err) {
+                                          // result.nombre=argv.name;
+                                          // result.direcciongit=argv.url;
+                                          // result.direccionwiki='argv.wiki';
+                                           console.log(result);
+                                               //CREAMOS EL PACKAGE.JSON del template
+                                                  //var write=fs.writeFile("./template/package.json",result, (err) => {
+                                                   fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
+                                                          if (err) throw err;
+                                                          console.log('CREADO PACKAGE.JSON');
+
+                                      }
+                                      // render or error
+                                      else {
+                                               console.log('Error renderFile(package.ejs)');
+                                               console.log(err);
+                                      }
+                               });
+
+
+
+
               }else{
                   console.log("ELSE DENTRO NO HA INTRODUCIDO OPCIONES VALIDAS DE DEPLOY");
               }
