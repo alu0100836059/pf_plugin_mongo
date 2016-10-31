@@ -142,15 +142,15 @@ if(argv.h || argv.help){
                                                console.log(err);
                                       }
                                });
-                               // 
-                              //  fs.copy(path.join(__dirname,'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), argv.directorio , 'gulpfile.js'),function(err){
+                               //
+                              //  fs.copy(path.join(process.cwd(),'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), argv.directorio , 'gulpfile.js'),function(err){
                               //    if(err)
                               //      console.log(err);
-                              //      console.log("Tarea gulp añadida a gulpfile");
+                              //      console.log("Tarea gulp añadida a gulpfile desde NPM");
                               //  });
 
 
-
+                                   //
                                   //  fs.copy(path.join(__dirname, '..', 'gulpfile.js') , path.join(process.cwd(), `${argv.directorio}`,'gulpfile.js'), function(err){
                                   //      if(err) return console.error(err)
                                   //  });

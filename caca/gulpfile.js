@@ -104,35 +104,5 @@ gulp.task("deploy-iaas-ull", function () {
 	var iaas_ip = paquete.iaas.IP;
 	var iaas_path = paquete.iaas.PATH;
 
-	iaas.deploy(iaas_ip, iaas_path, url);
+	iaas.deploy(iaas_ip, iaas_path,url);
 });
-
-gulp.task("deploy-iaas-ull", function () {
-	var iaas = require("gitbook-start-plugin-iaas-ull-es-noejaco2017");
-	var url = paquete.repository.url;
-	var iaas_ip = paquete.iaas.IP;
-	var iaas_path = paquete.iaas.PATH;
-
-	iaas.deploy(iaas_ip, iaas_path, url);
-});
-
-
-gulp.task("deploy-iaas-ull", function () {
-	var iaas = require("gitbook-start-plugin-iaas-ull-es-noejaco2017");
-	var url = paquete.repository.url;
-	var iaas_ip = paquete.iaas.IP;
-	var iaas_path = paquete.iaas.PATH;
-
-	iaas.deploy(iaas_ip, iaas_path, url);
-});
-
-
-gulp.task("deploy-iaas-ull", function () {
-	var iaas = require("gitbook-start-plugin-iaas-ull-es-noejaco2017");
-	var url = paquete.repository.url;
-	var iaas_ip = paquete.iaas.IP;
-	var iaas_path = paquete.iaas.PATH;
-
-	iaas.deploy(iaas_ip, iaas_path, url);
-});
-
