@@ -6,21 +6,12 @@ var fs= require('fs-extra');
 var ejs=require('ejs');
 var child = require("child_process");
 
-//DIRECTORIO CON TEMPLATES
-// app.set('views', path.join(__dirname, 'template'));
-// app.set('view engine', 'ejs');
 
 //MINIMIST
 var argv = require('minimist')(process.argv.slice(2));
 console.dir(argv);
 
-// console.log("argv_ ",argv._);//los que no tienen opcion asociada
-// console.log("argv ",argv);
-// console.log("nombre "+argv.autor);
-// console.log("url "+argv.url);
-// console.log("wiki "+argv.wiki);
-// console.log("version "+argv.version);
-// console.log("email "+argv.email);
+
 function estructura(directorio){
       //CREACION DE LOS DIRECTORIOS TXT, SCRIPTS, Y LA CARPETA A GENERAR
       //creamos el directorio raiz
@@ -31,20 +22,6 @@ function estructura(directorio){
              //Creamos el directorio
              fs.mkdirsSync(directorio);
 
-      // fs.createDir(path.join(process.cwd(), directorio), function(err){
-      //   if(err)
-      //     console.log(err);
-    	// });
-      //creamos el directorio txt
-      // fs.createDir(path.join(process.cwd(), directorio , 'txt'), function(err){
-      //   if(err)
-      //     console.log(err);
-    	// });
-    	// //creamos el directorio scripts
-    	// fs.createDir(path.join(process.cwd(), directorio , 'scripts'), function(err){
-      //   if(err)
-      //     console.log(err);
-    	// });
 
       //Creamos una copia de los scripts
       console.log("LLEGOOOOOOOOOOO SCRIPTS");
@@ -59,24 +36,6 @@ function estructura(directorio){
                  console.log(err);
              });
 
-      //COPIAMOS NUESTROS ARCHIVOS AL NUEVO DIRECTORIO
-    	//copiamos lo que hay en txt y lo ponemos en el txt creado
-      // fs.copyDir(path.join(__dirname, '..', 'txt'), path.join(process.cwd(), dir , 'txt'), function (err) {
-      // 	if (err)
-      //     console.error(err)
-    	// });
-      // //copiamos lo que hay en scripts y lo ponemos en el spripts creado
-      // fs.copyDir(path.join(__dirname, '..', 'scripts'), path.join(process.cwd(), dir , 'scripts'), function (err) {
-      // 	if (err)
-      //     console.error(err)
-    	// });
-      //copiamos gulpfile
-      console.log("LLEGOOOOOOOOOOO GULPFILE");
-      fs.copy(path.join(__dirname,'..','gulpfile.js'), path.join(process.cwd(), directorio , 'gulpfile.js'),function(err){
-        if(err)
-          console.log(err);
-      });
-      //copiamos el book
       console.log("LLEGOOOOOOOOOOO BOOK");
       fs.copy(path.join(__dirname,'..','book.json'),path.join(process.cwd(), directorio , 'book.json'),function(err){
         if(err)
@@ -89,31 +48,6 @@ console.log("LLEGOOOOOOOOOOO APP");
         console.log(err);
       });
 console.log("SALGO");
-
-       //
-      //        //Creamos una copia de los scripts
-      //        fs.copy(path.join(__dirname, '../template-iaas', 'scripts') , path.join(direct, `${argv.d}`,'scripts'), function(err){
-      //            if(err) return console.error(err)
-      //        });
-      //        //Creamos una copia de los txt
-      //        fs.copy(path.join(__dirname, '../template-iaas', 'txt') , path.join(direct, `${argv.d}`,'txt'), function(err){
-      //            if(err) return console.error(err)
-      //        });
-      //        //Creamos una copia de Readme
-      //        fs.copy(path.join(__dirname, '../template-iaas', 'README.md') , path.join(direct, `${argv.d}`,'README.md'), function(err){
-      //            if(err) return console.error(err)
-      //        });
-      //        //Creamos gulpfile
-      //        fs.copy(path.join(__dirname, '../template-iaas', 'gulpfile.js') , path.join(direct, `${argv.d}`,'gulpfile.js'), function(err){
-      //            if(err) return console.error(err)
-      //        });
-      //        //Creamos book.json
-      //        fs.copy(path.join(__dirname, '../template-iaas', 'book.json') , path.join(direct, `${argv.d}`,'book.json'), function(err){
-      //            if(err) return console.error(err)
-      //        });
-      //        //Creamos server
-      //        fs.copy(path.join(__dirname, '../template-iaas', 'app.js') , path.join(direct, `${argv.d}`,'app.js'), function(err){
-      //            if(err) return console.error(err)
 
 }
 
@@ -186,21 +120,6 @@ if(argv.h || argv.help){
                          iaas.initialize(argv.directorio);
 
                          console.log("LLEGOOOOOOOOOOO PACKAGE");
-                         //renderizando package.json con opciones de iaas
-
-
-
-
-                        //  ejs.renderFile(path.join(__dirname,'../template','package.ejs'),{ nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath},
-                        //    function(err,data){
-                        //        if(err) {
-                        //            console.error(err);
-                        //        }
-                        //        if(data) {
-                        //            fs.writeFile(path.join(process.cwd(),directorio,'package.json'), data);
-                        //        }
-                        //    });
-
 
                            ejs.renderFile(path.join(__dirname, '../template_npm', 'package.ejs'),{nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath},function(err, result) {
                               // render on success
@@ -211,7 +130,7 @@ if(argv.h || argv.help){
                                           // result.direccionwiki='argv.wiki';
                                            console.log(result);
                                                //CREAMOS EL PACKAGE.JSON del template
-                                                  //var write=fs.writeFile("./template/package.json",result, (err) => {
+
                                                    fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
                                                           if (err) throw err;
                                                           console.log('CREADO PACKAGE.JSON');
@@ -223,9 +142,18 @@ if(argv.h || argv.help){
                                                console.log(err);
                                       }
                                });
+                               // 
+                              //  fs.copy(path.join(__dirname,'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), argv.directorio , 'gulpfile.js'),function(err){
+                              //    if(err)
+                              //      console.log(err);
+                              //      console.log("Tarea gulp añadida a gulpfile");
+                              //  });
 
 
 
+                                  //  fs.copy(path.join(__dirname, '..', 'gulpfile.js') , path.join(process.cwd(), `${argv.directorio}`,'gulpfile.js'), function(err){
+                                  //      if(err) return console.error(err)
+                                  //  });
 
               }else{
                   console.log("ELSE DENTRO NO HA INTRODUCIDO OPCIONES VALIDAS DE DEPLOY");

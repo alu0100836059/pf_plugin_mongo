@@ -7,11 +7,12 @@ los usuarios con conocimientos de **NodeJS** puedan extender la conducta del eje
 de las ya consideradas.
 
 ## Instalar nuestro paquete NPM
-_npm install -g gitbook-start-team-noejaco2017_
-_npm install --save gitbook-start-team-noejaco2017_
+_npm install -g gitbook-start-team-noejaco2017-1.0_
+_npm install --save gitbook-start-team-noejaco2017-1.07_
+
 
 ##Instalación del directorio
-_gitbook-start-team-noejaco2017 --directorio [nombre directorio]_
+_gitbook-start --deploy iaas-ull-es --iaasIP 192.162.30.50 --iaaspath ./MyPath --directorio prueba_
 
 ## Manual de ayuda
 _gitbook-start --h || --help_
@@ -24,15 +25,24 @@ gitbook-start [OPTIONS]
 --wiki: direccion web de la wiki en github -w github.com/repo.wiki.git
 --directorio: nombre del directorio a crear
 --help: muestra ayuda sobre las opciones disponibles
-````````````````````
-
-
-
-## Manual de ayuda
-_gitbook-start --h || --help_
-````````````````````
-gitbook-start-iaas [OPTIONS]
+--deploy: Deploy en IaaS(iaas.ull.es)
 --iaasIP: Direccion de la maquina virtual
---iaaspath: repositorio que va a contener el libro en iaas
---d: directorio a crear con el nombre que quiera
+--iaaspath: Repositorio que va a contener el libro en iaas
+
+** PARA EL BUEN DESPLIEGUE DEL LIBRO USAR TODAS LAS OPCIONES
 ````````````````````
+
+## Enlace a github gh-pages
+[gh-pages](https://ull-esit-sytw-1617.github.io/tareas-iniciales-noejaco2017/)
+
+## Enlace a gitbook
+[gitbook](https://alu0100836059.gitbooks.io/apuntessytw/content/)
+
+## Enlace al plugin npm iaas
+[npm-plugin-iaas](https://www.npmjs.com/package/gitbook-start-plugin-iaas-ull-es-noejaco2017)
+
+## Enlace a NPM 1.0
+[npm-v1.0](https://www.npmjs.com/package/gitbook-start-team-noejaco2017-1.0)
+
+## Enlace a la aplicación desplegada en heroku
+[heroku](https://herokuiaass.herokuapp.com/)
