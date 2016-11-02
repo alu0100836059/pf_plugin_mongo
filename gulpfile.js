@@ -4,7 +4,7 @@ var ghPages = require('gulp-gh-pages');
 var path = require('path');
 var run = require('gulp-run');
 var cwd = process.cwd();
-var paquete = require(cwd+'/package.json');
+var paquete = require(process.cwd()+'/package.json');
 
 //-----------------------IAAS--------------------------------------
 gulp.task('iaas',shell.task(['./scripts/ssh']));

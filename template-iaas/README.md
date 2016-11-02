@@ -8,11 +8,15 @@ de las ya consideradas.
 
 ## Instalar nuestro paquete NPM
 _npm install -g gitbook-start-team-noejaco2017-1.0_
-_npm install --save gitbook-start-team-noejaco2017-1.07_
+_npm install --save gitbook-start-team-noejaco2017-1.0_
 
 
 ##Instalación del directorio
-_gitbook-start --deploy iaas-ull-es --iaasIP 192.162.30.50 --iaaspath ./MyPath --directorio prueba_
+_gitbook-start --deploy iaas-ull-es --iaasIP 192.162.30.50 --iaaspath ./MyPath --directorio prueba --autor juanito --url juanito@ull.edu.es --wiki wiki@ull.es --email github@github.es --version 1.0.1_
+
+##Desplieque iaas
+_Una vez creado nuestro nuevo directorio, accedems a el, instalamos las dependes,
+y hariamos un gulp deploy-iaas-ull_
 
 ## Manual de ayuda
 _gitbook-start --h || --help_

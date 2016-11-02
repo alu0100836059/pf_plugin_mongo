@@ -77,7 +77,7 @@ function deploy(ip, ruta, url) {
 
     console.log("Comenzando el deploy en Iaas");
     console.log('Direccion IP Destino: '+ip);
-    console.log('Ruta de destino: '+ruta+'/'+carpeta.name);
+    //console.log('Ruta de destino: '+ruta+'/'+carpeta.name);
     //console.log('Repositorio origen: '+url);
 
 
