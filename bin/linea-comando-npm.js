@@ -67,102 +67,118 @@ if(argv.h || argv.help){
     "--help: muestra ayuda sobre las opciones disponibles\n"+
     "--deploy: Deploy en IaaS(iaas.ull.es)"+
     "--iaasIP: Direccion de la maquina virtual\n"+
-    "--iaaspath: Repositorio que va a contener el libro en iaas\n");
+    "--iaaspath: Repositorio que va a contener el libro en iaas\n"+
+    "--heroku: Nombre de la api del repo en heroku\n");
 
 
 }else{
-  if(!argv.iaasIP || !argv.iaaspath || !argv.deploy ){
-               console.log("Falta el argumento IP, path o directorio");
-  }else{
-    if(argv.deploy){
-                 if(!argv.directorio){//Si especificas deploy solo
 
-                             estructura("Estructura_del_book");
+    if(argv.deploy && argv.directorio ){
+                         if( argv.iaasIP && argv.iaaspath){//Cuando pasamos el directorio
 
-                             child.exec('npm install --save-dev gitbook-start-plugin-iaas-ull-es-noejaco2017 ', function(error, stdout, stderr){
-                               if(error)
-                                 console.log(error)
+                             estructura(argv.directorio);
+                                  console.log("Despues de crear estructura");
+                                     child.exec('npm install --save-dev gitbook-start-plugin-iaas-ull-es-noejaco2017', function(error, stdout, stderr){
+                                       if(error)
+                                         console.log(error)
 
-                               console.log(stderr);
-                               console.log(stdout);
-                             })
+                                       console.log(stderr);
+                                       console.log(stdout);
+                                     })
 
-                             //añadir las tareas al gulp
-                             var iaas = require(path.join(__dirname,'../..','gitbook-start-plugin-iaas-ull-es-noejaco2017 ','linea-comando-iaas '));
-                             iaas.initialize("Estructura_del_book");
+                                     console.log("TAREA GULP");
+                                     //añadir las tareas al gulp
+                                     var iaas = require(path.join(__dirname,'../node_modules','gitbook-start-plugin-iaas-ull-es-noejaco2017','linea-comando-iaas'));
+                                     iaas.initialize(argv.directorio);
+
+                                     console.log("LLEGOOOOOOOOOOO PACKAGE");
+
+                                     var heroku        = argv.herokupath || '';
+
+                                       ejs.renderFile(path.join(__dirname, '../template_npm', 'package.ejs'),{nombre:argv.name, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath,nombreheroku:heroku},function(err, result) {
+                                          // render on success
+
+                                                  if (!err) {
+                                                      // result.nombre=argv.name;
+                                                      // result.direcciongit=argv.url;
+                                                      // result.direccionwiki='argv.wiki';
+                                                       console.log(result);
+                                                           //CREAMOS EL PACKAGE.JSON del template
+
+                                                               fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
+                                                                      if (err) throw err;
+                                                                      console.log('CREADO PACKAGE.JSON');
+
+                                                  }
+                                                  // render or error
+                                                  else {
+                                                           console.log('Error renderFile(package.ejs)');
+                                                           console.log(err);
+                                                  }
+                                           });
+
+                          }else{
+                                    if(argv.heroku ){
+
+                                     estructura(argv.directorio);
+                                          console.log("Despues de crear estructura");
+                                             child.exec('npm install --save-dev gitbook-start-plugin-heroku-noejaco2017', function(error, stdout, stderr){
+                                               if(error)
+                                                 console.log(error)
+
+                                               console.log(stderr);
+                                               console.log(stdout);
+                                             })
+
+                                             console.log("TAREA GULP");
+                                             //añadir las tareas al gulp
+                                             var heroku = require(path.join(__dirname,'../node_modules','gitbook-start-plugin-heroku-noejaco2017','linea-comando-heroku'));
+                                             heroku.initialize(argv.heroku);
+
+                                             console.log("LLEGOOOOOOOOOOO PACKAGE");
 
 
-                             //renderizando package.json con opciones de iaas
-                             ejs.renderFile(path.join(__dirname,'./template_npm','template','package.ejs'),{ direccionip:argv.iaasIP,direccionpath:argv.iaaspath},
-                               function(err,data){
-                                   if(err) {
-                                       console.error(err);
-                                   }
-                                   if(data) {
-                                       fs.writeFile(path.join(process.cwd(),"Estructura_del_book",'package.json'), data);
-                                   }
-                               });
-               }else if(argv.directorio){
+                                             var iaasip     = argv.iaasIP || '';
+                                            var iaaspath        = argv.iaaspath || '';
 
-                 estructura(argv.directorio);
-                      console.log("Despues de crear estructura");
-                         child.exec('npm install --save-dev gitbook-start-plugin-iaas-ull-es-noejaco2017', function(error, stdout, stderr){
-                           if(error)
-                             console.log(error)
 
-                           console.log(stderr);
-                           console.log(stdout);
-                         })
+                                             ejs.renderFile(path.join(__dirname, '../template_npm', 'package.ejs'),{nombre:argv.name, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,nombreheroku:argv.heroku,direccionip:iaasip,direccionpath:iaaspath},function(err, result) {
+                                                // render on success
 
-                         console.log("TAREA GULP");
-                         //añadir las tareas al gulp
-                         var iaas = require(path.join(__dirname,'../node_modules','gitbook-start-plugin-iaas-ull-es-noejaco2017','linea-comando-iaas'));
-                         iaas.initialize(argv.directorio);
+                                                        if (!err) {
+                                                            // result.nombre=argv.name;
+                                                            // result.direcciongit=argv.url;
+                                                            // result.direccionwiki='argv.wiki';
+                                                             console.log(result);
+                                                                 //CREAMOS EL PACKAGE.JSON del template
 
-                         console.log("LLEGOOOOOOOOOOO PACKAGE");
+                                                                     fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
+                                                                            if (err) throw err;
+                                                                            console.log('CREADO PACKAGE.JSON');
 
-                           ejs.renderFile(path.join(__dirname, '../template_npm', 'package.ejs'),{nombre:argv.name, num:argv.version, direcciongit:argv.url, direccionwiki:argv.wiki, autor:argv.autor, email:argv.email,direccionip:argv.iaasIP,direccionpath:argv.iaaspath},function(err, result) {
-                              // render on success
+                                                        }
+                                                        // render or error
+                                                        else {
+                                                                 console.log('Error renderFile(package.ejs)');
+                                                                 console.log(err);
+                                                        }
+                                                 });
 
-                                      if (!err) {
-                                          // result.nombre=argv.name;
-                                          // result.direcciongit=argv.url;
-                                          // result.direccionwiki='argv.wiki';
-                                           console.log(result);
-                                               //CREAMOS EL PACKAGE.JSON del template
 
-                                                   fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
-                                                          if (err) throw err;
-                                                          console.log('CREADO PACKAGE.JSON');
-
+                                      }else{
+                                            if(!argv.iaasIP || !argv.iaaspath || !argv.deploy ){
+                                                         console.log("Falta el argumento IP, path o directorio, consulte el help");
+                                            }else if(!argv.heroku){
+                                              console.log("Falta el argumento de heroku, consulte el help");
+                                            }
                                       }
-                                      // render or error
-                                      else {
-                                               console.log('Error renderFile(package.ejs)');
-                                               console.log(err);
-                                      }
-                               });
-                               //
-                              //  fs.copy(path.join(process.cwd(),'./node_modules/gitbook-start-team-noejaco2017','gulpfile.js'), path.join(process.cwd(), argv.directorio , 'gulpfile.js'),function(err){
-                              //    if(err)
-                              //      console.log(err);
-                              //      console.log("Tarea gulp añadida a gulpfile desde NPM");
-                              //  });
-
-
-                                   //
-                                  //  fs.copy(path.join(__dirname, '..', 'gulpfile.js') , path.join(process.cwd(), `${argv.directorio}`,'gulpfile.js'), function(err){
-                                  //      if(err) return console.error(err)
-                                  //  });
-
-              }else{
-                  console.log("ELSE DENTRO NO HA INTRODUCIDO OPCIONES VALIDAS DE DEPLOY");
-              }
+                          }
       }else{
-             console.log("ELSE FUERA NO HA INTRODUCIDO OPCIONES VALIDAS DE DEPLOY");
-     }
-   }
+                  console.log("Consulte el help FINAL");
+      }
 }
+
+
             //    var direct = process.cwd() + '/template-iaas/';
              //
             //        //Creamos el directorio
