@@ -1,6 +1,6 @@
 {
   "name": "gitbook-start-team-noejaco2017-2.0",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Despliegue con pluign Iaas",
   "main": "./bin/linea-comando-npm.js",
   "scripts": {
