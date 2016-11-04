@@ -97,3 +97,27 @@ gulp.task('epub',
 // herokuiaasfinal, la del repo. En los settings de la aplicación
 // en la página de heroku podemos ver el repositorio git al que
 // responde nuestra aplicación. Sólo administrador
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var iaas_ip = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var iaas_ip = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
