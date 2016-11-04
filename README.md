@@ -49,7 +49,8 @@ Y por ultimo instalamos el plugin para poder desplegarlo en heroku , para ello u
 Una vez instalados los paquetes podemos consultar nuestro plugin para ver sus opciones, a traves de gitbook-start --help
 
 Para poder realizar correctamente el desplique en IAAS, recuerde que debe al menos realizar la prueba con estos 2 campos y recuerde de poner en el campo --iaasIP su direccion IP de su maquina y el path donde se desplpegara:
-gitbook-start --deploy p --iaaspath ./Mypath --iaasIP 192.126.3.2 --directorio prueba --autor new_usuario
+- gitbook-start --deploy p --iaaspath ./Mypath --iaasIP 192.126.3.2 --directorio prueba --autor new_usuario   ||
+- gitbook-start --deploy iaas-ull-es --iaasIP 192.162.30.50 --iaaspath ./MyPath --directorio prueba --autor juanito --url juanito@ull.edu.es --wiki wiki@ull.es --email github@github.es --version 1.0.1
 
 Para la correcta realizacion del libro y del despliuque debera rellenar todos los campos.
 
