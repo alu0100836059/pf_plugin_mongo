@@ -29,7 +29,7 @@ gitbook-start --deploy p --heroku heroku-deploy-plugins --directorio prueba --au
 Para la correcta realizacion del libro y del despliuque debera rellenar todos los campos.
 
 Una vez ejecutado el comando se nos generara el directorio que hemos dado nombre. Nos situamos en el, e instalamos el package.json (npm install).
-Una vez aqui, lo que tendremos que hacer son las tareas automatizadas del gulp, donde con gulp deploy-heroku(crearemos nuestro remoto de heroku)y justamente cuando se nos genere
+Luego de esta logeese desde la terminal en heroku, a traves de: heroku login para luego, lo unico que tendremos que hacer son las tareas automatizadas del gulp, donde con gulp deploy-heroku(crearemos nuestro remoto de heroku)y justamente cuando se nos genere
 el remoto, se nos creara una nueva tarea, llamada gulp push-heroku(que nos permitira empujar nuestro repo. a heroku)
 
 *** RECUERDE QUE DEBE DE HABER GENERADO EL LIBRO PARA SU CORRECTO DESPLIUEGE EN HEROKU
