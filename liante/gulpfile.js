@@ -116,6 +116,134 @@ gulp.task("deploy-heroku", function () {
 
 gulp.task("deploy-heroku", function () {
 	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var iaas_ip = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
+	var herokupath = paquete.heroku.IP;
+
+	heroku.deploy(herokupath);
+});
+
+
+gulp.task("deploy-heroku", function () {
+	var heroku = require("gitbook-start-plugin-heroku-noejaco2017");
 	var herokupath = paquete.heroku.IP;
 
 	heroku.deploy(herokupath);

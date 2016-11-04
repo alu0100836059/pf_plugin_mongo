@@ -26,7 +26,7 @@
     "PATH": ""
   },
   "heroku":{
-    "IP": "api.com"
+    "IP": "heroku-deploy-plugins"
   },
   "keywords": [
     "gitbook",
@@ -55,6 +55,7 @@
     "gitbook": "^2.1.0",
     "gitbook-cli": "^0.3.4",
     "gitbook-start-plugin-iaas-ull-es-noejaco2017": "*",
+    "gitbook-start-team-noejaco2017-2.0": "*",
     "gulp": "~3.9.1",
     "gulp-gh-pages": "^0.5.4",
     "gulp-shell": "~0.5.2",

@@ -47,6 +47,12 @@ console.log("LLEGOOOOOOOOOOO APP");
         if(err)
         console.log(err);
       });
+      console.log("LLEGOOOOOOOOOOO Procfile");
+            //copiamos server.js
+            fs.copy(path.join(__dirname,'..','Procfile'),path.join(process.cwd(), directorio , 'Procfile'),function(err){
+              if(err)
+              console.log(err);
+            });
 console.log("SALGO");
 
 }
@@ -133,7 +139,7 @@ if(argv.h || argv.help){
                                              console.log("TAREA GULP");
                                              //añadir las tareas al gulp
                                              var heroku = require(path.join(__dirname,'../node_modules','gitbook-start-plugin-heroku-noejaco2017','linea-comando-heroku'));
-                                             heroku.initialize(argv.heroku);
+                                             heroku.initialize(argv.directorio);
 
                                              console.log("LLEGOOOOOOOOOOO PACKAGE");
 

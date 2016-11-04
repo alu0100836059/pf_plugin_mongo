@@ -53,6 +53,7 @@
     "git-url-parse": "^6.0.7",
     "gitbook": "^2.1.0",
     "gitbook-cli": "^0.3.4",
+    "gitbook-start-plugin-heroku-noejaco2017": "0.0.20",
     "gitbook-start-plugin-iaas-ull-es-noejaco2017": "*",
     "gitbook-start-team-noejaco2017-2.0": "*",
     "gulp": "~3.9.1",
