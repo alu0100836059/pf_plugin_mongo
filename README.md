@@ -18,7 +18,7 @@ El objetivo de esta práctica es extender el package NodeJS publicado en npm en 
 # Instalacion plugin heroku
 ```
 Lo primero que debemos hacer es instalar el paquete NPM _gitbook-start-team-noejaco2017-2.0_ => npm install -g  gitbook-start-team-noejaco2017-2.0
-Seguidamente, instalamos instalamos el paquete en nuestras devDependencies => npm install --save gitbook-start-team-noejaco2017-2.0
+Seguidamente, instalamos el paquete en nuestras Dependencies => npm install --save gitbook-start-team-noejaco2017-2.0(Recuerde que tiene que tener generado un package.json)
 Y por ultimo instalamos el plugin para poder desplegarlo en heroku , para ello usamos npm install --save gitbook-start-plugin-heroku-noejaco2017
 
 Una vez instalados los paquetes podemos consultar nuestro plugin para ver sus opciones, a traves de gitbook-start --help
