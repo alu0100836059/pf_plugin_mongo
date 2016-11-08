@@ -128,7 +128,7 @@ if(argv.h || argv.help){
 
                                      estructura(argv.directorio);
                                           console.log("Despues de crear estructura");
-                                             child.exec('npm install --save-dev gitbook-start-plugin-heroku-noejaco2017', function(error, stdout, stderr){
+                                             child.exec('npm install --save gitbook-start-plugin-heroku-noejaco2017', function(error, stdout, stderr){
                                                if(error)
                                                  console.log(error)
 
