@@ -5,6 +5,7 @@ var path = require('path');
 var fs= require('fs-extra');
 var ejs=require('ejs');
 var child = require("child_process");
+var exec = require('child_process').exec;
 
 
 //MINIMIST
@@ -128,17 +129,18 @@ if(argv.h || argv.help){
 
                                      estructura(argv.directorio);
                                           console.log("Despues de crear estructura");
-                                             child.exec('npm install --save gitbook-start-plugin-heroku-noejaco2017', function(error, stdout, stderr){
+
+                                             child.exec('npm install --save-dev gitbook-start-plugin-heroku-noejaco2017', function(error, stdout, stderr){
                                                if(error)
                                                  console.log(error)
 
                                                console.log(stderr);
                                                console.log(stdout);
-                                             })
+                                             });
 
                                              console.log("TAREA GULP");
                                              //añadir las tareas al gulp
-                                             var heroku = require(path.join('./node_modules','gitbook-start-plugin-heroku-noejaco2017','linea-comando-heroku'));
+                                             var heroku = require(path.join(__dirname,'../node_modules/gitbook-start-plugin-heroku-noejaco2017/linea-comando-heroku'));
                                              heroku.initialize(argv.directorio);
 
                                              console.log("LLEGOOOOOOOOOOO PACKAGE");
