@@ -138,7 +138,7 @@ if(argv.h || argv.help){
 
                                              console.log("TAREA GULP");
                                              //añadir las tareas al gulp
-                                             var heroku = require(path.join(__dirname,'./node_modules','gitbook-start-plugin-heroku-noejaco2017','linea-comando-heroku'));
+                                             var heroku = require(path.join('./node_modules','gitbook-start-plugin-heroku-noejaco2017','linea-comando-heroku'));
                                              heroku.initialize(argv.directorio);
 
                                              console.log("LLEGOOOOOOOOOOO PACKAGE");
