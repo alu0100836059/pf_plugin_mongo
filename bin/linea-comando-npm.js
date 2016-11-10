@@ -9,37 +9,109 @@ var child = require("child_process");
 var exec = require('child_process').exec;
 //---------------------------------------------------------------------------
 var github = require('octonode');
+var inquirer = require('inquirer');
+//var prompt = inquirer.createPromptModule();
 
 
+// prompt(preguntas).then(function(answers){
+//     console.log("LEGOO A ANSWER"+answers);
+// });
+//
+var preguntas = [{
+  type: 'input',
+  name: 'name_usuario',
+  message: 'Intrduzca su usuario?\n',
+  default: 'user',
+},{
+  type: 'password',
+  name: 'password_usuario',
+  message: 'Introduzca contraseña: \n',
+  validate: function(str){
+    return str !== 'Yoda'; //Yoda had *better not* use this application!!
+  }
+}];
 
-var client = github.client('jhghjhgh');//generado token
-var ghme = client.me();
-//var ghuser = client.user('pipopipo');
 
+// inquirer.prompt(preguntas, function(respuestas) {
+//   console.log(respuestas);
+//   // console.log(respuestas.name_usuario);
+//   // console.log()
+// });
 
+var respuestas_user = inquirer.prompt(preguntas).then(function(respuesta){
+  console.log(respuesta);
+  console.log(respuesta.name_usuario);
+  console.log(respuesta.password_usuario);
+     return respuesta;
 
-
-client.get('/user', {}, function (err, status, body, headers) {
-  // console.log("ACCEDEMOS A USER HEADERS")
-  // console.log(headers);
-  console.log("ACCEDEMOS A USER BODY")
-  console.log(body); //json object
-
-
-  fs.writeJson('../.gitbook-start/config.json', {body}, function (err) {
-    console.log(err)
-  });
-
-
+     inquirer.prompt.start();
+       inquirer.prompt.get(preguntas,function(err,result){
+          if(err)
+         throw err;
+         console.log("RESULT"+result);
+       });
 });
+console.log("AQUIIIII"+respuestas_user);
 
-client.get('/user/emails', {}, function (err, status, body, headers) {
-  // console.log("ACCEDEMOS A USER/EMAILS HEADERS")
-  // console.log(headers);
-  console.log("ACCEDEMOS A USER/EMAILS BODY")
-  console.log(body); //devolvemos el emaail
-  //ghme.emails(callback);
-});
+//---------------------------------------------------------------------------------
+
+//(CUANDO GENERAMOS EL TOKEN DEBEMOS COMPROBAR CON LAS LLAMADAS A FS si exite el fichero en su home.gitbook-start/config.json en sysREAD()  process.env.home)
+
+
+//Authenticate to github in cli mode (desktop application) //GENERA el TOKEN vampos y creo que sin el gist
+// github.auth.config({
+//   username: 'pksunkara',
+//   password: 'password'
+// }).login(['user', 'repo', 'gist'], function (err, id, token) {
+//   console.log(id, token);
+// });
+
+//Create a repository (POST /user/repos) // CREAR REPO
+// ghme.repo({
+//   "name": "Hello-World",
+//   "description": "This is your first repo",
+// }, callback); //repo
+
+
+//Get emails of the user (GET /user/emails) //OBTENER EMAIL USER
+//ghme.emails(callback); //array of emails
+
+//Get information about the user (GET /user)//OBTENER INFORMACION USER
+//ghme.info(callback); //json
+
+
+
+
+//---------------------------------------------------------------------------------
+
+// var client = github.client('jhghjhgh');//generado token
+// var ghme = client.me();
+// //var ghuser = client.user('pipopipo');
+//
+//
+//
+//
+// client.get('/user', {}, function (err, status, body, headers) {
+//   // console.log("ACCEDEMOS A USER HEADERS")
+//   // console.log(headers);
+//   console.log("ACCEDEMOS A USER BODY")
+//   console.log(body); //json object
+//
+//
+//   fs.writeJson('../.gitbook-start/config.json', {body}, function (err) {
+//     console.log(err)
+//   });
+//
+//
+// });
+//
+// client.get('/user/emails', {}, function (err, status, body, headers) {
+//   // console.log("ACCEDEMOS A USER/EMAILS HEADERS")
+//   // console.log(headers);
+//   console.log("ACCEDEMOS A USER/EMAILS BODY")
+//   console.log(body); //devolvemos el emaail
+//   //ghme.emails(callback);
+// });
 
 //inquirer (SCHEMA CONSOLA)
 
@@ -124,8 +196,8 @@ client.get('/user/emails', {}, function (err, status, body, headers) {
 
 
 //MINIMIST
-var argv = require('minimist')(process.argv.slice(2));
-console.dir(argv);
+ var argv = require('minimist')(process.argv.slice(2));
+ console.dir(argv);
 
 
 function estructura(directorio){

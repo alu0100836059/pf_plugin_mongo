@@ -82,11 +82,12 @@
     "gulp-install": "~0.6.0",
     "gulp-run": "^1.7.1",
     "gulp-shell": "^0.5.2",
+    "inquirer": "^1.2.2",
     "minimatch": "^3.0.3",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "underscore": "^1.8.3",
-    "ssh-exec": "^2.0.0"
+    "ssh-exec": "^2.0.0",
+    "underscore": "^1.8.3"
   },
   "engines": {
     "node": "0.10.x"
