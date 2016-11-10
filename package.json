@@ -60,6 +60,7 @@
     "gulp-gh-pages": "^0.5.4",
     "gulp-shell": "~0.5.2",
     "minimist": "^1.2.0",
+    "octonode": "^0.7.6",
     "path": "^0.12.7",
     "simple-git": "^1.51.0",
     "ssh-exec": "^2.0.0",

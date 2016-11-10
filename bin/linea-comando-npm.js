@@ -3,9 +3,108 @@ var express = require('express');
 var app = express()
 var path = require('path');
 var fs= require('fs-extra');
+var fs_simple=('fs');
 var ejs=require('ejs');
 var child = require("child_process");
 var exec = require('child_process').exec;
+//---------------------------------------------------------------------------
+var github = require('octonode');
+
+
+
+var client = github.client('cc1b1d94b6c5eace90c3f28fb4dd437047ec8aac');//generado token
+var ghme = client.me();
+//var ghuser = client.user('pipopipo');
+
+
+
+
+client.get('/user', {}, function (err, status, body, headers) {
+  // console.log("ACCEDEMOS A USER HEADERS")
+  // console.log(headers);
+  console.log("ACCEDEMOS A USER BODY")
+  console.log(body); //json object
+
+
+  fs.writeJson('../.gitbook-start/config.json', {body}, function (err) {
+    console.log(err)
+  });
+
+
+});
+
+client.get('/user/emails', {}, function (err, status, body, headers) {
+  // console.log("ACCEDEMOS A USER/EMAILS HEADERS")
+  // console.log(headers);
+  console.log("ACCEDEMOS A USER/EMAILS BODY")
+  console.log(body); //json object
+  //ghme.emails(callback);
+});
+
+client.get('/user/user', {}, function (err, status, body, headers) {
+  // console.log("ACCEDEMOS A USER/EMAILS HEADERS")
+  // console.log(headers);
+  console.log("ACCEDEMOS A USER/USERS BODY")
+  console.log(body); //json object
+  //ghme.emails(callback);
+});
+
+
+
+
+
+// Web application which authenticates to github
+// var http = require('http')
+//   , url = require('url')
+//   , qs = require('querystring')
+//   , github = require('octonode');
+//
+// // Build the authorization config and url
+// var auth_url = github.auth.config({
+//   id: 'mygithubclientid',
+//   secret: 'mygithubclientsecret',
+//   apiUrl: 'https://optional-internal-github-enterprise/api/v3',
+//   webUrl: 'https://optional-internal-github-enterprise'
+// }).login(['user', 'repo', 'gist']);
+//
+// // Store info to verify against CSRF
+// var state = auth_url.match(/&state=([0-9a-z]{32})/i);
+//
+// // Web server
+// http.createServer(function (req, res) {
+//   uri = url.parse(req.url);
+//   // Redirect to github login
+//   if (uri.pathname=='/login') {
+//     res.writeHead(302, {'Content-Type': 'text/plain', 'Location': auth_url})
+//     res.end('Redirecting to ' + auth_url);
+//   }
+//   // Callback url from github login
+//   else if (uri.pathname=='/auth') {
+//     var values = qs.parse(uri.query);
+//     // Check against CSRF attacks
+//     if (!state || state[1] != values.state) {
+//       res.writeHead(403, {'Content-Type': 'text/plain'});
+//       res.end('');
+//     } else {
+//       github.auth.login(values.code, function (err, token) {
+//         res.writeHead(200, {'Content-Type': 'text/plain'});
+//         res.end(token);
+//       });
+//     }
+//   } else {
+//     res.writeHead(200, {'Content-Type': 'text/plain'})
+//     res.end('');
+//   }
+// }).listen(3000);
+//
+// console.log('Server started on 3000');
+
+
+
+
+
+
+//--------------------------------------------------
 
 
 //MINIMIST
@@ -141,7 +240,7 @@ if(argv.h || argv.help){
                                              console.log("TAREA GULP");
                                              //añadir las tareas al gulp
                                              var heroku = require('../node_modules/gitbook-start-plugin-heroku-noejaco2017/linea-comando-heroku');
-                                             console.log("VARIABLE HEROKU REQUIRE"+heroku)
+                                             console.log("VARIABLE HEROKU REQUIRE"+heroku);
                                              heroku.initialize(argv.directorio);
 
                                              console.log("LLEGOOOOOOOOOOO PACKAGE");
