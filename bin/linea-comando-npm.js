@@ -12,7 +12,7 @@ var github = require('octonode');
 
 
 
-var client = github.client('cc1b1d94b6c5eace90c3f28fb4dd437047ec8aac');//generado token
+var client = github.client('jhghjhgh');//generado token
 var ghme = client.me();
 //var ghuser = client.user('pipopipo');
 
@@ -37,17 +37,33 @@ client.get('/user/emails', {}, function (err, status, body, headers) {
   // console.log("ACCEDEMOS A USER/EMAILS HEADERS")
   // console.log(headers);
   console.log("ACCEDEMOS A USER/EMAILS BODY")
-  console.log(body); //json object
+  console.log(body); //devolvemos el emaail
   //ghme.emails(callback);
 });
 
-client.get('/user/user', {}, function (err, status, body, headers) {
-  // console.log("ACCEDEMOS A USER/EMAILS HEADERS")
-  // console.log(headers);
-  console.log("ACCEDEMOS A USER/USERS BODY")
-  console.log(body); //json object
-  //ghme.emails(callback);
-});
+//inquirer (SCHEMA CONSOLA)
+
+//EJemplo crear token
+
+
+// return new Promise((resolve,reject)=>{
+//   prompt.start();
+//   prompt.get(schema,(err,result)=>{
+//     if(err)
+//     throw err;
+//
+//     github.auth.config({username:resultname, password: result.password,
+//     scopes:['user','repo'],
+//     note: ruslt.descripcion
+//   },(err,id,token)=>{
+//     if(err)throw err;
+//     console.log(err);
+//     console.log(id);
+//     console.log(token);
+//     resolve (token);
+//   })
+// });
+// });
 
 
 
