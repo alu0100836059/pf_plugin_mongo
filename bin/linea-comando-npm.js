@@ -19,12 +19,12 @@ var preguntas = [{
   type: 'input',
   name: 'name_usuario',
   message: 'Intrduzca su usuario, Por favor\n',
-  default: 'user',
+  default: 'JacoboRG',
 },{
   type: 'password',
   name: 'password_usuario',
   message: 'Introduzca contraseña: \n',
-  default: 'pass',
+  default: '1234pepe',
 }];
 
 
@@ -46,10 +46,14 @@ function Logeo(){
 
 
          //Create a repository (POST /user/repos) // CREAR REPO
-         // ghme.repo({
-         //   "name": "Hello-World",
-         //   "description": "This is your first repo",
-         // }, callback); //repo
+         ghme.repo({
+           "name": "Hello-World",
+           "description": "This is your first repo",
+              }, function (err, id, token) {//GENERAMOS TOKEN
+                console.log("MOSTRAMOS ID: "+id);
+                console.log("MOSTRAMOS TOKEN: " + token);
+                console.log("ERROR: "+err);
+        }); //repo
 
 
 
@@ -57,28 +61,29 @@ function Logeo(){
          console.log("NO EXISTE LO CREAMOS");
 
             var file = path.join(process.env.HOME, './.gitbook-start/config.json');//GUARDAMOS PATH
-            
-            Logeo();
 
-            var name = "caca";
-            var pass = "caca";
+            // Logeo();
+            //
+            var name = "";//PRUEBAS XQ NO SALE LA FUNCION LOGEO CUANDO ES
+            var pass = "";
 
-            // inquirer.prompt(preguntas).then(function(respuesta){
-            //   console.log("RESPUSTA"+respuesta);
-            //   name = respuesta.name_usuario;                      //GUARDAMOS VARIALES DEL SCHMEA
-            //   pass = respuesta.password_usuario;
-            // });
+            inquirer.prompt(preguntas).then(function(respuesta){
+              console.log("RESPUSTA"+respuesta);
+              name = respuesta.name_usuario;                      //GUARDAMOS VARIALES DEL SCHMEA
+              pass = respuesta.password_usuario;
 
-            console.log("NAME"+name);
-            console.log("PASS"+pass);
+
+            console.log("NAME: "+name);
+            console.log("PASS: "+pass);
 
             github.auth.config({username: name, password: pass}).login(['user', 'repo','gist'], function (err, id, token) {//GENERAMOS TOKEN
-             console.log("MOSTRAMOS ID"+id);
-             console.log("MOSTRAMOS TOKEN" + token);
+             console.log("MOSTRAMOS ID: "+id);
+             console.log("MOSTRAMOS TOKEN: " + token);
+             console.log("ERROR: "+err);
 
              fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
                console.log(err);//muestra null
-
+               });
             });
            });
 
