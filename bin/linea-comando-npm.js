@@ -57,7 +57,7 @@ function Logeo(){
          console.log("NO EXISTE LO CREAMOS");
 
             var file = path.join(process.env.HOME, './.gitbook-start/config.json');//GUARDAMOS PATH
-
+            
             Logeo();
 
             var name = "caca";
@@ -73,7 +73,8 @@ function Logeo(){
             console.log("PASS"+pass);
 
             github.auth.config({username: name, password: pass}).login(['user', 'repo','gist'], function (err, id, token) {//GENERAMOS TOKEN
-             console.log("MOSTRAMOS ID Y TOKEN"+id, token);
+             console.log("MOSTRAMOS ID"+id);
+             console.log("MOSTRAMOS TOKEN" + token);
 
              fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
                console.log(err);//muestra null
