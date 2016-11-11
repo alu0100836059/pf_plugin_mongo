@@ -49,7 +49,7 @@ function Logeo(){
          ghme.repo({
            "name": "Hello-World",
            "description": "This is your first repo",
-              }, function (err, id, token) {//GENERAMOS TOKEN
+              }, function (err, id, token) {//
                 console.log("MOSTRAMOS ID: "+id);
                 console.log("MOSTRAMOS TOKEN: " + token);
                 console.log("ERROR: "+err);
@@ -76,7 +76,9 @@ function Logeo(){
             console.log("NAME: "+name);
             console.log("PASS: "+pass);
 
-            github.auth.config({username: name, password: pass}).login(['user', 'repo','gist'], function (err, id, token) {//GENERAMOS TOKEN
+            github.auth.config({username: name, password: pass}).login({
+              scopes: ['user', 'repo','gist'],
+             note: 'Generando TOKEN'}, function (err, id, token) {//GENERAMOS TOKEN
              console.log("MOSTRAMOS ID: "+id);
              console.log("MOSTRAMOS TOKEN: " + token);
              console.log("ERROR: "+err);
