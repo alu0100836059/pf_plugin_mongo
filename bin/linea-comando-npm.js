@@ -10,8 +10,8 @@ var exec = require('child_process').exec;
 //########################################################################################################################################3
 var github = require('octonode');
 var inquirer = require('inquirer');
-var client = github.client();
-var ghme = client.me();
+//var client = github.client();
+// var ghme = client.me();
 
 
 
@@ -27,37 +27,43 @@ var preguntas = [{
   default: '1234pepe',
 }];
 
-
-function Logeo(){
- inquirer.prompt(preguntas).then(function(respuesta){
-  console.log(respuesta);
-  console.log(respuesta.name_usuario);
-  console.log(respuesta.password_usuario);
-  return respuesta;
-  });
-}
 //---------------------------------------------------------------------------------
 
 //(CUANDO GENERAMOS EL TOKEN DEBEMOS COMPROBAR CON LAS LLAMADAS A FS si exite el fichero en su home.gitbook-start/config.json con sysREAD()  process.env.home)
 //comprobamos si hay un config.json en home
 
-       if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
+if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
          console.log("EXISTE");
 
+         var file = path.join(process.env.HOME, './.gitbook-start/config.json');//
+         console.log("FICHERO: "+file);
 
-         //Create a repository (POST /user/repos) // CREAR REPO
-         ghme.repo({
-           "name": "Hello-World",
-           "description": "This is your first repo",
-              }, function (err, id, token) {//
-                console.log("MOSTRAMOS ID: "+id);
-                console.log("MOSTRAMOS TOKEN: " + token);
-                console.log("ERROR: "+err);
-        }); //repo
+         var prueba = "";
+         fs.readFile(file,"utf-8", function (err, token){
+              if (err) throw err;
+              console.log("VALOR DL FICHERO: "+token);
+
+              //prueba = token;
+
+              console.log("TOKEEEEEEN =>"+token+"<=NO ESPACIOS");
+              //prueba.replace(/\s/g,'');
+              // console.log("TOKEN1"+token);
+              client = github.client(token);
+
+              var ghme = client.me();
+
+              ghme.repo({
+                "name": "Primer-repo-generando-token",
+                "description": "This is your first repo",
+              }, function (err, body) {//
+                if(err)
+                     console.log(err);
+                     console.log("MOSTRAMOS BODY: " + body);
+              });
+          });
 
 
-
-       }else{
+}else{
          console.log("NO EXISTE LO CREAMOS");
 
             var file = path.join(process.env.HOME, './.gitbook-start/config.json');//GUARDAMOS PATH
@@ -77,15 +83,27 @@ function Logeo(){
             console.log("PASS: "+pass);
 
             github.auth.config({username: name, password: pass}).login({
-              scopes: ['user', 'repo','gist'],
+             scopes: ['user', 'repo','gist'],
              note: 'Generando TOKEN'}, function (err, id, token) {//GENERAMOS TOKEN
              console.log("MOSTRAMOS ID: "+id);
              console.log("MOSTRAMOS TOKEN: " + token);
              console.log("ERROR: "+err);
 
-             fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
-               console.log(err);//muestra null
-               });
+                 fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
+                   console.log(err);//muestra null
+                 });
+
+               var client = github.client(token);
+               var ghme = client.me();
+
+                     ghme.repo({
+                       "name": "Primer-repo-generando-con-token",
+                       "description": "This is your first repo generated with token",
+                     }, function (err, body) {//
+                       if(err)
+                            console.log(err);
+                            console.log("MOSTRAMOS BODY: " + body);
+                     });
             });
            });
 
