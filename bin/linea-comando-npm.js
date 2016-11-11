@@ -7,55 +7,99 @@ var fs_simple=('fs');
 var ejs=require('ejs');
 var child = require("child_process");
 var exec = require('child_process').exec;
-//---------------------------------------------------------------------------
+//########################################################################################################################################3
 var github = require('octonode');
 var inquirer = require('inquirer');
-//var prompt = inquirer.createPromptModule();
+var client = github.client();
+var ghme = client.me();
 
 
-// prompt(preguntas).then(function(answers){
-//     console.log("LEGOO A ANSWER"+answers);
-// });
-//
+
 var preguntas = [{
   type: 'input',
   name: 'name_usuario',
-  message: 'Intrduzca su usuario?\n',
+  message: 'Intrduzca su usuario, Por favor\n',
   default: 'user',
 },{
   type: 'password',
   name: 'password_usuario',
   message: 'Introduzca contraseña: \n',
-  validate: function(str){
-    return str !== 'Yoda'; //Yoda had *better not* use this application!!
-  }
+  default: 'pass',
 }];
 
 
-// inquirer.prompt(preguntas, function(respuestas) {
-//   console.log(respuestas);
-//   // console.log(respuestas.name_usuario);
-//   // console.log()
-// });
-
-var respuestas_user = inquirer.prompt(preguntas).then(function(respuesta){
+function Logeo(){
+ inquirer.prompt(preguntas).then(function(respuesta){
   console.log(respuesta);
   console.log(respuesta.name_usuario);
   console.log(respuesta.password_usuario);
-     return respuesta;
-
-     inquirer.prompt.start();
-       inquirer.prompt.get(preguntas,function(err,result){
-          if(err)
-         throw err;
-         console.log("RESULT"+result);
-       });
-});
-console.log("AQUIIIII"+respuestas_user);
-
+  return respuesta;
+  });
+}
 //---------------------------------------------------------------------------------
 
-//(CUANDO GENERAMOS EL TOKEN DEBEMOS COMPROBAR CON LAS LLAMADAS A FS si exite el fichero en su home.gitbook-start/config.json en sysREAD()  process.env.home)
+//(CUANDO GENERAMOS EL TOKEN DEBEMOS COMPROBAR CON LAS LLAMADAS A FS si exite el fichero en su home.gitbook-start/config.json con sysREAD()  process.env.home)
+//comprobamos si hay un config.json en home
+
+       if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
+         console.log("EXISTE");
+
+
+         //Create a repository (POST /user/repos) // CREAR REPO
+         // ghme.repo({
+         //   "name": "Hello-World",
+         //   "description": "This is your first repo",
+         // }, callback); //repo
+
+
+
+       }else{
+         console.log("NO EXISTE LO CREAMOS");
+
+            var file = path.join(process.env.HOME, './.gitbook-start/config.json');//GUARDAMOS PATH
+
+            Logeo();
+
+            var name = "caca";
+            var pass = "caca";
+
+            // inquirer.prompt(preguntas).then(function(respuesta){
+            //   console.log("RESPUSTA"+respuesta);
+            //   name = respuesta.name_usuario;                      //GUARDAMOS VARIALES DEL SCHMEA
+            //   pass = respuesta.password_usuario;
+            // });
+
+            console.log("NAME"+name);
+            console.log("PASS"+pass);
+
+            github.auth.config({username: name, password: pass}).login(['user', 'repo','gist'], function (err, id, token) {//GENERAMOS TOKEN
+             console.log("MOSTRAMOS ID Y TOKEN"+id, token);
+
+             fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
+               console.log(err);//muestra null
+
+            });
+           });
+
+}
+
+//---------------------------------------------------------NECESARIO PARA ESTA
+
+//fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json')) ? console.log("EXISTE") : console.log("NO existe");
+//console.log("Valor de AUX"+aux);
+// fs.writeFile(path.join(process.env.HOME,'./.gitbook-start/config.json'), 'Hello Node.js','utf-8' ,(err) => {
+//   if (err) throw err;
+//   console.log('It\'s saved config.json');
+// });
+
+// //añadimos la tarea en contenido debemos añadir lo que devuleva el token
+// fs.writeFileSync(path.join(process.env.HOME,'./.gitbook-start/config.json'), /*contenido,*/  {'flag':'a'},  function(err) {
+//     if (err) {
+//         return console.error(err);
+//     }
+//     console.log("Añadiendo tarea gulp de node modules")
+// });
+
 
 
 //Authenticate to github in cli mode (desktop application) //GENERA el TOKEN vampos y creo que sin el gist
@@ -82,7 +126,7 @@ console.log("AQUIIIII"+respuestas_user);
 
 
 
-//---------------------------------------------------------------------------------
+//--------------------------------ANTIGUO-------------------------------------------------
 
 // var client = github.client('jhghjhgh');//generado token
 // var ghme = client.me();
@@ -138,7 +182,7 @@ console.log("AQUIIIII"+respuestas_user);
 // });
 
 
-
+//########################################################################################################################################3
 
 
 // Web application which authenticates to github
@@ -370,6 +414,6 @@ if(argv.h || argv.help){
                                       }
                           }
       }else{
-                  console.log("Consulte el help FINAL");
+                  //console.log("Consulte el help FINAL");
       }
 }
