@@ -6,10 +6,36 @@ var path = require('path');
 var exec = require('child_process').exec;
 
 // ### Jaco 12/11
-// var passport = require('passport'),
-//  OAuthStrategy = require('passport-oauth').OAuthStrategy;
-//
-//
+var passport = require('passport'),
+// OAuthStrategy = require('passport-oauth').OAuthStrategy;
+// Comprobar el nombre de la estrategia y su compatibilidad
+// con la nueva versión de la API de github v3.0
+var Strategy = require('passport-github').Strategy;
+
+passport.use(new Strategy({
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: 'http://localhost:3000/login/github/return'
+},
+function(accessToken, refreshToken, profile, cb) {
+  return cb(null, profile);
+}));
+
+// Configurando sesión persistente
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+
+
+// Inicializando passport y restaurando estado de autenticación si es que
+// existe alguno a través de session
+app.use(passport.initialize());
+app.use(passport.session());
 // ###
 
 
