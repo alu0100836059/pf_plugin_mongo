@@ -32,10 +32,7 @@ passport.deserializeUser(function(obj, cb) {
 
 
 
-// Inicializando passport y restaurando estado de autenticación si es que
-// existe alguno a través de session
-app.use(passport.initialize());
-app.use(passport.session());
+
 // ###
 
 
@@ -43,12 +40,43 @@ app.use(passport.session());
 app.set('port', (process.env.PORT || 8080));
 //app.use(expressLayouts);
 app.use(express.static(path.join(__dirname,'gh-pages')))
-
-
+// ###
+// Inicializando passport y restaurando estado de autenticación si es que
+// existe alguno a través de session
+app.use(passport.initialize());
+app.use(passport.session());
+// ###
 
 app.get('/',function(req, res){
   res.send('index');
 });
+
+// ### Definiendo rutas autenticación github
+// app.get('/',
+//   function(req, res) {
+//     res.render('home', { user: req.user });
+//   });
+//
+// app.get('/login',
+//   function(req, res){
+//     res.render('login');
+//   });
+//
+// app.get('/login/github',
+//   passport.authenticate('github'));
+//
+// app.get('/login/github/return',
+//   passport.authenticate('github', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
+//
+// app.get('/profile',
+//   require('connect-ensure-login').ensureLoggedIn(),
+//   function(req, res){
+//     res.render('profile', { user: req.user });
+// });
+// ###
 
 // este lo hace bien
 //app.get('/get', function(request, response){
