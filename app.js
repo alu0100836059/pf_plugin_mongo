@@ -9,12 +9,18 @@ var exec = require('child_process').exec;
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 // variable para acceder a nuestra confi de auth
-var configAuth = './config/auth'
+// Areglar referencia a config/auth
+// AQUI: var configAuth = './config/auth'
 // configuracion estrategia facebook
+// passport.use(new FacebookStrategy({
+//     clientID: configAuth.facebookAuth.clientID,
+//     clientSecret: configAuth.facebookAuth.clientSecret,
+//     callbackURL: configAuth.facebookAuth.callbackURL
+//   },
 passport.use(new FacebookStrategy({
-    clientID: configAuth.facebookAuth.clientID,
-    clientSecret: configAuth.facebookAuth.clientSecret,
-    callbackURL: configAuth.facebookAuth.callbackURL
+    clientID: '200574843726334',
+    clientSecret: 'c98159896fea62a6238dad8001b66b88',
+    callbackURL: 'http://localhost:8080/auth/facebook/callback'
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
