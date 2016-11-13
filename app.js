@@ -41,6 +41,10 @@ app.set('port', (process.env.PORT || 8080));
 //app.use(expressLayouts);
 app.use(express.static(path.join(__dirname,'gh-pages')))
 // ###
+// app.use(require('morgan')('combined'));
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 // Inicializando passport y restaurando estado de autenticación si es que
 // existe alguno a través de session
 app.use(passport.initialize());
