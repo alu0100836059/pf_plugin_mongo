@@ -5,6 +5,13 @@ var path = require('path');
 //var expressLayouts = require('express-ejs-layouts');
 var exec = require('child_process').exec;
 
+// ### Jaco 12/11
+// var passport = require('passport'),
+//  OAuthStrategy = require('passport-oauth').OAuthStrategy;
+//
+//
+// ###
+
 
 
 app.set('port', (process.env.PORT || 8080));
