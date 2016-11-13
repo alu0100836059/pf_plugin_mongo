@@ -369,7 +369,7 @@ if(argv.h || argv.help){
                                                        console.log(result);
                                                            //CREAMOS EL PACKAGE.JSON del template
 
-                                                               fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
+                                                               fs.writeFile(path.join(process.cwd(), '${argv.directorio}', 'package.json'), result);
                                                                       if (err) throw err;
                                                                       console.log('CREADO PACKAGE.JSON');
 
@@ -418,7 +418,7 @@ if(argv.h || argv.help){
                                                              console.log(result);
                                                                  //CREAMOS EL PACKAGE.JSON del template
 
-                                                                     fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
+                                                                     fs.writeFile(path.join(process.cwd(), '${argv.directorio}', 'package.json'), result);
                                                                             if (err) throw err;
                                                                             console.log('CREADO PACKAGE.JSON');
 
