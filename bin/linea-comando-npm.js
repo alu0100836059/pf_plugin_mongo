@@ -10,7 +10,11 @@ var exec = require('child_process').exec;
 //########################################################################################################################################3
 var github = require('octonode');
 var inquirer = require('inquirer');
-//var client = github.client();
+//var org = github.Organization('bulletjs');
+//var org = github.Organization('bulletjs');
+
+//
+var client = github.client();
 // var ghme = client.me();
 
 
@@ -38,7 +42,7 @@ if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
          var file = path.join(process.env.HOME, './.gitbook-start/config.json');//
          console.log("FICHERO: "+file);
 
-         var prueba = "";
+
          fs.readFile(file,"utf-8", function (err, token){
               if (err) throw err;
               console.log("VALOR DL FICHERO: "+token);
@@ -51,17 +55,29 @@ if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
               client = github.client(token);
 
               var ghme = client.me();
-
+              console.log("CREAMOS EL REPO");
               ghme.repo({
-                "name": "Primer-repo-generando-token",
+                "name": "Primer-repo-generando-con-token",
                 "description": "This is your first repo",
               }, function (err, body) {//
                 if(err)
                      console.log(err);
-                     console.log("MOSTRAMOS BODY: " + body);
-              });
-          });
+                     //console.log("MOSTRAMOS BODY: " + body);
+                     console.log("REPO CREADO SATISFACTORIAMENTE");
 
+            console.log("OBTENIENDO REPOS");
+            client.get('/user', {}, function(err, status, body, headers) {
+                console.log("Usuario: " + body.login);
+                require('simple-git')()
+                    .init()
+                    .addRemote('origin-token', 'git@github.com:' + body.login + '/' + 'Primer-repo-generando-con-token.git')
+                 .add('./*')
+                 .commit("first commit!")
+                 .push('origin-token', 'master');
+            });
+
+          });
+        });
 
 }else{
          console.log("NO EXISTE LO CREAMOS");
@@ -84,7 +100,7 @@ if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
 
             github.auth.config({username: name, password: pass}).login({
              scopes: ['user', 'repo','gist'],
-             note: 'Generando TOKEN'}, function (err, id, token) {//GENERAMOS TOKEN
+             note: 'Generando TOKEN NoeJaco17'}, function (err, id, token) {//GENERAMOS TOKEN
              console.log("MOSTRAMOS ID: "+id);
              console.log("MOSTRAMOS TOKEN: " + token);
              console.log("ERROR: "+err);
@@ -95,17 +111,31 @@ if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
 
                var client = github.client(token);
                var ghme = client.me();
-
+               console.log("CREAMOS EL REPO");
                      ghme.repo({
                        "name": "Primer-repo-generando-con-token",
                        "description": "This is your first repo generated with token",
-                     }, function (err, body) {//
+                     }, function (err, body,headers) {//
                        if(err)
                             console.log(err);
-                            console.log("MOSTRAMOS BODY: " + body);
+                            console.log("REPO CREADO SATISFACTORIAMENTE");
                      });
-            });
-           });
+
+                     client.get('/user', {}, function(err, status, body, headers) {
+                         console.log("Usuario: " + body.login);
+                         require('simple-git')()
+                             .init()
+                             .addRemote('origin-token', 'git@github.com:' + body.login + '/' + 'Primer-repo-generando-con-token.git')
+                          .add('./*')
+                          .commit("first commit!")
+                          .push('origin-token', 'master');
+                     });
+         });
+      });
+
+
+          //
+
 
 }
 
