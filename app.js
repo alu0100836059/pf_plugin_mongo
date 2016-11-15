@@ -50,16 +50,31 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
-// app.use(express.cookieParser());
-// app.use(express.session({secret: 'f584e68426cfda58592977e598a99eea68966503'}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-//
+
+app.get('/auth/github',
+  passport.authenticate('github'));
+
+app.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log("RENDERIZO A HOME DEPSUES DE AUTENTICAR");
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    console.log("RENDERIZO PROFILE");
+    console.log(req.user);
+    res.render('profile', { user: req.user });
+});
+
+
 passport.use(new GithubStrategy({
   clientID: '1f3b68617159ac9492c2',
   clientSecret: 'f584e68426cfda58592977e598a99eea68966503',
-  callbackURL: 'http://localhost:8080/auth/callback'
+  callbackURL: 'http://localhost:8080/auth/github/callback'
 }, function(accessToken, refreshToken, profile, done){
   console.log("ACCEDO A GITHUB PASSPORT");
     console.log("accessToken"+accessToken);
@@ -74,49 +89,31 @@ passport.use(new GithubStrategy({
       console.log("refreshToken"+refreshToken);
         console.log("profile"+profile);
         console.log("DONE"+done);
+        console.log("USER"+user);
       return cb(err, user);
     });
-  // done(null, {
-  //   accessToken: accessToken,
-  //   profile: profile
-  // });
+  done(null, {
+    accessToken: accessToken,
+    profile: profile
+  });
 }));
 
+passport.serializeUser(function(user, done) {
+  console.log("SERIALIZER");
+  console.log("USUARIO"+user)
+  done(null, user.id);
+});
 
-
-app.get('/auth/github',
-  passport.authenticate('github'));
-
-app.get('/auth/github/return',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log("RENDERIZO A HOME DEPSUES DE AUTENTICAR");
-    // Successful authentication, redirect home.
-    res.redirect('/');
+passport.deserializeUser(function(id, done) {
+  console.log("DESERIALIZER ID"+id);
+  User.findById(id, function(err, user) {
+    console.log("USER"+user);
+    done(err, user);
   });
+});
 
-  app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    console.log("RENDERIZO PROFILE");
-    console.log(req.user);
-    res.render('profile', { user: req.user });
-  });
-
-//app.use(require('serve-static')(__dirname + '/../../public'));
-
-
-//app.use(express.cookieParser());
-// app.use(express.session({secret: 'f584e68426cfda58592977e598a99eea68966503'}));
-// app.use(passport.initialize());
-// app.use(passport.session());
-//
-//
-// app.use(express.methodOverride());
-//
  app.set('port', (process.env.PORT || 8080));
-// //app.use(expressLayouts);
-// app.use(express.static(path.join(__dirname,'gh-pages')))
+
 
 
 //
@@ -213,9 +210,9 @@ app.get('/auth/github/return',
 // app.use(passport.session());
 // // ###
 
-app.get('/',function(req, res){
-  res.send('index');
-});
+// app.get('/',function(req, res){
+//   res.send('index');
+// });
 
 // ### Definiendo rutas autenticación github
 // app.get('/',
