@@ -7,7 +7,115 @@ var exec = require('child_process').exec;
 
 // ### Jaco 12/11
 var passport = require('passport');
+var session = require('express-session');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GithubStrategy = require('passport-github').Strategy;
+
+//##################################################### OAUTH WITH GITHUB
+
+//app.use(express.static(path.join(__dirname,'gh-pages')))
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'f584e68426cfda58592977e598a99eea68966503', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+//Inicializamos el midelware de passport con la app
+app.get('/', function (req, res) {
+  var html = "<ul>\
+    <li><a href='/auth/github'>GitHub</a></li>\
+    <li><a href='/logout'>logout</a></li>\
+  </ul>";
+
+  res.send(html);
+});
+
+
+app.get('/logout', function(req, res){
+  console.log('logging out');
+  req.logout();
+  res.redirect('/');
+});
+// app.use(express.cookieParser());
+// app.use(express.session({secret: 'f584e68426cfda58592977e598a99eea68966503'}));
+// app.use(passport.initialize());
+// app.use(passport.session());
+//
+//
+passport.use(new GithubStrategy({
+  clientID: '1f3b68617159ac9492c2',
+  clientSecret: 'f584e68426cfda58592977e598a99eea68966503',
+  callbackURL: 'http://localhost:8080/auth/callback'
+}, function(accessToken, refreshToken, profile, done){
+    console.log("accessToken"+accessToken);
+      console.log("refreshToken"+refreshToken);
+        console.log("profile"+profile.id);
+        console.log("DONE"+done);
+
+  //return done (null,profile);
+  User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    console.log("accessToken"+accessToken);
+      console.log("refreshToken"+refreshToken);
+        console.log("profile"+profile);
+        console.log("DONE"+done);
+      return cb(err, user);
+    });
+  // done(null, {
+  //   accessToken: accessToken,
+  //   profile: profile
+  // });
+}));
+
+app.get('/auth/github',
+  passport.authenticate('github'));
+
+app.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+//app.use(require('serve-static')(__dirname + '/../../public'));
+
+
+//app.use(express.cookieParser());
+// app.use(express.session({secret: 'f584e68426cfda58592977e598a99eea68966503'}));
+// app.use(passport.initialize());
+// app.use(passport.session());
+//
+//
+// app.use(express.methodOverride());
+//
+ app.set('port', (process.env.PORT || 8080));
+// //app.use(expressLayouts);
+// app.use(express.static(path.join(__dirname,'gh-pages')))
+
+
+//
+// Client ID
+// 1f3b68617159ac9492c2
+// Client Secret
+// f584e68426cfda58592977e598a99eea68966503
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//##################################################### OAUTH WITH GITHUB
+
+
 // variable para acceder a nuestra confi de auth
 // Areglar referencia a config/auth
 // AQUI: var configAuth = './config/auth'
@@ -17,19 +125,22 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 //     clientSecret: configAuth.facebookAuth.clientSecret,
 //     callbackURL: configAuth.facebookAuth.callbackURL
 //   },
-passport.use(new FacebookStrategy({
-    clientID: '200574843726334',
-    clientSecret: 'c98159896fea62a6238dad8001b66b88',
-    callbackURL: 'http://localhost:8080/auth/facebook/callback'
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
 
 
+
+///////////////////////////////////////////////////////////////////////////
+// passport.use(new FacebookStrategy({
+//
+//     callbackURL: 'http://localhost:8080/auth/facebook/callback'
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+//       return cb(err, user);
+//     });
+//   }
+// ));
+
+/////////////////////////////////////////////////////////////////////////////
 
 
 // OAuthStrategy = require('passport-oauth').OAuthStrategy;
@@ -65,9 +176,6 @@ passport.use(new FacebookStrategy({
 
 
 
-app.set('port', (process.env.PORT || 8080));
-//app.use(expressLayouts);
-app.use(express.static(path.join(__dirname,'gh-pages')))
 // // ###
 // // app.use(require('morgan')('combined'));
 // app.use(require('cookie-parser')());
@@ -109,17 +217,17 @@ app.get('/',function(req, res){
 //     res.render('profile', { user: req.user });
 // });
 // ###
-
+////////////////////////////////////////////////////////////////////////////////
 // ### TEMA FACEBOOK
 // Añadimos al final el tema del scope:email para otorgar permisos en la
 // obtención del email que nos servira para nuestra base de datos futura.
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ["email"]}));
+// app.get('/auth/facebook', passport.authenticate('facebook', {scope: ["email"]}));
+//
+// app.get('/auth/facebook/callback',
+//         passport.authenticate('facebook', { successRedirect: '/',
+//                                             failureRedirect: '/login'}));
 
-app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', { successRedirect: '/',
-                                            failureRedirect: '/login'}));
-
-
+/////////////////////////////////////////////////////////////////////////////////////
 
 // este lo hace bien
 //app.get('/get', function(request, response){
@@ -136,19 +244,6 @@ app.get('/auth/facebook/callback',
 // });
 
 app.post('/sync',function(req,res){
-  // Probando con el clone en el directorio actual
-  // exec("git clone git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git .", (err, stdout, stderr) => {
-  //   if (err) {
-  //      console.log("HA OCURRIDO UN ERROR");
-  //     console.error(err);
-  //     return;
-  //   }
-  //   console.log("Después del pull de heroku");
-  //   console.log(stdout);
-  //   return;
-  // });
-
-
     console.log("Antes de la funcion");
     function puts(err,stdout,stderr){
       if(err)
