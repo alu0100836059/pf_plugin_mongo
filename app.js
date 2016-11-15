@@ -34,11 +34,13 @@ app.use(passport.session());
 
 app.get('/',
   function(req, res) {
+    console.log("RENDERIZO HOME");
     res.render('home', { user: req.user });
   });
 
   app.get('/login',
   function(req, res){
+    console.log("RENDERIZO LOGIN");
     res.render('login');
   });
 
@@ -59,6 +61,7 @@ passport.use(new GithubStrategy({
   clientSecret: 'f584e68426cfda58592977e598a99eea68966503',
   callbackURL: 'http://localhost:8080/auth/callback'
 }, function(accessToken, refreshToken, profile, done){
+  console.log("ACCEDO A GITHUB PASSPORT");
     console.log("accessToken"+accessToken);
       console.log("refreshToken"+refreshToken);
         console.log("profile"+profile.id);
@@ -66,6 +69,7 @@ passport.use(new GithubStrategy({
 
   //return done (null,profile);
   User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    console.log("BUSCO USUARIOS");
     console.log("accessToken"+accessToken);
       console.log("refreshToken"+refreshToken);
         console.log("profile"+profile);
@@ -78,12 +82,15 @@ passport.use(new GithubStrategy({
   // });
 }));
 
+
+
 app.get('/auth/github',
   passport.authenticate('github'));
 
-app.get('/auth/github/callback',
+app.get('/auth/github/return',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log("RENDERIZO A HOME DEPSUES DE AUTENTICAR");
     // Successful authentication, redirect home.
     res.redirect('/');
   });
@@ -91,6 +98,7 @@ app.get('/auth/github/callback',
   app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
+    console.log("RENDERIZO PROFILE");
     console.log(req.user);
     res.render('profile', { user: req.user });
   });
