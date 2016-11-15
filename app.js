@@ -2,7 +2,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-//var expressLayouts = require('express-ejs-layouts');
+var expressLayouts = require('express-ejs-layouts');
 var exec = require('child_process').exec;
 
 // ### Jaco 12/11
@@ -12,8 +12,9 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var GithubStrategy = require('passport-github').Strategy;
 
 //##################################################### OAUTH WITH GITHUB
-
-//app.use(express.static(path.join(__dirname,'gh-pages')))
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+//app.use(require('serve-static')(__dirname + 'views'));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'f584e68426cfda58592977e598a99eea68966503', resave: true, saveUninitialized: true }));
@@ -22,14 +23,24 @@ app.use(passport.session());
 
 
 //Inicializamos el midelware de passport con la app
-app.get('/', function (req, res) {
-  var html = "<ul>\
-    <li><a href='/auth/github'>GitHub</a></li>\
-    <li><a href='/logout'>logout</a></li>\
-  </ul>";
+// app.get('/', function (req, res) {
+//   var html = "<ul>\
+//     <li><a href='/auth/github'>GitHub</a></li>\
+//     <li><a href='/logout'>logout</a></li>\
+//   </ul>";
+//
+//   res.send(html);
+// });
 
-  res.send(html);
-});
+app.get('/',
+  function(req, res) {
+    res.render('home', { user: req.user });
+  });
+
+  app.get('/login',
+  function(req, res){
+    res.render('login');
+  });
 
 
 app.get('/logout', function(req, res){
@@ -75,6 +86,13 @@ app.get('/auth/github/callback',
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
+  });
+
+  app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    console.log(req.user);
+    res.render('profile', { user: req.user });
   });
 
 //app.use(require('serve-static')(__dirname + '/../../public'));
