@@ -67,7 +67,9 @@ app.get('/profile',
   function(req, res){
     console.log("RENDERIZO PROFILE");
     console.log(req.user);
-    res.render('profile', { user: req.user });
+    console.log("ID",req.user.profile.id);
+    console.log("_RAW",req.user.profile._raw);
+    res.render('profile', { id: req.user.profile.id,username:req.user.profile.username,user: req.user /*,displayName:*/});
 });
 
 
@@ -80,18 +82,16 @@ passport.use(new GithubStrategy({
     console.log("accessToken"+accessToken);
       console.log("refreshToken"+refreshToken);
         console.log("profile"+profile.id);
-        console.log("DONE"+done);
-
   //return done (null,profile);
-  User.findOrCreate({ githubId: profile.id }, function (err, user) {
-    console.log("BUSCO USUARIOS");
-    console.log("accessToken"+accessToken);
-      console.log("refreshToken"+refreshToken);
-        console.log("profile"+profile);
-        console.log("DONE"+done);
-        console.log("USER"+user);
-      return cb(err, user);
-    });
+  // User.findOrCreate({ githubId: profile.id }, function (err, user) {
+  //   console.log("BUSCO USUARIOS");
+  //   console.log("accessToken"+accessToken);
+  //     console.log("refreshToken"+refreshToken);
+  //       console.log("profile"+profile);
+  //       console.log("DONE"+done);
+  //       console.log("USER"+user);
+  //     return cb(err, user);
+  //   });
   done(null, {
     accessToken: accessToken,
     profile: profile
@@ -101,15 +101,15 @@ passport.use(new GithubStrategy({
 passport.serializeUser(function(user, done) {
   console.log("SERIALIZER");
   console.log("USUARIO"+user)
-  done(null, user.id);
+  done(null, user);
 });
 
 passport.deserializeUser(function(id, done) {
   console.log("DESERIALIZER ID"+id);
-  User.findById(id, function(err, user) {
-    console.log("USER"+user);
-    done(err, user);
-  });
+//  User.findById(id, function(err, user) {
+    //console.log("USER"+user);
+    done(null, id);
+  //});
 });
 
  app.set('port', (process.env.PORT || 8080));
