@@ -51,13 +51,34 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+// Una de las dos sobra?
 app.get('/auth/github',
-  passport.authenticate('github'));
+  passport.authenticate('github'),
+  function(req, res) {
+    // No llegamos aquí
+    // Aquí debemos comprobar si el usuario es miembro o no de la organización
+    // y en función de eso dar acceso o no al libro.
+    // GET /orgs/:org/members/:username
+    console.log("\n\nreq-usuario: "+req.user.username)
 
+    if(req.get(/orgs/prueba/members/req.user.username)){
+    // res.redirect('/users/' + req.user.username);
+    console.log("Organización OK")
+    res.redirect('/auth/github/callback');
+    }
+    consolo.log("Ha habido un error en la autenticacion de la organización");
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+
+
+  });
+
+
+//NO SE SUPERPONE CON LA ANTERIOR? apesar de la extensión
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log("RENDERIZO A HOME DEPSUES DE AUTENTICAR");
+    console.log("RENDERIZO A HOME DESPUES DE AUTENTICAR");
     // Successful authentication, redirect home.
     res.redirect('/');
   });
