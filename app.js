@@ -51,36 +51,45 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
+app.get('/err', function(req, res){
+  res.render('err');
+});
 // Una de las dos sobra?
 app.get('/auth/github',
-  passport.authenticate('github'),
-  function(req, res) {
+  passport.authenticate('github'));
+
+  //function(req, res) {
     // No llegamos aquí
     // Aquí debemos comprobar si el usuario es miembro o no de la organización
     // y en función de eso dar acceso o no al libro.
     // GET /orgs/:org/members/:username
-    console.log("\n\nreq-usuario: "+req.user.username)
 
-    if(req.get(/orgs/prueba/members/req.user.username)){
-    // res.redirect('/users/' + req.user.username);
-    console.log("Organización OK")
-    res.redirect('/auth/github/callback');
-    }
-    consolo.log("Ha habido un error en la autenticacion de la organización");
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
 
 
-  });
-
+  //});
+//////////////////////////////////////////////////////////////
+// Organización a la que pertenece JacoboRG: demoMembership //
+//////////////////////////////////////////////////////////////
 
 //NO SE SUPERPONE CON LA ANTERIOR? apesar de la extensión
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     console.log("RENDERIZO A HOME DESPUES DE AUTENTICAR");
-    // Successful authentication, redirect home.
+    console.log("\n\nreq-usuario: "+req.user.username);
+    console.log("orgs"+req.get('/users/req.user.login/orgs'));
+    console.log("secOrgs"+req.get('/orgs/req.user.organizations_url/members/req.user.login'));
+    if(req.get('/orgs/req.user.organizations_url/members/req.user.login')){
+    // res.redirect('/users/' + req.user.username);
+    console.log("Organización OK")
+    //res.redirect('/auth/github/callback');
     res.redirect('/');
+    }
+    console.log("Ha habido un error en la autenticacion de la organización");
+    // Successful authentication, redirect home.
+    res.redirect('/err');
   });
 
 app.get('/profile',
