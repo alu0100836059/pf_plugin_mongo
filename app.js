@@ -54,7 +54,7 @@ app.get('/logout', function(req, res){
 app.get('/err', function(req, res){
   res.render('err');
 });
-// Una de las dos sobra?
+
 app.get('/auth/github',
   passport.authenticate('github'));
 
@@ -73,20 +73,21 @@ app.get('/auth/github',
 // Organización a la que pertenece JacoboRG: demoMembership //
 //////////////////////////////////////////////////////////////
 
-//NO SE SUPERPONE CON LA ANTERIOR? apesar de la extensión
+
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     console.log("RENDERIZO A HOME DESPUES DE AUTENTICAR");
-    console.log("\n\nreq-usuario: "+req.user.username);
-    console.log("orgs"+req.get('/users/req.user.login/orgs'));
+    console.log("\n\nreq-usuario: "+req.user.profile.username);
+    console.log("orgs: "+req.get('/${req.user.profile.username}/orgs'));
+    //console.log("organizaciones: "+req.user.profile.username/orgs)
     console.log("secOrgs"+req.get('/orgs/req.user.organizations_url/members/req.user.login'));
-    if(req.get('/orgs/req.user.organizations_url/members/req.user.login')){
+    //if(req.get('/orgs/req.user.organizations_url/members/req.user.login')){
     // res.redirect('/users/' + req.user.username);
     console.log("Organización OK")
     //res.redirect('/auth/github/callback');
     res.redirect('/');
-    }
+  //  }
     console.log("Ha habido un error en la autenticacion de la organización");
     // Successful authentication, redirect home.
     res.redirect('/err');
