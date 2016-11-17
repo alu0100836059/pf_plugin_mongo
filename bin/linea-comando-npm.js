@@ -36,108 +36,7 @@ var preguntas = [{
 //(CUANDO GENERAMOS EL TOKEN DEBEMOS COMPROBAR CON LAS LLAMADAS A FS si exite el fichero en su home.gitbook-start/config.json con sysREAD()  process.env.home)
 //comprobamos si hay un config.json en home
 
-if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
-         console.log("EXISTE");
 
-         var file = path.join(process.env.HOME, './.gitbook-start/config.json');//
-         console.log("FICHERO: "+file);
-
-
-         fs.readFile(file,"utf-8", function (err, token){
-              if (err) throw err;
-              console.log("VALOR DL FICHERO: "+token);
-
-              //prueba = token;
-
-              console.log("TOKEEEEEEN =>"+token+"<=NO ESPACIOS");
-              //prueba.replace(/\s/g,'');
-              // console.log("TOKEN1"+token);
-              client = github.client(token);
-
-              var ghme = client.me();
-              console.log("CREAMOS EL REPO");
-              ghme.repo({
-                "name": "Primer-repo-generando-con-token",
-                "description": "This is your first repo",
-              }, function (err, body) {//
-                if(err)
-                     console.log(err);
-                     //console.log("MOSTRAMOS BODY: " + body);
-                     console.log("REPO CREADO SATISFACTORIAMENTE");
-
-            console.log("OBTENIENDO REPOS");
-            client.get('/user', {}, function(err, status, body, headers) {
-                console.log("Usuario: " + body.login);
-                require('simple-git')()
-                    .init()
-                    .addRemote('origin-token', 'git@github.com:' + body.login + '/' + 'Primer-repo-generando-con-token.git')
-                 .add('./*')
-                 .commit("first commit!")
-                 .push('origin-token', 'master');
-            });
-
-          });
-        });
-
-}else{
-         console.log("NO EXISTE LO CREAMOS");
-
-            var file = path.join(process.env.HOME, './.gitbook-start/config.json');//GUARDAMOS PATH
-
-            // Logeo();
-            //
-            var name = "";//PRUEBAS XQ NO SALE LA FUNCION LOGEO CUANDO ES
-            var pass = "";
-
-            inquirer.prompt(preguntas).then(function(respuesta){
-              console.log("RESPUSTA"+respuesta);
-              name = respuesta.name_usuario;                      //GUARDAMOS VARIALES DEL SCHMEA
-              pass = respuesta.password_usuario;
-
-
-            console.log("NAME: "+name);
-            console.log("PASS: "+pass);
-
-            github.auth.config({username: name, password: pass}).login({
-             scopes: ['user', 'repo','gist'],
-             note: 'Generando TOKEN NoeJaco17'}, function (err, id, token) {//GENERAMOS TOKEN
-             console.log("MOSTRAMOS ID: "+id);
-             console.log("MOSTRAMOS TOKEN: " + token);
-             console.log("ERROR: "+err);
-
-                 fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
-                   console.log(err);//muestra null
-                 });
-
-               var client = github.client(token);
-               var ghme = client.me();
-               console.log("CREAMOS EL REPO");
-                     ghme.repo({
-                       "name": "Primer-repo-generando-con-token",
-                       "description": "This is your first repo generated with token",
-                     }, function (err, body,headers) {//
-                       if(err)
-                            console.log(err);
-                            console.log("REPO CREADO SATISFACTORIAMENTE");
-                     });
-
-                     client.get('/user', {}, function(err, status, body, headers) {
-                         console.log("Usuario: " + body.login);
-                         require('simple-git')()
-                             .init()
-                             .addRemote('origin-token', 'git@github.com:' + body.login + '/' + 'Primer-repo-generando-con-token.git')
-                          .add('./*')
-                          .commit("first commit!")
-                          .push('origin-token', 'master');
-                     });
-         });
-      });
-
-
-          //
-
-
-}
 
 //---------------------------------------------------------NECESARIO PARA ESTA
 
@@ -358,6 +257,7 @@ if(argv.h || argv.help){
     "--url: repositorio github contra el que se va a trabajar -r github.com/repo.git\n"+
     "--wiki: direccion web de la wiki en github -w github.com/repo.wiki.git\n"+
     "--directorio: nombre del directorio a crear\n"+
+    "--repo: Crear repositorio en GITHUB\n"+
     "--help: muestra ayuda sobre las opciones disponibles\n"+
     "--deploy: Deploy en IaaS(iaas.ull.es)"+
     "--iaasIP: Direccion de la maquina virtual\n"+
@@ -366,8 +266,117 @@ if(argv.h || argv.help){
 
 
 }else{
+    if(argv.repo){
 
-    if(argv.deploy && argv.directorio ){
+      console.log("LLEGAMOS A CREAR REPO"+argv.repo);
+
+      if(fs.existsSync(path.join(process.env.HOME, './.gitbook-start/config.json'))){
+               console.log("EXISTE");
+
+               var file = path.join(process.env.HOME, './.gitbook-start/config.json');//
+               console.log("FICHERO: "+file);
+
+
+               fs.readFile(file,"utf-8", function (err, token){
+                    if (err) throw err;
+                    console.log("VALOR DL FICHERO: "+token);
+
+                    //prueba = token;
+
+                    console.log("TOKEEEEEEN =>"+token+"<=NO ESPACIOS");
+                    //prueba.replace(/\s/g,'');
+                    // console.log("TOKEN1"+token);
+                    client = github.client(token);
+
+                    var ghme = client.me();
+                    console.log("CREAMOS EL REPO");
+                    ghme.repo({
+                      "name": "Primer-repo-generando-con-token",
+                      "description": "This is your first repo",
+                    }, function (err, body) {//
+                      if(err)
+                           console.log(err);
+                           //console.log("MOSTRAMOS BODY: " + body);
+                           console.log("REPO CREADO SATISFACTORIAMENTE");
+
+                  console.log("OBTENIENDO REPOS");
+                  client.get('/user', {}, function(err, status, body, headers) {
+                      console.log("Usuario: " + body.login);
+                      require('simple-git')()
+                          .init()
+                          .addRemote('origin-token', 'git@github.com:' + body.login + '/' + 'Primer-repo-generando-con-token.git')
+                       .add('./*')
+                       .commit("first commit!")
+                       .push('origin-token', 'master');
+                  });
+
+                });
+              });
+
+      }else{
+               console.log("NO EXISTE LO CREAMOS");
+
+                  var file = path.join(process.env.HOME, './.gitbook-start/config.json');//GUARDAMOS PATH
+
+                  // Logeo();
+                  //
+                  var name = "";//PRUEBAS XQ NO SALE LA FUNCION LOGEO CUANDO ES
+                  var pass = "";
+
+                  inquirer.prompt(preguntas).then(function(respuesta){
+                    console.log("RESPUSTA"+respuesta);
+                    name = respuesta.name_usuario;                      //GUARDAMOS VARIALES DEL SCHMEA
+                    pass = respuesta.password_usuario;
+
+
+                  console.log("NAME: "+name);
+                  console.log("PASS: "+pass);
+
+                  github.auth.config({username: name, password: pass}).login({
+                   scopes: ['user', 'repo','gist'],
+                   note: 'Generando TOKEN NoeJaco17'}, function (err, id, token) {//GENERAMOS TOKEN
+                   console.log("MOSTRAMOS ID: "+id);
+                   console.log("MOSTRAMOS TOKEN: " + token);
+                   console.log("ERROR: "+err);
+
+                       fs.outputFile(file, token, function (err) {//GENERAMOS FICHERO,con l token
+                         console.log(err);//muestra null
+                       });
+
+                     var client = github.client(token);
+                     var ghme = client.me();
+                     console.log("CREAMOS EL REPO");
+                           ghme.repo({
+                             "name": "Primer-repo-generando-con-token",
+                             "description": "This is your first repo generated with token",
+                           }, function (err, body,headers) {//
+                             if(err)
+                                  console.log(err);
+                                  console.log("REPO CREADO SATISFACTORIAMENTE");
+                           });
+
+                           client.get('/user', {}, function(err, status, body, headers) {
+                               console.log("Usuario: " + body.login);
+                               require('simple-git')()
+                                   .init()
+                                   .addRemote('origin-token', 'git@github.com:' + body.login + '/' + 'Primer-repo-generando-con-token.git')
+                                .add('./*')
+                                .commit("first commit!")
+                                .push('origin-token', 'master');
+                           });
+               });
+            });
+
+
+                //
+
+
+      }
+    }
+    if(argv.directorio){
+      estructura(argv.directorio);
+    }
+    else if(argv.deploy && argv.directorio ){
                          if( argv.iaasIP && argv.iaaspath){//Cuando pasamos el directorio
 
                              estructura(argv.directorio);
@@ -399,7 +408,7 @@ if(argv.h || argv.help){
                                                        console.log(result);
                                                            //CREAMOS EL PACKAGE.JSON del template
 
-                                                               fs.writeFile(path.join(process.cwd(), '${argv.directorio}', 'package.json'), result);
+                                                               fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
                                                                       if (err) throw err;
                                                                       console.log('CREADO PACKAGE.JSON');
 
@@ -448,7 +457,7 @@ if(argv.h || argv.help){
                                                              console.log(result);
                                                                  //CREAMOS EL PACKAGE.JSON del template
 
-                                                                     fs.writeFile(path.join(process.cwd(), '${argv.directorio}', 'package.json'), result);
+                                                                     fs.writeFile(path.join(process.cwd(), `${argv.directorio}`, 'package.json'), result);
                                                                             if (err) throw err;
                                                                             console.log('CREADO PACKAGE.JSON');
 

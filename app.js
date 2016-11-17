@@ -11,6 +11,13 @@ var session = require('express-session');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GithubStrategy = require('passport-github').Strategy;
 
+
+//*********************************************************
+var github = require('octonode');
+var url=require('url');
+
+///*******************************************************
+
 //##################################################### OAUTH WITH GITHUB
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -75,20 +82,25 @@ app.get('/auth/github',
 
 
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    console.log("RENDERIZO A HOME DESPUES DE AUTENTICAR");
-    console.log("\n\nreq-usuario: "+req.user.profile.username);
-    console.log("orgs: "+req.get('/${req.user.profile.username}/orgs'));
+  passport.authenticate('github', { failureRedirect: '/login' }),  function(req, res) {
+    console.log("CCACACACACACACACCACCACACACACCCACACACCAC");
+
+
     //console.log("organizaciones: "+req.user.profile.username/orgs)
-    console.log("secOrgs"+req.get('/orgs/req.user.organizations_url/members/req.user.login'));
+    console.log("VALOR HTTP"+req.user.profile._json.organizations_url);
+
+    var urle = req.user.profile._json.organizations_url;
+    var uri = url.parse(req.url);
+    console.log("URIIIIIIIIIIIIIIIIIIIII"+uri.pathname);
+    console.log("MOSTRANDO URL"+req.get(url+'/:org'));
+
     //if(req.get('/orgs/req.user.organizations_url/members/req.user.login')){
     // res.redirect('/users/' + req.user.username);
-    console.log("Organización OK")
+
     //res.redirect('/auth/github/callback');
     res.redirect('/');
   //  }
-    console.log("Ha habido un error en la autenticacion de la organización");
+
     // Successful authentication, redirect home.
     res.redirect('/err');
   });

@@ -1,5 +1,5 @@
 {
-  "name": "gitbook-start-team-noejaco2017-2.0",
+  "name": "gitbook-start-team-noejaco2017-4.0",
   "version": "0.0.9",
   "description": "Despliegue con pluign Iaas",
   "main": "./bin/linea-comando-npm.js",
@@ -102,7 +102,8 @@
     "path": "^0.12.7",
     "serve-static": "^1.11.1",
     "ssh-exec": "^2.0.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "url": "^0.11.0"
   },
   "engines": {
     "node": "0.10.x"
