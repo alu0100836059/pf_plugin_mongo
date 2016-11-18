@@ -62,6 +62,10 @@ app.get('/err', function(req, res){
   res.render('err');
 });
 
+app.get('/success', function(req, res){
+  res.render('success');
+});
+
 app.get('/auth/github',
   passport.authenticate('github'));
 
@@ -107,10 +111,10 @@ app.get('/auth/github/callback',
           console.log(body[i].login);
           if(body[i].login == 'DSI1516' || 'demoMembership'){
           console.log("COINCIDE");
-          //res.redirect('/');
+          res.redirect('/success');
         }else{
           console.log("No COINICIDEN");
-          //res.render('err');
+          res.redirect('/err');
         }
         ++i;
         }
@@ -128,7 +132,7 @@ app.get('/auth/github/callback',
     // res.redirect('/users/' + req.user.username);
 
     //res.redirect('/auth/github/callback');
-    res.redirect('/');
+    //res.redirect('/');
   //  }
 
     // Successful authentication, redirect home.
