@@ -17,7 +17,7 @@ var github = require('octonode');
 var url=require('url');
 
 ///*******************************************************
-app.use(express.static(__dirname + '/gh-pages'));
+//app.use(express.static(__dirname + '/gh-pages'));
 //##################################################### OAUTH WITH GITHUB
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -111,7 +111,9 @@ app.get('/auth/github/callback',
           console.log(body[i].login);
           if(body[i].login == 'DSI1516' || 'demoMembership'){
           console.log("COINCIDE");
-          res.redirect('/success');
+          app.use(express.static(__dirname + '/gh-pages'));
+          res.redirect('/gh-pages/index')
+          //res.redirect('./gh-pages/*');
         }else{
           console.log("No COINICIDEN");
           res.redirect('/err');
@@ -137,7 +139,7 @@ app.get('/auth/github/callback',
 
     // Successful authentication, redirect home.
     //res.redirect('/err');
-  });
+});
 
 app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
@@ -147,7 +149,7 @@ app.get('/profile',
     console.log("ID",req.user.profile.id);
     console.log("_RAW",req.user.profile._raw);
     res.render('profile', { id: req.user.profile.id,username:req.user.profile.username,user: req.user /*,displayName:*/});
-});
+  });
 
 
 passport.use(new GithubStrategy({
