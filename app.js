@@ -17,7 +17,7 @@ var github = require('octonode');
 var url=require('url');
 
 ///*******************************************************
-
+app.use(express.static(__dirname + '/gh-pages'));
 //##################################################### OAUTH WITH GITHUB
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -63,7 +63,7 @@ app.get('/err', function(req, res){
 });
 
 app.get('/success', function(req, res){
-  res.render('success');
+  res.sendFile('index.html');
 });
 
 app.get('/auth/github',
