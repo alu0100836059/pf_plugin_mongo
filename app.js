@@ -87,7 +87,37 @@ app.get('/auth/github/callback',
 
 
     //console.log("organizaciones: "+req.user.profile.username/orgs)
+    console.log("ID:"+req.user.profile.id);
+    console.log("TOKEEEEN"+req.user.accessToken)
     console.log("VALOR HTTP"+req.user.profile._json.organizations_url);
+    console.log("USUARIO"+req.user.profile.username);
+
+    var client = github.client( {id: req.user.profile.id, secret: req.user.accessToken});
+    console.log("OBJECT CLIENT->"+ client);
+    console.log("CLIENT LOGIN"+client.login);
+
+
+    client.get('/users/'+req.user.profile.username+'/orgs', {}, function (err, status, body, headers) {
+        if(err)console.log("ERROR -> "+err);
+        console.log("HEAD -> "+headers);
+        console.log("BODY -> "+body); //json object
+
+        var i = 0;
+        while (i < body.length){
+          console.log(body[i].login);
+          if(body[i].login == 'DSI1516' || 'demoMembership'){
+          console.log("COINCIDE");
+          //res.redirect('/');
+        }else{
+          console.log("No COINICIDEN");
+          //res.render('err');
+        }
+        ++i;
+        }
+
+      });
+
+
 
     var urle = req.user.profile._json.organizations_url;
     var uri = url.parse(req.url);
@@ -102,7 +132,7 @@ app.get('/auth/github/callback',
   //  }
 
     // Successful authentication, redirect home.
-    res.redirect('/err');
+    //res.redirect('/err');
   });
 
 app.get('/profile',
