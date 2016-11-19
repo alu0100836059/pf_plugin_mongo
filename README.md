@@ -1,121 +1,74 @@
-#
-# Práctica: Nueva funcionalidad para el paquete NPM plugins
+# Práctica: Autenticación OAuth con Passport
 
 
 ![imagen1][logo]
 [logo]: https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQmTdns2SIHRywqRrwjOmWCewbAPJKjv5s_iblApWlTryhkwB1n
 
-### Requisitos
 
-Descripción
+## Descripción de la práctica
 
-El objetivo de esta práctica es extender el package NodeJS publicado en npm en una práctica anterior con una nueva funcionalidad que permita
-* Obtener el email y el nombre del autor
-* Crear el repositorio del libro en GitHub
-* Hacer un push del repositorio inicial para actualizar los ficheros necesarios al repositorio del libro en la máquina virtual.
+### Objetivo:
+El servidor proveído por el plugin (sea iaaso heroku) deberá autenticar que el lector del libro pertenece a una organización dada de GitHub (por ejemplo ULL-ESIT-SYTW-1617). Si es el caso que pertenece podrá seguir leyendo el libro, sino será redirigido a la ruta de autenticación.
 
-
-# Instalacion plugin heroku
-```
-Lo primero que debemos hacer es instalar el paquete NPM _gitbook-start-team-noejaco2017-2.0_ => npm install -g  gitbook-start-team-noejaco2017-2.0
-Seguidamente, instalamos el paquete en nuestras Dependencies => npm install --save gitbook-start-team-noejaco2017-2.0(Recuerde que tiene que tener generado un package.json)
-Y por ultimo instalamos el plugin para poder desplegarlo en heroku , para ello usamos npm install --save gitbook-start-plugin-heroku-noejaco2017
-
-Una vez instalados los paquetes podemos consultar nuestro plugin para ver sus opciones, a traves de gitbook-start --help
-
-Para poder realizar correctamente el desplique en heroku, recuerde que debe al menos realizar la prueba con estos 3 campos y recuerde de poner en el campo --heroku el nombre de su app en heroku:
-gitbook-start --deploy p --heroku heroku-deploy-plugins --directorio prueba --autor new_usuario
-
-Para la correcta realizacion del libro y del despliuque debera rellenar todos los campos.
-
-Una vez ejecutado el comando se nos generara el directorio que hemos dado nombre. Nos situamos en el, e instalamos el package.json (npm install).
-Luego de esta logeese desde la terminal en heroku, a traves de: heroku login para luego, lo unico que tendremos que hacer son las tareas automatizadas del gulp, donde con gulp deploy-heroku(crearemos nuestro remoto de heroku)y justamente cuando se nos genere
-el remoto, se nos creara una nueva tarea, llamada gulp push-heroku(que nos permitira empujar nuestro repo. a heroku)
-
-*** RECUERDE QUE DEBE DE HABER GENERADO EL LIBRO PARA SU CORRECTO DESPLIUEGE EN HEROKU
+Puede partir de los repos de los plugins que ha usado en prácticas anteriores o crear unos nuevos
 
 
+### Pasos a seguir:
 
-```
+#### Instalación del plugin
+Para ello nos serviremos del paquete [npm-gitbook-start](https://www.npmjs.com/package/gitbook-start-team-noejaco2017-2.0) y seguiremos las instrucciones indicadas.
 
-# Instalación de plugin npm iaas
+Una vez finalizado este paso, tendremos un servidor Express desplegado en la IP indicada así como nuevas tareas añadidas al fichero __gulpfile.js__.
+#### Paquetes necesarios
+Deberemos contar con Node.js y npm instalados en nuestra máquina.
 
+Instalación de los paquetes y dependencias necesarias para el correcto funcionamiento:
+~~~
+$ npm install
+~~~
 
-```
-Lo primero que debemos hacer es instalar el paquete NPM _gitbook-start-team-noejaco2017-1.0_ => npm install -g  gitbook-start-team-noejaco2017-1.0
-Seguidamente, instalamos instalamos el paquete en nuestras devDependencies => npm install --save-dev gitbook-start-team-noejaco2017-1.0
-Y por ultimo instalamos el plugin para poder desplegarlo en heroku , para ello usamos npm install --save-dev gitbook-start-plugin-iaas-ull-es-noejaco2017
+#### Despliegue del libro
+A continuación debemos desplegar el libro a través de la nueva tarea generada.
 
-Una vez instalados los paquetes podemos consultar nuestro plugin para ver sus opciones, a traves de gitbook-start --help
-
-Para poder realizar correctamente el desplique en IAAS, recuerde que debe al menos realizar la prueba con estos 2 campos y recuerde de poner en el campo --iaasIP su direccion IP de su maquina y el path donde se desplpegara:
-- gitbook-start --deploy p --iaaspath ./Mypath --iaasIP 192.126.3.2 --directorio prueba --autor new_usuario   ||
-- gitbook-start --deploy iaas-ull-es --iaasIP 192.162.30.50 --iaaspath ./MyPath --directorio prueba --autor juanito --url juanito@ull.edu.es --wiki wiki@ull.es --email github@github.es --version 1.0.1
-
-Para la correcta realizacion del libro y del despliuque debera rellenar todos los campos.
-
-Una vez ejecutado el comando se nos generara el directorio que hemos dado nombre. Nos situamos en el, e instalamos el package.json (npm install).
-Una vez aqui, lo que tendremos que hacer son las tareas automatizadas del gulp, donde con gulp deploy-iaas-ull-es(crearemos nuestro proyecto en nuestra maquina remota)
-```
-
-
-## Manual de ayuda IAAS
-
-````````````````````
-gitbook-start-iaas [OPTIONS](OBLIGATORIAS MINIMAS)
---iaasIP: Direccion de la maquina virtual
---iaaspath: repositorio que va a contener el libro en iaas
---directorio: directorio a crear con el nombre que quiera
-````````````````````
-
-## Manual de ayuda de Heroku
-```
-gitbook-start [OPTIONS](OBLIGATORIAS MINIMAS)
---directorio: nombre del directorio a crear
---deploy: Deploy en IaaS(iaas.ull.es)
---heroku: Nombre de su api en heroku
-```
+#### Desplegar el servidor Express
+En la línea de comandos ingresamos:
+~~~
+node app.js
+~~~
+Esto nos permitirá ingresar en el prompt nuestro nombre de usuario y nuestra contraseña, una vez ingresados, correrá el servidor y nos proporcionará información acerca de la ubicación del mismo.
+#### Acceso al libro
+Como último paso deberemos acceder a la ubicación del servidor proporcionada en el paso anterior.
+Lo que veremos será una página de logueo en la que haremos click sobre `login` para acceder al libro.
 
 
-## Manual de ayuda
-_gitbook-start --h || --help_
-````````````````````
-gitbook-start [OPTIONS]
---autor: autor del libro a crear node gitbook-star -
---email: email de contacto del usuario
---version: version repositorio github contra el que se va a trabajar
---url: repositorio github contra el que se va a trabajar
---wiki: direccion web de la wiki en github
---directorio: nombre del directorio a crear
---help: muestra ayuda sobre las opciones disponibles
---deploy: Deploy en IaaS(iaas.ull.es)
---iaasIP: Direccion de la maquina virtual
---iaaspath: Repositorio que va a contener el libro en iaas
---heroku: Nombre de su api en heroku
-
-````````````````````
 
 
-## Enlace a github gh-pages
+
+
+
+
+## Enlaces:
+##### Enlace a github gh-pages
 [gh-pages](https://ull-esit-sytw-1617.github.io/tareas-iniciales-noejaco2017/)
 
-## Enlace a gitbook
+##### Enlace a gitbook
 [gitbook](https://alu0100836059.gitbooks.io/apuntessytw/content/)
 
-## Enlace a npm gitbook-start-2.0
+##### Enlace a npm gitbook-start-2.0
 [npm-gitbook-start](https://www.npmjs.com/package/gitbook-start-team-noejaco2017-2.0)
 
-## Enlace a npm plugin Heroku
+##### Enlace a npm plugin Heroku
 [npm-heroku](https://www.npmjs.com/package/gitbook-start-plugin-heroku-noejaco2017)
 
-## Enlace al paquete npm iaas
+##### Enlace al paquete npm iaas
 [npm-plugin-iaas](https://www.npmjs.com/package/gitbook-start-plugin-iaas-ull-es-noejaco2017)
 
-## Enlace a la aplicación desplegada en heroku
+##### Enlace a la aplicación desplegada en heroku
 [heroku](https://herokuiaass.herokuapp.com/)
 
 
 
-## Autor
+## Autores
 [Noé Campos](http://dsi1516.github.io/Practica1/)
-[Jacobo]()
+
+[Jacobo](https://ull-esit-sytw-1617.github.io/tareas-iniciales-noejaco2017/)
