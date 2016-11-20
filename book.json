@@ -5,7 +5,7 @@
         "toc": {
             "addClass": true,
             "className": "toc",
-      "maxDepth": 6
+            "maxDepth": 6
         },
          "toolbar": {
             "buttons":
