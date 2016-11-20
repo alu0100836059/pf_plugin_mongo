@@ -6,6 +6,23 @@ var run = require('gulp-run');
 var cwd = process.cwd();
 var paquete = require(process.cwd()+'/package.json');
 
+//----------- Simplificación --------------------------------------
+gulp.task('deploy', ['build-gitbook']function () {
+  return gulp.src('').pipe(shell(["./scripts/deploy-gitbook"]));
+});
+
+gulp.task('build-gitbook', function() {
+  return gulp.src('').pipe(shell(['gitbook install; ./scripts/generate-gitbook']));
+});
+
+gulp.task('wiki-deploy', ['wiki-build'] function() {
+   return gulp.src('').pipe(shell(['./scripts/deploy-wiki']));
+});
+
+gulp.task('wiki-build', function() {
+   return gulp.src('').pipe(shell(['./scripts/generate-wiki']));
+});
+//-----------------------------------------------------------------
 //-----------------------IAAS--------------------------------------
 gulp.task('iaas',shell.task(['./scripts/ssh']));
 
