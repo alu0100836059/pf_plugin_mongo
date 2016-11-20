@@ -7,7 +7,7 @@ var cwd = process.cwd();
 var paquete = require(process.cwd()+'/package.json');
 
 //----------- Simplificación --------------------------------------
-gulp.task('deploy', ['build-gitbook']function () {
+gulp.task('deploy', ['build-gitbook'], function () {
   return gulp.src('').pipe(shell(["./scripts/deploy-gitbook"]));
 });
 
@@ -15,7 +15,7 @@ gulp.task('build-gitbook', function() {
   return gulp.src('').pipe(shell(['gitbook install; ./scripts/generate-gitbook']));
 });
 
-gulp.task('wiki-deploy', ['wiki-build'] function() {
+gulp.task('wiki-deploy', ['wiki-build'], function() {
    return gulp.src('').pipe(shell(['./scripts/deploy-wiki']));
 });
 
@@ -42,34 +42,34 @@ gulp.task('iaas',shell.task(['./scripts/ssh']));
 //  "deploy-gitbook": "./scripts/losh deploy-gitbook",
 // gulp.task('deploy', deploy-gh-pages);
 
-
-gulp.task('deploy', ['empujar'], function () {
-return gulp.src('').pipe(shell(["./scripts/deploy-gitbook"]));
-});
-//  "generate-gitbook": "./scripts/generate-gitbook",
-gulp.task('build', function() {
-  return gulp.src(' ').pipe(shell(['./scripts/generate-gitbook']));
-});
-
-// Comentado Jacobo 19.10 problema autorización ?
-// gulp.task('deployWiki', function(){
-//   return gulp.src('').pipe(shell(["./scripts/deploy-wiki"]));
+////////////// viejo___
+// gulp.task('deploy', ['empujar'], function () {
+// return gulp.src('').pipe(shell(["./scripts/deploy-gitbook"]));
 // });
-
-gulp.task('empujar', ['build'],
- shell.task(
-    "git add ."+
-    ";"+
-    "git commit -am 'desplegando a github'"+
-    ";"+
-    "git push origin master",
-    // cambiar la coma de arriba por un +  ,borrar esta línea y descomentar las de abajo
-    // ";"+
-    // "git push heroku master",
-    { verbose: true }
-  )
-);
-
+// //  "generate-gitbook": "./scripts/generate-gitbook",
+// gulp.task('build', function() {
+//   return gulp.src(' ').pipe(shell(['./scripts/generate-gitbook']));
+// });
+//
+// // Comentado Jacobo 19.10 problema autorización ?
+// // gulp.task('deployWiki', function(){
+// //   return gulp.src('').pipe(shell(["./scripts/deploy-wiki"]));
+// // });
+//
+// gulp.task('empujar', ['build'],
+//  shell.task(
+//     "git add ."+
+//     ";"+
+//     "git commit -am 'desplegando a github'"+
+//     ";"+
+//     "git push origin master",
+//     // cambiar la coma de arriba por un +  ,borrar esta línea y descomentar las de abajo
+//     // ";"+
+//     // "git push heroku master",
+//     { verbose: true }
+//   )
+// );
+//
 
 // Comentado el 18.10 por Jacobo error en let
 // var deploygh = function() {
@@ -87,7 +87,7 @@ gulp.task('empujar', ['build'],
 
 
 //creacion de pdf emobi y epub
-gulp.task('crea-archivos',['pdf','mobi','epub']);
+gulp.task('creación-archivos',['pdf','mobi','epub']);
 
 gulp.task('pdf',
   shell.task(
