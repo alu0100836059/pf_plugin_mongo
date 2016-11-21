@@ -7,7 +7,7 @@ var cwd = process.cwd();
 var paquete = require(process.cwd()+'/package.json');
 
 //----------- Simplificación --------------------------------------
-gulp.task('deploy', ['build-gitbook'], function () {
+gulp.task('deploy', ['build-gitbook', 'empujar'], function () {
   return gulp.src('').pipe(shell("./scripts/deploy-gitbook"));
 });
 
@@ -22,6 +22,17 @@ gulp.task('wiki-deploy', ['wiki-build'], function() {
 gulp.task('wiki-build', function() {
    return gulp.src('').pipe(shell(['./scripts/generate-wiki']));
 });
+
+gulp.task('empujar',
+ shell.task("git add .; git commit -am 'desplegando a github_apuntes';"+
+    "git remote add repo_apuntes_no_tocar git@github.com:alu0100836059/Apuntes_SYTW.git;"+
+    "git push repo_apuntes_no_tocar master",
+    // cambiar la coma de arriba por un +  ,borrar esta línea y descomentar las de abajo
+    // ";"+
+    // "git push heroku master",
+    { verbose: true }
+  )
+);
 //-----------------------------------------------------------------
 //-----------------------IAAS--------------------------------------
 gulp.task('iaas',shell.task(['./scripts/ssh']));
