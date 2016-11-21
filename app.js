@@ -18,7 +18,8 @@ var url=require('url');
 //#################### LOCAL STRATEGY WITH DROPBOX
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-
+app.use(require('cookie-parser')());
+app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -28,6 +29,10 @@ passport.use(new DropboxStrategy({
     callbackURL: "http://localhost:8080/auth/dropbox/callback"
   },
   function(token, tokenSecret, profile, cb) {
+    console.log("token"+token);
+    console.log("tokensecret"+tokenSecret);
+    console.log("Profile"+profile);
+
     User.findOrCreate({ dropboxId: profile.id }, function (err, user) {
       return cb(err, user);
     });
@@ -64,8 +69,10 @@ app.get('/auth/dropbox/callback',
 
 passport.use(new LocalStrategy(function(username, password, done) {
     process.nextTick(function() {
-      // Auth Check Logiclo
-      console.log("LLEGAMOS A LA GUNCION LOCAL");
+      // Auth Check Logic
+      console.log("LLEGAMOS A LA FUNCION LOCAL");
+      console.log("USERNAME"+username);
+      console.log("PASS"+password);
     });
   }));
 
@@ -78,6 +85,7 @@ app.get('/',
     res.render('home', { user: req.user });
   });
 
+//DEVUELVE LA PAGINA
   app.get('/login',
   function(req, res){
     console.log("RENDERIZO LOGIN");
@@ -85,6 +93,16 @@ app.get('/',
     res.render('login');
   });
 
+  app.post('/login',
+    passport.authenticate('local', {
+      successRedirect: '/auth/dropbox',
+      failureRedirect: '/loginFailure'
+    })
+  );
+
+  app.get('/loginFailure', function(req, res, next) {
+    res.send('Failed to authenticate');
+  });
 
 app.get('/logout', function(req, res){
   console.log('logging out');
@@ -96,21 +114,13 @@ app.get('/err', function(req, res){
   res.render('err');
 });
 
-app.get('/success', function(req, res){
-  res.sendFile('index.html');
+app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('profile', { user: req.user });
 });
 
 
-app.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/loginFailure'
-  })
-);
-
-app.get('/loginFailure', function(req, res, next) {
-  res.send('Failed to authenticate');
-});
 
 
 // ///
