@@ -8,7 +8,7 @@ var paquete = require(process.cwd()+'/package.json');
 
 //----------- Simplificación --------------------------------------
 gulp.task('deploy', ['build-gitbook'], function () {
-  return gulp.src('').pipe(shell(["./scripts/deploy-gitbook"]));
+  return gulp.src('').pipe(shell("./scripts/deploy-gitbook"));
 });
 
 gulp.task('build-gitbook', function() {

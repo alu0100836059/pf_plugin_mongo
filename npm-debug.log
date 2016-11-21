@@ -1,0 +1,93 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'gitbook',
+1 verbose cli   './scripts/deploy-gitbook' ]
+2 info using npm@1.3.10
+3 info using node@v0.10.25
+4 warn package.json gitbook-start-team-noejaco2017-4.0@0.0.9 homepage field must start with a protocol.
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'gitbook@^2.1.0', null ]
+7 verbose cache add name=undefined spec="gitbook@^2.1.0" args=["gitbook@^2.1.0",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'gitbook@^2.1.0',
+8 verbose parsed url   path: 'gitbook@^2.1.0',
+8 verbose parsed url   href: 'gitbook@^2.1.0' }
+9 verbose cache add name="gitbook" spec="^2.1.0" args=["gitbook","^2.1.0"]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: '^2.1.0',
+10 verbose parsed url   path: '^2.1.0',
+10 verbose parsed url   href: '^2.1.0' }
+11 verbose addNamed [ 'gitbook', '^2.1.0' ]
+12 verbose addNamed [ null, '>=2.1.0-0 <3.0.0-0' ]
+13 verbose cache add [ './scripts/deploy-gitbook', null ]
+14 verbose cache add name=undefined spec="./scripts/deploy-gitbook" args=["./scripts/deploy-gitbook",null]
+15 verbose parsed url { protocol: null,
+15 verbose parsed url   slashes: null,
+15 verbose parsed url   auth: null,
+15 verbose parsed url   host: null,
+15 verbose parsed url   port: null,
+15 verbose parsed url   hostname: null,
+15 verbose parsed url   hash: null,
+15 verbose parsed url   search: null,
+15 verbose parsed url   query: null,
+15 verbose parsed url   pathname: './scripts/deploy-gitbook',
+15 verbose parsed url   path: './scripts/deploy-gitbook',
+15 verbose parsed url   href: './scripts/deploy-gitbook' }
+16 silly lockFile 07928793-gitbook-2-1-0 gitbook@^2.1.0
+17 verbose lock gitbook@^2.1.0 /home/jacko/.npm/07928793-gitbook-2-1-0.lock
+18 silly lockFile a4e13a8a-scripts-deploy-gitbook ./scripts/deploy-gitbook
+19 verbose lock ./scripts/deploy-gitbook /home/jacko/.npm/a4e13a8a-scripts-deploy-gitbook.lock
+20 silly addNameRange { name: 'gitbook', range: '>=2.1.0-0 <3.0.0-0', hasData: false }
+21 verbose url raw gitbook
+22 verbose url resolving [ 'https://registry.npmjs.org/', './gitbook' ]
+23 verbose url resolved https://registry.npmjs.org/gitbook
+24 info trying registry request attempt 1 at 23:18:05
+25 verbose etag "57f01e9f-40168"
+26 http GET https://registry.npmjs.org/gitbook
+27 verbose chmod /home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz 644
+28 verbose tar unpack /home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz
+29 silly lockFile f0cd2bd3-85353-0-1598597252741456-package tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/package
+30 verbose lock tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/package /home/jacko/.npm/f0cd2bd3-85353-0-1598597252741456-package.lock
+31 silly lockFile c81ea716-85353-0-1598597252741456-tmp-tgz tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz
+32 verbose lock tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz /home/jacko/.npm/c81ea716-85353-0-1598597252741456-tmp-tgz.lock
+33 silly gunzTarPerm modes [ '755', '644' ]
+34 error not a package /home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz
+35 silly lockFile f0cd2bd3-85353-0-1598597252741456-package tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/package
+36 silly lockFile f0cd2bd3-85353-0-1598597252741456-package tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/package
+37 silly lockFile c81ea716-85353-0-1598597252741456-tmp-tgz tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz
+38 silly lockFile c81ea716-85353-0-1598597252741456-tmp-tgz tar:///home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/tmp.tgz
+39 silly lockFile a4e13a8a-scripts-deploy-gitbook ./scripts/deploy-gitbook
+40 silly lockFile a4e13a8a-scripts-deploy-gitbook ./scripts/deploy-gitbook
+41 error addLocal Could not install ./scripts/deploy-gitbook
+42 error Error: ENOENT, open '/home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/package/package.json'
+43 error If you need help, you may report this log at:
+43 error     <http://github.com/isaacs/npm/issues>
+43 error or email it to:
+43 error     <npm-@googlegroups.com>
+44 error System Linux 4.4.0-47-generic
+45 error command "/usr/bin/nodejs" "/usr/bin/npm" "install" "gitbook" "./scripts/deploy-gitbook"
+46 error cwd /home/jacko/Documentos/SYTW/srs/autenticacion-oauth-con-passport-noejaco2017
+47 error node -v v0.10.25
+48 error npm -v 1.3.10
+49 error path /home/jacko/tmp/npm-3532-AoZI7dk7/1479683885353-0.1598597252741456/package/package.json
+50 error code ENOENT
+51 error errno 34
+52 verbose exit [ 34, true ]
