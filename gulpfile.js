@@ -7,7 +7,13 @@ var cwd = process.cwd();
 var paquete = require(process.cwd()+'/package.json');
 
 //----------- Simplificación --------------------------------------
-gulp.task('deploy', ['build-gitbook', 'empujar-libro', 'build-gitbook', 'empujar-gh'], function () {
+
+// Inclusión del Despliegue a gh-pages, problema :nothing to commit
+// gulp.task('deploy', ['build-gitbook', 'empujar-libro', 'build-gitbook', 'empujar-gh'], function () {
+//   return gulp.src('').pipe(shell("./scripts/deploy-gitbook"));
+// });
+
+gulp.task('deploy', ['build-gitbook', 'empujar-libro'], function () {
   return gulp.src('').pipe(shell("./scripts/deploy-gitbook"));
 });
 
@@ -35,13 +41,13 @@ gulp.task('empujar-libro',
   )
 );
 
-
-gulp.task('empujar-gh',
- shell.task("cd gh-pages; git add .; git commit -m 'Despliegue gh';"+
- "git push repo_secundario gh-pages;",
-    { verbose: true }
-  )
-);
+// División de tareas para libro y gh
+// gulp.task('empujar-gh',
+//  shell.task("cd gh-pages; git add .; git commit -m 'Despliegue gh';"+
+//  "git push repo_secundario gh-pages;",
+//     { verbose: true }
+//   )
+// );
 
 
 
