@@ -1,9 +1,0 @@
-# Índice
-
-
-* [Herramientas](Herramientas.md)
-    * [Gitbook](gitbook.md)
-    * [Github](github.md)
-    * [Gulp](gulp.md)
-* [Apuntes](apuntes.md)
- 

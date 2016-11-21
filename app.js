@@ -4,40 +4,73 @@ var app = express();
 var path = require('path');
 var expressLayouts = require('express-ejs-layouts');
 var exec = require('child_process').exec;
-
-// ### Jaco 12/11
 var passport = require('passport');
 var session = require('express-session');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var GithubStrategy = require('passport-github').Strategy;
-
+//var FacebookStrategy = require('passport-facebook').Strategy;
+//var GithubStrategy = require('passport-github').Strategy;
+var DropboxStrategy = require('passport-dropbox').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 
 //*********************************************************
 var github = require('octonode');
 var url=require('url');
 
-///*******************************************************
-//app.use(express.static(__dirname + '/gh-pages'));
-//##################################################### OAUTH WITH GITHUB
+//#################### LOCAL STRATEGY WITH DROPBOX
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-//app.use(require('serve-static')(__dirname + 'views'));
-app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('express-session')({ secret: 'f584e68426cfda58592977e598a99eea68966503', resave: true, saveUninitialized: true }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.use(new DropboxStrategy({
+    consumerKey:'uz18i71y7janvvs' ,//DROPBOX_APP_KEY,
+    consumerSecret:'hr3a1zqr7qoy2yy', //DROPBOX_APP_SECRET,
+    callbackURL: "http://localhost:8080/auth/dropbox/callback"
+  },
+  function(token, tokenSecret, profile, cb) {
+    User.findOrCreate({ dropboxId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
-//Inicializamos el midelware de passport con la app
-// app.get('/', function (req, res) {
-//   var html = "<ul>\
-//     <li><a href='/auth/github'>GitHub</a></li>\
-//     <li><a href='/logout'>logout</a></li>\
-//   </ul>";
-//
-//   res.send(html);
-// });
+
+app.get('/auth/dropbox',
+  passport.authenticate('dropbox'));
+
+app.get('/auth/dropbox/callback',
+  passport.authenticate('dropbox', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+
+
+  passport.serializeUser(function(user, done) {
+    console.log("SERIALIZER");
+    console.log("USUARIO"+user)
+    done(null, user);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    console.log("DESERIALIZER ID"+id);
+  //  User.findById(id, function(err, user) {
+      //console.log("USER"+user);
+      done(null, id);
+    //});
+  });
+
+
+passport.use(new LocalStrategy(function(username, password, done) {
+    process.nextTick(function() {
+      // Auth Check Logiclo
+      console.log("LLEGAMOS A LA GUNCION LOCAL");
+    });
+  }));
+
+app.set('port', (process.env.PORT || 8080));
+
 
 app.get('/',
   function(req, res) {
@@ -48,6 +81,7 @@ app.get('/',
   app.get('/login',
   function(req, res){
     console.log("RENDERIZO LOGIN");
+    //<a href="/auth/dropbox">Log In with DROPBOX</a>
     res.render('login');
   });
 
@@ -66,13 +100,26 @@ app.get('/success', function(req, res){
   res.sendFile('index.html');
 });
 
-///
-app.get('/gh-pages/index', function(req, res){
-  res.redirect('https://alu0100836059.gitbooks.io/apuntes_sytw_16_17/content/');
+
+app.post('/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/loginFailure'
+  })
+);
+
+app.get('/loginFailure', function(req, res, next) {
+  res.send('Failed to authenticate');
 });
 
-app.get('/auth/github',
-  passport.authenticate('github'));
+
+// ///
+// app.get('/gh-pages/index', function(req, res){
+//   res.redirect('https://alu0100836059.gitbooks.io/apuntes_sytw_16_17/content/');
+// });
+//
+// app.get('/auth/github',
+//   passport.authenticate('github'));
 
   //function(req, res) {
     // No llegamos aquí
@@ -90,113 +137,98 @@ app.get('/auth/github',
 //////////////////////////////////////////////////////////////
 
 
-app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),  function(req, res) {
-    console.log("CCACACACACACACACCACCACACACACCCACACACCAC");
+// app.get('/auth/github/callback',
+//   passport.authenticate('github', { failureRedirect: '/login' }),  function(req, res) {
+//     console.log("CCACACACACACACACCACCACACACACCCACACACCAC");
+//
+//
+//     //console.log("organizaciones: "+req.user.profile.username/orgs)
+//     console.log("ID:"+req.user.profile.id);
+//     console.log("TOKEEEEN"+req.user.accessToken)
+//     console.log("VALOR HTTP"+req.user.profile._json.organizations_url);
+//     console.log("USUARIO"+req.user.profile.username);
+//
+//     var client = github.client( {id: req.user.profile.id, secret: req.user.accessToken});
+//     console.log("OBJECT CLIENT->"+ client);
+//     console.log("CLIENT LOGIN"+client.login);
+//
+//
+//     client.get('/users/'+req.user.profile.username+'/orgs', {}, function (err, status, body, headers) {
+//         if(err)console.log("ERROR -> "+err);
+//         console.log("HEAD -> "+headers);
+//         console.log("BODY -> "+body); //json object
+//
+//         var i = 0;
+//         while (i < body.length){
+//           console.log(body[i].login);
+//           if(body[i].login == 'DSI1516' || 'demoMembership'){
+//           console.log("COINCIDE");
+//           app.use(express.static(__dirname + '/gh-pages'));
+//           res.redirect('/gh-pages/index')
+//           //res.redirect('./gh-pages/*');
+//         }else{
+//           console.log("No COINICIDEN");
+//           res.redirect('/err');
+//         }
+//         ++i;
+//         }
+//
+//       });
+//
+//
+//
+//     var urle = req.user.profile._json.organizations_url;
+//     var uri = url.parse(req.url);
+//     console.log("URIIIIIIIIIIIIIIIIIIIII"+uri.pathname);
+//     console.log("MOSTRANDO URL"+req.get(url+'/:org'));
+//
+//     //if(req.get('/orgs/req.user.organizations_url/members/req.user.login')){
+//     // res.redirect('/users/' + req.user.username);
+//
+//     //res.redirect('/auth/github/callback');
+//     //res.redirect('/');
+//   //  }
+//
+//     // Successful authentication, redirect home.
+//     //res.redirect('/err');
+// });
+//
+// app.get('/profile',
+//   require('connect-ensure-login').ensureLoggedIn(),
+//   function(req, res){
+//     console.log("RENDERIZO PROFILE");
+//     console.log(req.user);
+//     console.log("ID",req.user.profile.id);
+//     console.log("_RAW",req.user.profile._raw);
+//     res.render('profile', { id: req.user.profile.id,username:req.user.profile.username,user: req.user /*,displayName:*/});
+//   });
+//
+//
+// passport.use(new GithubStrategy({
+//   clientID: '1f3b68617159ac9492c2',
+//   clientSecret: 'f584e68426cfda58592977e598a99eea68966503',
+//   callbackURL: 'http://localhost:8080/auth/github/callback'
+// }, function(accessToken, refreshToken, profile, done){
+//   console.log("ACCEDO A GITHUB PASSPORT");
+//     console.log("accessToken"+accessToken);
+//       console.log("refreshToken"+refreshToken);
+//         console.log("profile"+profile.id);
+//   //return done (null,profile);
+//   // User.findOrCreate({ githubId: profile.id }, function (err, user) {
+//   //   console.log("BUSCO USUARIOS");
+//   //   console.log("accessToken"+accessToken);
+//   //     console.log("refreshToken"+refreshToken);
+//   //       console.log("profile"+profile);
+//   //       console.log("DONE"+done);
+//   //       console.log("USER"+user);
+//   //     return cb(err, user);
+//   //   });
+//   done(null, {
+//     accessToken: accessToken,
+//     profile: profile
+//   });
+// }));
 
-
-    //console.log("organizaciones: "+req.user.profile.username/orgs)
-    console.log("ID:"+req.user.profile.id);
-    console.log("TOKEEEEN"+req.user.accessToken)
-    console.log("VALOR HTTP"+req.user.profile._json.organizations_url);
-    console.log("USUARIO"+req.user.profile.username);
-
-    var client = github.client( {id: req.user.profile.id, secret: req.user.accessToken});
-    console.log("OBJECT CLIENT->"+ client);
-    console.log("CLIENT LOGIN"+client.login);
-
-
-    client.get('/users/'+req.user.profile.username+'/orgs', {}, function (err, status, body, headers) {
-        if(err)console.log("ERROR -> "+err);
-        console.log("HEAD -> "+headers);
-        console.log("BODY -> "+body); //json object
-
-        var i = 0;
-        while (i < body.length){
-          console.log(body[i].login);
-          if(body[i].login == 'DSI1516' || 'demoMembership'){
-          console.log("COINCIDE");
-          app.use(express.static(__dirname + '/gh-pages'));
-          res.redirect('/gh-pages/index')
-          //res.redirect('./gh-pages/*');
-        }else{
-          console.log("No COINICIDEN");
-          res.redirect('/err');
-        }
-        ++i;
-        }
-
-      });
-
-
-
-    var urle = req.user.profile._json.organizations_url;
-    var uri = url.parse(req.url);
-    console.log("URIIIIIIIIIIIIIIIIIIIII"+uri.pathname);
-    console.log("MOSTRANDO URL"+req.get(url+'/:org'));
-
-    //if(req.get('/orgs/req.user.organizations_url/members/req.user.login')){
-    // res.redirect('/users/' + req.user.username);
-
-    //res.redirect('/auth/github/callback');
-    //res.redirect('/');
-  //  }
-
-    // Successful authentication, redirect home.
-    //res.redirect('/err');
-});
-
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    console.log("RENDERIZO PROFILE");
-    console.log(req.user);
-    console.log("ID",req.user.profile.id);
-    console.log("_RAW",req.user.profile._raw);
-    res.render('profile', { id: req.user.profile.id,username:req.user.profile.username,user: req.user /*,displayName:*/});
-  });
-
-
-passport.use(new GithubStrategy({
-  clientID: '1f3b68617159ac9492c2',
-  clientSecret: 'f584e68426cfda58592977e598a99eea68966503',
-  callbackURL: 'http://localhost:8080/auth/github/callback'
-}, function(accessToken, refreshToken, profile, done){
-  console.log("ACCEDO A GITHUB PASSPORT");
-    console.log("accessToken"+accessToken);
-      console.log("refreshToken"+refreshToken);
-        console.log("profile"+profile.id);
-  //return done (null,profile);
-  // User.findOrCreate({ githubId: profile.id }, function (err, user) {
-  //   console.log("BUSCO USUARIOS");
-  //   console.log("accessToken"+accessToken);
-  //     console.log("refreshToken"+refreshToken);
-  //       console.log("profile"+profile);
-  //       console.log("DONE"+done);
-  //       console.log("USER"+user);
-  //     return cb(err, user);
-  //   });
-  done(null, {
-    accessToken: accessToken,
-    profile: profile
-  });
-}));
-
-passport.serializeUser(function(user, done) {
-  console.log("SERIALIZER");
-  console.log("USUARIO"+user)
-  done(null, user);
-});
-
-passport.deserializeUser(function(id, done) {
-  console.log("DESERIALIZER ID"+id);
-//  User.findById(id, function(err, user) {
-    //console.log("USER"+user);
-    done(null, id);
-  //});
-});
-
- app.set('port', (process.env.PORT || 8080));
 
 
 

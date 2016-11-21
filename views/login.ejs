@@ -1,7 +1,28 @@
-<head>
+<!--head>
 <link rel="stylesheet" href="estilo_ejs.css">
 </head>
 <body>
 <a href="/auth/github">Log In with GitHub</a>
-<!--a href="/login/github">Log In with GitHub</a-->
-</body>
+<a href="/login/github">Log In with GitHub</a>
+</body-->
+
+
+<html>
+  <link rel="stylesheet" href="estilo_ejs.css">
+  <body>
+    <form action="/login" method="post">
+      <div>
+        <label>Username:</label>
+        <input type="text" name="username" />
+        <br/>
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" name="password" />
+      </div>
+      <div>
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
+  </body>
+</html>
