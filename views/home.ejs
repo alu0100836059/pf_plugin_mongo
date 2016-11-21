@@ -1,6 +1,13 @@
+<head>
+<link rel="stylesheet" href="estilo_ejs.css">
+</head>
+<body>
+	<h1>Apuntes Sistemas y Tecnologías Web</h1>
+
 <% if (!user) { %>
 	<p>Welcome! Please <a href="/login">log in</a>.</p>
   <p>Bye Bye! <a href="/logout">log out</a>.</p>
 <% } else { %>
 	<p>Hello, <%= user.username %>. View your <a href="/profile">profile</a>.</p>
 <% } %>
+</body>
