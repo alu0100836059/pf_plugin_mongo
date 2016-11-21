@@ -66,6 +66,11 @@ app.get('/success', function(req, res){
   res.sendFile('index.html');
 });
 
+///
+app.get('/gh-pages/index', function(req, res){
+  res.redirect('https://alu0100836059.gitbooks.io/apuntes_sytw_16_17/content/');
+});
+
 app.get('/auth/github',
   passport.authenticate('github'));
 
