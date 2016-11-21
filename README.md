@@ -30,6 +30,12 @@ $ npm install
 #### Despliegue del libro
 A continuación debemos desplegar el libro a través de la nueva tarea generada.
 
+Para ello ejecutamos por consola:
+~~~
+$ gulp deploy
+~~~
+
+
 #### Desplegar el servidor Express
 En la línea de comandos ingresamos:
 ~~~
@@ -48,11 +54,11 @@ Lo que veremos será una página de logueo en la que haremos click sobre `login`
 
 
 ## Enlaces:
-##### Enlace a github gh-pages
+##### Enlace al libro desplegado en gh-pages
 [gh-pages](https://ull-esit-sytw-1617.github.io/tareas-iniciales-noejaco2017/)
 
 ##### Enlace a gitbook
-[gitbook](https://alu0100836059.gitbooks.io/apuntessytw/content/)
+[gitbook](https://alu0100836059.gitbooks.io/apuntes_sytw_16_17/content/)
 
 ##### Enlace a npm gitbook-start-2.0
 [npm-gitbook-start](https://www.npmjs.com/package/gitbook-start-team-noejaco2017-2.0)

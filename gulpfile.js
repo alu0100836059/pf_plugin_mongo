@@ -26,7 +26,9 @@ gulp.task('wiki-build', function() {
 gulp.task('empujar',
  shell.task("git add .; git commit -am 'desplegando a github_apuntes';"+
     "git remote add repo_apuntes_no_tocar git@github.com:alu0100836059/Apuntes_SYTW.git;"+
-    "git push repo_apuntes_no_tocar master",
+    "git push repo_apuntes_no_tocar master;"+
+    "cd /gh-pages; git add .; git commit -m 'Despliegue gh';"+
+    "git push repo_apuntes_no_tocar master;",
     // cambiar la coma de arriba por un +  ,borrar esta línea y descomentar las de abajo
     // ";"+
     // "git push heroku master",
