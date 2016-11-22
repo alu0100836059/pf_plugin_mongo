@@ -48,11 +48,18 @@ Lo que veremos será una página de logueo en la que haremos click sobre `login`
 
 
 
-### MongoDB
+### MongoDB with c9
+
+sudo apt-get install -y mongodb-org
+
 MongoDB is preinstalled in your workspace. To run MongoDB, run the following below (passing the correct parameters to it). Mongodb data will be stored in the folder data.
 $ mkdir data
 $ echo 'mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"' > mongod
 $ chmod a+x mongod
+$ ./mongod
+Abrir la base de datos
+$ mongo (show db)
+
 
 
 

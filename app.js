@@ -103,14 +103,7 @@ mongoose.connect('mongodb://localhost/lista', function(err, res) {
           console.log('ERROR: connecting to Database. ' + err);
   }});
 
-var Schema = mongoose.Schema;
-var UserDetail = new Schema({
-      username: String,
-      password: String
-    }, {
-      collection: 'userInfo'
-    });
-var UserDetails = mongoose.model('userInfo', UserDetail);
+
 
 
 
@@ -153,7 +146,19 @@ var UserDetails = mongoose.model('userInfo', UserDetail);
 //     });
 // }));
 
-passport.use(new LocalStrategy(function(username, password, done) {
+var Schema = mongoose.Schema;
+var UserDetail = new Schema({
+      username: String,
+      password: String
+    }, {
+      collection: 'userInfo'
+    });
+var UserDetails = mongoose.model('userInfo', UserDetail);
+
+passport.use('local',new LocalStrategy(function(username, password, done) {
+    console.log("LLEGAMOS A LA FUNCION LOCAL");
+      console.log("USERNAME"+username);
+      console.log("PASS"+password);
   process.nextTick(function() {
     UserDetails.findOne({
       'username': username, 
@@ -198,7 +203,6 @@ app.get('/',
 
   app.get('/loginFailure', function(req, res, next) {
     res.send('Failed to authenticate');
-    res.render('/login');
   });
 
 app.get('/logout', function(req, res){
