@@ -99,6 +99,7 @@
     "inquirer": "^1.2.2",
     "minimatch": "^3.0.3",
     "minimist": "^1.2.0",
+    "mongodb": "^2.2.11",
     "passport": "^0.2.2",
     "passport-dropbox": "^2.0.0",
     "passport-facebook": "~2.1.1",

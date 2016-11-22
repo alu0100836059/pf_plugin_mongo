@@ -10,7 +10,7 @@ var session = require('express-session');
 //var GithubStrategy = require('passport-github').Strategy;
 var DropboxStrategy = require('passport-dropbox').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
-
+//var User = require('./logeo.js');
 //*********************************************************
 var github = require('octonode');
 var url=require('url');
@@ -22,6 +22,8 @@ app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 
 passport.use(new DropboxStrategy({
     consumerKey:'uz18i71y7janvvs' ,//DROPBOX_APP_KEY,
@@ -68,13 +70,29 @@ app.get('/auth/dropbox/callback',
 
 
 passport.use(new LocalStrategy(function(username, password, done) {
-    process.nextTick(function() {
-      // Auth Check Logic
-      console.log("LLEGAMOS A LA FUNCION LOCAL");
-      console.log("USERNAME"+username);
-      console.log("PASS"+password);
-    });
+    // process.nextTick(function() {
+    //   // Auth Check Logic
+    //   console.log("LLEGAMOS A LA FUNCION LOCAL");
+    //   console.log("USERNAME"+username);
+    //   console.log("PASS"+password);
+    // });
+
+
+    User.findOne({
+        username: username
+    }, function(err, user) {
+        // This is how you handle error
+        if (err) return done(err);
+        // When user is not found
+        if (!user) return done(null, false);
+        // When password is not correct
+        if (!user.authenticate(password)) return done(null, false);
+        // When all things are good, we return the user
+        return done(null, user);
+     });
   }));
+
+
 
 app.set('port', (process.env.PORT || 8080));
 
@@ -95,13 +113,14 @@ app.get('/',
 
   app.post('/login',
     passport.authenticate('local', {
-      successRedirect: '/auth/dropbox',
+      successRedirect: '/profile',
       failureRedirect: '/loginFailure'
     })
   );
 
   app.get('/loginFailure', function(req, res, next) {
     res.send('Failed to authenticate');
+    res.render('/login');
   });
 
 app.get('/logout', function(req, res){
@@ -119,7 +138,7 @@ app.get('/profile',
   function(req, res){
     res.render('profile', { user: req.user });
 });
-
+//app.get('/profile', passport.authenticationMiddleware(), renderProfile)
 
 
 
