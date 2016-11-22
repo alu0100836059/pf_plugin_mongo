@@ -58,7 +58,8 @@ $ echo 'mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"' > mongod
 $ chmod a+x mongod
 $ ./mongod
 Abrir la base de datos
-$ mongo (show db)
+$ mongo (show db)(use lista)(show collections)
+
 
 
 

@@ -11,7 +11,7 @@ var session = require('express-session');
 var DropboxStrategy = require('passport-dropbox').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/bbdd.js');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 
 
 
@@ -98,87 +98,96 @@ app.get('/auth/dropbox/callback',
 //     });
 //   }));
 
-mongoose.connect('mongodb://localhost/lista', function(err, res) {  
-      if(err) {
-          console.log('ERROR: connecting to Database. ' + err);
-  }});
+// mongoose.connect('mongodb://localhost/lista', function(err, res) {  
+//       if(err) {
+//           console.log('ERROR: connecting to Database. ' + err);
+//   }});
 
 
 
 
 
-// passport.use(new LocalStrategy(function(username, password, done) {
-// process.nextTick(function() {
-//     //   // Auth Check Logic
-//       console.log("LLEGAMOS A LA FUNCION LOCAL");
-//       console.log("USERNAME"+username);
-//       console.log("PASS"+password);
-      
-//       // Buscamos por el email para ver si existe
-      
-//         User.findOne({ 'local.email' :  username }, function(err, user) {
-//             if (err)
-//                 return done(err);
-
-//             // check to see if theres already a user with that email
-//             if (user) {
-//               // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-//               console.log("EL USUARIO EXISTE");
-//             } else {
-
-//               //Creamos un nuevo usuario
-//                 var newUser = new User();
-
-              
-//                 newUser.local.email = username;
-//                 newUser.local.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
-
-//                 // save the user
-//                 newUser.save(function(err) {
-//                     if (err)
-//                         throw err;
-//                     return done(null, newUser);
-//                 });
-//             }
-
-//         });
-      
-//     });
-// }));
-
-var Schema = mongoose.Schema;
-var UserDetail = new Schema({
-      username: String,
-      password: String
-    }, {
-      collection: 'userInfo'
-    });
-var UserDetails = mongoose.model('userInfo', UserDetail);
-
-passport.use('local',new LocalStrategy(function(username, password, done) {
-    console.log("LLEGAMOS A LA FUNCION LOCAL");
+passport.use(new LocalStrategy(function(username, password, done) {
+process.nextTick(function() {
+    //   // Auth Check Logic
+      console.log("LLEGAMOS A LA FUNCION LOCAL");
       console.log("USERNAME"+username);
       console.log("PASS"+password);
-  process.nextTick(function() {
-    UserDetails.findOne({
-      'username': username, 
-    }, function(err, user) {
-      if (err) {
-        return done(err);
-      }
+      console.log("USER"+User);
+      
+      // Buscamos por el email para ver si existe
+      
+        User.findOne({ 'local.email' :  username }, function(err, user) {
+            if (err)
+                return done(err);
 
-      if (!user) {
-        return done(null, false);
-      }
+            // check to see if theres already a user with that email
+            if (!user) {
+              // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+              console.log("EL USUARIO NO EXISTE");
+              return done(null,false);
+              
+            }
+            if (user.password != password) {
+              return done(null, false);
+            }
 
-      if (user.password != password) {
-        return done(null, false);
-      }
+          
+            // else {
 
-      return done(null, user);
+            //   //Creamos un nuevo usuario
+            //     var newUser = new User();
+
+              
+            //     newUser.local.email = username;
+            //     newUser.local.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
+
+            //     // save the user
+            //     newUser.save(function(err) {
+            //         if (err)
+            //             throw err;
+            //         return done(null, newUser);
+            //     });
+            // }
+          return done(null, user);
+        });
+      
     });
-  });
 }));
+
+// var Schema = mongoose.Schema;
+// var UserDetail = new Schema({
+//       username: String,
+//       password: String
+//     }, {
+//       collection: 'userInfo'
+//     });
+// var UserDetails = mongoose.model('userInfo', UserDetail);
+
+// passport.use('local',new LocalStrategy(function(username, password, done) {
+//     console.log("LLEGAMOS A LA FUNCION LOCAL");
+//       console.log("USERNAME"+username);
+//       console.log("PASS"+password);
+//   process.nextTick(function() {
+//     UserDetails.findOne({
+//       'username': username, 
+//     }, function(err, user) {
+//       if (err) {
+//         return done(err);
+//       }
+
+//       if (!user) {
+//         return done(null, false);
+//       }
+
+//       if (user.password != password) {
+//         return done(null, false);
+//       }
+
+//       return done(null, user);
+//     });
+//   });
+// }));
 
 app.get('/',
   function(req, res) {

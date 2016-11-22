@@ -3,6 +3,11 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
+mongoose.connect('mongodb://localhost/lista', function(err, res) {  
+      if(err) {
+          console.log('ERROR: connecting to Database. ' + err);
+  }});
+
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 
