@@ -10,7 +10,13 @@ var session = require('express-session');
 //var GithubStrategy = require('passport-github').Strategy;
 var DropboxStrategy = require('passport-dropbox').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
-//var User = require('./logeo.js');
+var User = require('./models/bbdd.js');
+const mongoose = require('mongoose');
+
+
+
+
+
 //*********************************************************
 var github = require('octonode');
 var url=require('url');
@@ -69,33 +75,105 @@ app.get('/auth/dropbox/callback',
   });
 
 
+// passport.use(new LocalStrategy(function(username, password, done) {
+//     // process.nextTick(function() {
+//     //   // Auth Check Logic
+//       console.log("LLEGAMOS A LA FUNCION LOCAL");
+//       console.log("USERNAME"+username);
+//       console.log("PASS"+password);
+//     // });
+
+
+//     User.findOne({
+//         username: username
+//     }, function(err, user) {
+//         // This is how you handle error
+//         if (err) return done(err);
+//         // When user is not found
+//         if (!user) return done(null, false);
+//         // When password is not correct
+//         if (!user.authenticate(password)) return done(null, false);
+//         // When all things are good, we return the user
+//         return done(null, user);
+//     });
+//   }));
+
+mongoose.connect('mongodb://localhost/lista', function(err, res) {  
+      if(err) {
+          console.log('ERROR: connecting to Database. ' + err);
+  }});
+
+var Schema = mongoose.Schema;
+var UserDetail = new Schema({
+      username: String,
+      password: String
+    }, {
+      collection: 'userInfo'
+    });
+var UserDetails = mongoose.model('userInfo', UserDetail);
+
+
+
+// passport.use(new LocalStrategy(function(username, password, done) {
+// process.nextTick(function() {
+//     //   // Auth Check Logic
+//       console.log("LLEGAMOS A LA FUNCION LOCAL");
+//       console.log("USERNAME"+username);
+//       console.log("PASS"+password);
+      
+//       // Buscamos por el email para ver si existe
+      
+//         User.findOne({ 'local.email' :  username }, function(err, user) {
+//             if (err)
+//                 return done(err);
+
+//             // check to see if theres already a user with that email
+//             if (user) {
+//               // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+//               console.log("EL USUARIO EXISTE");
+//             } else {
+
+//               //Creamos un nuevo usuario
+//                 var newUser = new User();
+
+              
+//                 newUser.local.email = username;
+//                 newUser.local.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
+
+//                 // save the user
+//                 newUser.save(function(err) {
+//                     if (err)
+//                         throw err;
+//                     return done(null, newUser);
+//                 });
+//             }
+
+//         });
+      
+//     });
+// }));
+
 passport.use(new LocalStrategy(function(username, password, done) {
-    // process.nextTick(function() {
-    //   // Auth Check Logic
-    //   console.log("LLEGAMOS A LA FUNCION LOCAL");
-    //   console.log("USERNAME"+username);
-    //   console.log("PASS"+password);
-    // });
-
-
-    User.findOne({
-        username: username
+  process.nextTick(function() {
+    UserDetails.findOne({
+      'username': username, 
     }, function(err, user) {
-        // This is how you handle error
-        if (err) return done(err);
-        // When user is not found
-        if (!user) return done(null, false);
-        // When password is not correct
-        if (!user.authenticate(password)) return done(null, false);
-        // When all things are good, we return the user
-        return done(null, user);
-     });
-  }));
+      if (err) {
+        return done(err);
+      }
 
+      if (!user) {
+        return done(null, false);
+      }
 
+      if (user.password != password) {
+        return done(null, false);
+      }
 
-app.set('port', (process.env.PORT || 8080));
-
+      return done(null, user);
+    });
+  });
+}));
 
 app.get('/',
   function(req, res) {
@@ -139,6 +217,31 @@ app.get('/profile',
     res.render('profile', { user: req.user });
 });
 //app.get('/profile', passport.authenticationMiddleware(), renderProfile)
+
+
+
+var port = process.env.PORT || 8080;
+var ip = process.env.IP || '0.0.0.0';
+var addr = `${ip}:${port}`;
+//app.set('port', (process.env.PORT || 8080));
+
+
+
+app.listen(port,ip,function(){
+    console.log(`chat server listening at ${addr,ip}`);
+});
+
+
+// app.listen(app.get('port'), function() {
+//   console.log("Node app is running at localhost:" + app.get('port'));
+// });
+
+module.exports = app;
+
+
+
+
+
 
 
 
@@ -355,78 +458,6 @@ app.get('/profile',
 // app.use(passport.session());
 // // ###
 
-// app.get('/',function(req, res){
-//   res.send('index');
-// });
 
-// ### Definiendo rutas autenticación github
-// app.get('/',
-//   function(req, res) {
-//     res.render('home', { user: req.user });
-//   });
-//
-// app.get('/login',
-//   function(req, res){
-//     res.render('login');
-//   });
-//
-// app.get('/login/github',
-//   passport.authenticate('github'));
-//
-// app.get('/login/github/return',
-//   passport.authenticate('github', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     res.redirect('/');
-//   });
-//
-// app.get('/profile',
-//   require('connect-ensure-login').ensureLoggedIn(),
-//   function(req, res){
-//     res.render('profile', { user: req.user });
-// });
-// ###
-////////////////////////////////////////////////////////////////////////////////
-// ### TEMA FACEBOOK
-// Añadimos al final el tema del scope:email para otorgar permisos en la
-// obtención del email que nos servira para nuestra base de datos futura.
-// app.get('/auth/facebook', passport.authenticate('facebook', {scope: ["email"]}));
-//
-// app.get('/auth/facebook/callback',
-//         passport.authenticate('facebook', { successRedirect: '/',
-//                                             failureRedirect: '/login'}));
 
-/////////////////////////////////////////////////////////////////////////////////////
 
-// este lo hace bien
-//app.get('/get', function(request, response){
-//
-//   exec("ls", (err, stdout, stderr) => {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     }
-//     console.log(stdout);
-//     return;
-//   });
-//   return;
-// });
-
-app.post('/sync',function(req,res){
-    console.log("Antes de la funcion");
-    function puts(err,stdout,stderr){
-      if(err)
-      console.log("HA OCURRIDO UN ERROR"+err);
-      }
-      //proceso.exec('git clone git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017.git',puts);
-      exec('git pull git@github.com:ULL-ESIT-SYTW-1617/practica-despliegues-en-iaas-y-heroku-noejaco2017 .',puts);
-      //response.redirect('/');
-
-      console.log("Después del pull de heroku");
-
-});
-
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'));
-});
-
-module.exports = app;
