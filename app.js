@@ -56,19 +56,18 @@ app.use(passport.session());
 
 
 
-  passport.serializeUser(function(user, done) {
-    console.log("SERIALIZER");
-    console.log("USUARIO"+user)
+passport.serializeUser(function(user, done) {
+    console.log("SERIALIZER USER"+user);
     done(null, user);
-  });
+});
 
-  passport.deserializeUser(function(id, done) {
-    console.log("DESERIALIZER ID"+id);
+passport.deserializeUser(function(user, done) {
+    console.log("DESERIALIZER USER"+user);
   //  User.findById(id, function(err, user) {
       //console.log("USER"+user);
-      done(null, id);
+      done(null, user);
     //});
-  });
+});
 
 
 // passport.use(new LocalStrategy(function(username, password, done) {
@@ -144,11 +143,9 @@ process.nextTick(function() {
               return done(null,false);
               
             }
-            var ra=  bcrypt.compareSync(password, user.password);;
-            console.log("RA"+ra);
-            console.log("PASSWORD "+password);
-            
-            
+            // var ra=  bcrypt.compareSync(password, user.password);;
+            // console.log("RA"+ra);
+            // console.log("PASSWORD "+password);
             if (!user.validPassword(password)) {
               console.log("LA CONTRASEÑA NO COINCIDE");
               return done(null, false);
@@ -160,64 +157,41 @@ process.nextTick(function() {
     });
 }));
 
-// var Schema = mongoose.Schema;
-// var UserDetail = new Schema({
-//       username: String,
-//       password: String
-//     }, {
-//       collection: 'userInfo'
-//     });
-// var UserDetails = mongoose.model('userInfo', UserDetail);
-
-// passport.use('local',new LocalStrategy(function(username, password, done) {
-//     console.log("LLEGAMOS A LA FUNCION LOCAL");
-//       console.log("USERNAME"+username);
-//       console.log("PASS"+password);
-//   process.nextTick(function() {
-//     UserDetails.findOne({
-//       'username': username, 
-//     }, function(err, user) {
-//       if (err) {
-//         return done(err);
-//       }
-
-//       if (!user) {
-//         return done(null, false);
-//       }
-
-//       if (user.password != password) {
-//         return done(null, false);
-//       }
-
-//       return done(null, user);
-//     });
-//   });
-// }));
 
 app.get('/',
   function(req, res) {
-    console.log("RENDERIZO HOME");
+    console.log("RENDERIZO HOME "+ req.user);
     res.render('home', { user: req.user });
-  });
+});
 
 //DEVUELVE LA PAGINA
-  app.get('/login',
+app.get('/login',
   function(req, res){
     console.log("RENDERIZO LOGIN");
-    //<a href="/auth/dropbox">Log In with DROPBOX</a>
     res.render('login');
+});
+
+// app.post('/login',
+//     passport.authenticate('local', {
+//       successRedirect: '/',
+//       failureRedirect: '/loginFailure',
+//       failureFlash : true
+//     })
+// );
+
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
   });
 
-  app.post('/login',
-    passport.authenticate('local', {
-      successRedirect: '/profile',
-      failureRedirect: '/loginFailure'
-    })
-  );
-
-  app.get('/loginFailure', function(req, res, next) {
+app.get('/loginFailure', function(req, res, next) {
     res.send('Failed to authenticate');
-  });
+});
+
+// app.get('/loginSuccess', function(req, res, next) {
+//   res.send('Successfully authenticated');
+// });
 
 app.get('/logout', function(req, res){
   console.log('logging out');
@@ -232,6 +206,7 @@ app.get('/err', function(req, res){
 app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
+    console.log("RENDERIZO PROFILE");
     res.render('profile', { user: req.user });
 });
 //app.get('/profile', passport.authenticationMiddleware(), renderProfile)

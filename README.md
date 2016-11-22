@@ -56,7 +56,7 @@ MongoDB is preinstalled in your workspace. To run MongoDB, run the following bel
 $ mkdir data
 $ echo 'mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"' > mongod
 $ chmod a+x mongod
-$ ./mongod
+$ ./mongod -> Dejamos ejecutando la BBDD
 Abrir la base de datos
 $ mongo (show db)(use lista)(show collections)
 
