@@ -10,12 +10,8 @@ var session = require('express-session');
 //var GithubStrategy = require('passport-github').Strategy;
 var DropboxStrategy = require('passport-dropbox').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./models/bbdd.js');
+
 //const mongoose = require('mongoose');
-
-
-
-
 
 //*********************************************************
 var github = require('octonode');
@@ -31,32 +27,32 @@ app.use(passport.session());
 
 
 
-passport.use(new DropboxStrategy({
-    consumerKey:'uz18i71y7janvvs' ,//DROPBOX_APP_KEY,
-    consumerSecret:'hr3a1zqr7qoy2yy', //DROPBOX_APP_SECRET,
-    callbackURL: "http://localhost:8080/auth/dropbox/callback"
-  },
-  function(token, tokenSecret, profile, cb) {
-    console.log("token"+token);
-    console.log("tokensecret"+tokenSecret);
-    console.log("Profile"+profile);
+// passport.use(new DropboxStrategy({
+//     consumerKey:'uz18i71y7janvvs' ,//DROPBOX_APP_KEY,
+//     consumerSecret:'hr3a1zqr7qoy2yy', //DROPBOX_APP_SECRET,
+//     callbackURL: "http://localhost:8080/auth/dropbox/callback"
+//   },
+//   function(token, tokenSecret, profile, cb) {
+//     console.log("token"+token);
+//     console.log("tokensecret"+tokenSecret);
+//     console.log("Profile"+profile);
 
-    User.findOrCreate({ dropboxId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
-));
+//     User.findOrCreate({ dropboxId: profile.id }, function (err, user) {
+//       return cb(err, user);
+//     });
+//   }
+// ));
 
 
-app.get('/auth/dropbox',
-  passport.authenticate('dropbox'));
+// app.get('/auth/dropbox',
+//   passport.authenticate('dropbox'));
 
-app.get('/auth/dropbox/callback',
-  passport.authenticate('dropbox', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+// app.get('/auth/dropbox/callback',
+//   passport.authenticate('dropbox', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/');
+//   });
 
 
 
@@ -106,6 +102,7 @@ app.get('/auth/dropbox/callback',
 
 
 
+var User = require('./models/bbdd.js');
 
 passport.use(new LocalStrategy(function(username, password, done) {
 process.nextTick(function() {
@@ -113,42 +110,48 @@ process.nextTick(function() {
       console.log("LLEGAMOS A LA FUNCION LOCAL");
       console.log("USERNAME"+username);
       console.log("PASS"+password);
-      console.log("USER"+User);
+       //console.log("USER"+User+"\n");
       
       // Buscamos por el email para ver si existe
       
-        User.findOne({ 'local.email' :  username }, function(err, user) {
-            if (err)
+        User.findOne({ 'email' :  username }, function(err, user) {
+          console.log("Entramos a buscar usuario"+ user.email);
+          
+            if (err){
+              console.log("Ha ocurrido un error");
                 return done(err);
-
+            }
             // check to see if theres already a user with that email
             if (!user) {
               // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-              console.log("EL USUARIO NO EXISTE");
+              console.log("EL USUARIO NO EXISTE EN MONGO");
+                    // else {
+      
+                  //   //Creamos un nuevo usuario
+                  //     var newUser = new User();
+      
+                    
+                  //     newUser.local.email = username;
+                  //     newUser.local.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
+      
+                  //     // save the user
+                  //     newUser.save(function(err) {
+                  //         if (err)
+                  //             throw err;
+                  //         return done(null, newUser);
+                  //     });
+                  // }
               return done(null,false);
               
             }
-            if (user.password != password) {
+            console.log("PASS "+password);
+            // if (!user.validPassword(password)) {
+            var aux;
+            if(user.password != user.validPassword(password)){
+              console.log("LA CONTRASEÑA NO COINCIDE");
               return done(null, false);
             }
-
-          
-            // else {
-
-            //   //Creamos un nuevo usuario
-            //     var newUser = new User();
-
-              
-            //     newUser.local.email = username;
-            //     newUser.local.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
-
-            //     // save the user
-            //     newUser.save(function(err) {
-            //         if (err)
-            //             throw err;
-            //         return done(null, newUser);
-            //     });
-            // }
+          console.log("EL USUARIO EXISTE Y TODO HA IDO CORRECTO");
           return done(null, user);
         });
       
