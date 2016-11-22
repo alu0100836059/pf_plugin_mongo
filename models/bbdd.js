@@ -5,7 +5,7 @@ var util = require('util');
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
 
-mongoose.connect('mongodb://localhost/lista', function(err, res) {  
+mongoose.connect('mongodb://localhost/lista_usuarios', function(err, res) {  
       if(err) {
           console.log('ERROR: connecting to Database. ' + err);
       }
@@ -21,11 +21,13 @@ var userSchema = mongoose.Schema({
 
 // genera hash
 userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+   // return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+   return bcrypt.hashSync(password);
 };
 
 // chequea si el  password es validp
 userSchema.methods.validPassword = function(password) {
+    console.log("COMPARAMOS"+bcrypt.compareSync(password, this.password));
     return bcrypt.compareSync(password, this.password);
 };
 
@@ -35,7 +37,7 @@ var hash = userSchema.methods.generateHash("alu123");
 //var pass = bcrypt.compareSync("veggies", hash);
     var user_prueba = new User({
         "email": "alu0100622492",
-        "password": "alu123"
+        "password": hash
 
     });
 

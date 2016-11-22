@@ -10,7 +10,7 @@ var session = require('express-session');
 //var GithubStrategy = require('passport-github').Strategy;
 var DropboxStrategy = require('passport-dropbox').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
-
+var bcrypt = require("bcrypt-nodejs");
 //const mongoose = require('mongoose');
 
 //*********************************************************
@@ -115,8 +115,8 @@ process.nextTick(function() {
       // Buscamos por el email para ver si existe
       
         User.findOne({ 'email' :  username }, function(err, user) {
-          console.log("Entramos a buscar usuario"+ user.email);
-          
+          console.log("Entramos a buscar usuario -> "+ user.email);
+            console.log("Entramos a buscar usuario y su password en mongo es -> "+ user.password);
             if (err){
               console.log("Ha ocurrido un error");
                 return done(err);
@@ -144,10 +144,12 @@ process.nextTick(function() {
               return done(null,false);
               
             }
-            console.log("PASS "+password);
-            // if (!user.validPassword(password)) {
-            var aux;
-            if(user.password != user.validPassword(password)){
+            var ra=  bcrypt.compareSync(password, user.password);;
+            console.log("RA"+ra);
+            console.log("PASSWORD "+password);
+            
+            
+            if (!user.validPassword(password)) {
               console.log("LA CONTRASEÑA NO COINCIDE");
               return done(null, false);
             }
