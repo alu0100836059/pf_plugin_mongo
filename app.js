@@ -22,8 +22,10 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'sesion', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 
 
@@ -182,6 +184,7 @@ app.get('/login',
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
+    console.log("USHARIOOO"+req.user);
     res.redirect('/');
   });
 
@@ -207,7 +210,11 @@ app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     console.log("RENDERIZO PROFILE");
-    res.render('profile', { user: req.user });
+    console.log("EMAIL"+req.user.email);
+    //console.log("PASSW"+req.user.password);
+    console.log("ID"+req.user._id);
+    //res.render('profile', { user: req.user });
+    res.render('profile',{id: req.user._id, username: req.user.email});
 });
 //app.get('/profile', passport.authenticationMiddleware(), renderProfile)
 
