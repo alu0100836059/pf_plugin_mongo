@@ -7,9 +7,10 @@ var bcrypt   = require('bcrypt-nodejs');
 
 mongoose.connect('mongodb://localhost/lista_usuarios', function(err, res) {  
       if(err) {
-          console.log('ERROR: connecting to Database. ' + err);
-      }
+          console.log('ERROR: connecting to Database MongoDB. ' + err);
+      }else{
     console.log("Conexion con exito a MONGO DATA BASE")
+      }
 });
 
 // define the schema for our user model

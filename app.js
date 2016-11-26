@@ -27,6 +27,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+//---
+app.use('/public', express.static(__dirname+'/public'));
+//---
+
+
 
 
 // passport.use(new DropboxStrategy({
@@ -132,8 +137,8 @@ process.nextTick(function() {
                   //     var newUser = new User();
       
                     
-                  //     newUser.local.email = username;
-                  //     newUser.local.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
+                  //     newUser.email = username;
+                  //     newUser.password = newUser.generateHash(password);//Generamos la contraseña con bcryptnodejs
       
                   //     // save the user
                   //     newUser.save(function(err) {
@@ -184,7 +189,7 @@ app.get('/login',
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log("USHARIOOO"+req.user);
+    //console.log("USHARIOOO"+req.user);
     res.redirect('/');
   });
 
