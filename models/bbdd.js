@@ -42,9 +42,21 @@ var hash = userSchema.methods.generateHash("alu123");
 
     });
 
+    var user_prueba_jaco = new User({
+        "email": "Jacobo_RG",
+        "password": "1234pepe"
+    });
+    
   var user1 = user_prueba.save(function (err) {
     if (err) { console.log(`Hubieron errores al guardar user:\n${err}`); return err; }
     console.log(`Saved: ${user_prueba}`);
+  });
+  
+  
+  
+  var user2 = user_prueba_jaco.save(function (err) {
+    if (err) { console.log(`Hubieron errores al guardar usuario jaco:\n${err}`); return err; }
+    console.log(`Saved: ${user_prueba_jaco}`);
   });
   
   Promise.all([user1]).then( function(value){ 
