@@ -8,7 +8,6 @@ body {
 	color: #666;
 }
 
-/* Typography */
 h1#title {
 	font-family: 'Roboto Slab', serif;
 	font-weight: 300;
@@ -51,7 +50,6 @@ p.small {
 }
 
 
-/* Layout */
 .container {
 	margin: 0;
 }
@@ -139,7 +137,7 @@ p.small {
 	transition: 0.5s;
 }
 
-/* Animation Delay */
+
 #logo {
   -webkit-animation-duration: 1s;
   -webkit-animation-delay: 2s;
