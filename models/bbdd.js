@@ -35,7 +35,9 @@ userSchema.methods.validPassword = function(password) {
 const User  = mongoose.model('User', userSchema);
 
 var hash = userSchema.methods.generateHash("alu123");
+var hash2 = userSchema.methods.generateHash("1234pepe");
 //var pass = bcrypt.compareSync("veggies", hash);
+
     var user_prueba = new User({
         "email": "alu0100622492",
         "password": hash
@@ -43,8 +45,8 @@ var hash = userSchema.methods.generateHash("alu123");
     });
 
     var user_prueba_jaco = new User({
-        "email": "Jacobo_RG",
-        "password": "1234pepe"
+        "email": "JacoboRG",
+        "password": hash2
     });
     
   var user1 = user_prueba.save(function (err) {
@@ -59,7 +61,7 @@ var hash = userSchema.methods.generateHash("alu123");
     console.log(`Saved: ${user_prueba_jaco}`);
   });
   
-  Promise.all([user1]).then( function(value){ 
+  Promise.all([user1], [user2]).then( function(value){ 
     console.log(util.inspect(value, {depth: null}));  
     //mongoose.connection.close(); 
   });
