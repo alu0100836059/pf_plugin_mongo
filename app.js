@@ -29,6 +29,7 @@ app.use(passport.session());
 
 //---
 app.use('/public', express.static(__dirname+'/public'));
+
 //---
 
 
@@ -116,13 +117,14 @@ process.nextTick(function() {
       console.log("LLEGAMOS A LA FUNCION LOCAL");
       console.log("USERNAME"+username);
       console.log("PASS"+password);
-      //console.log("USER"+User+"\n");
+       //console.log("USER"+User+"\n");
       
       // Buscamos por el email para ver si existe
       
         User.findOne({ 'email' :  username }, function(err, user) {
-          console.log("Entramos a buscar usuario -> "+ user.email);
-            console.log("Entramos a buscar usuario y su password en mongo es -> "+ user.password);
+          console.log("Usuario dentro de findone: "+user)
+          // console.log("Entramos a buscar usuario -> "+ user.email || '');
+          //   console.log("Entramos a buscar usuario y su password en mongo es -> "+ user.password || '');
             if (err){
               console.log("Ha ocurrido un error");
                 return done(err);
