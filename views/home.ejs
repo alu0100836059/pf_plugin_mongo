@@ -1,14 +1,4 @@
-<!--<head>-->
-<!--<link rel="stylesheet" href="../public/animate.css">-->
-<!--<link rel="stylesheet" href="../public/estilo_ejs.css">-->
-<!--</head>-->
-<!--<body>-->
-<!--	<h1>Apuntes Sistemas y Tecnologías Web</h1>-->
 
-<!--Insertar aquí lo de txt-->
-
-
-<!---------------->
 <html lang="en">
 
 <head>
@@ -23,12 +13,21 @@
 	<link rel="stylesheet" href="./public/estilo_ejs.css">
 </head>
 
-
-
 <body>
 	<% if (!user) { %>
-	<p>Bienvenido! Por favor, acceda al <a href="/login">log in</a>.</p>
-  	<p>Si no posee una cuenta, por favor <a href="/registro">regístrese</a>.</p>
+	<h1 id="title" class="hidden"><span id="logo">Bienvenido a los <span>Apuntes de SYTW</span></span></h1>
+	<!--<p>Por favor, acceda al <a href="/login">log in</a><p>-->
+	<br/><br/><br/><br/><br/>
+		<div class="botones_reg animated fadeInUp">
+			<!--<div class="box-header">-->
+			<a href="/login">Log in</a>
+			<!--</div>-->
+		<!--</div>-->
+		<!--<div class="login-box animated fadeInUp">-->
+			<!--<div class="box-header">-->
+			<a href="/registro">Registrarse</a>
+			<!--</div>-->
+		</div>
 <% } else { %>
 	
 	<p>Hello, <%= user.username %> enjoy the <a href="https://alu0100836059.github.io/Apuntes_SYTW/">book</a>.</p>

@@ -122,6 +122,25 @@ a:hover {
 	outline: none;
 }
 
+.botones_reg a {
+	margin-top: 10px;
+	border: 0;
+	border-radius: 2px;
+	color: white;
+	padding: 10px;
+	text-transform: uppercase;
+	font-weight: 400;
+	font-size: 2em;
+	letter-spacing: 1px;
+	background-color: #665851;
+	cursor:pointer;
+	outline: none;
+	text-align: center;
+	margin-left: 27%;
+
+}
+
+
 .login-box button:hover {
 	opacity: 0.7;
 	transition: 0.5s;
