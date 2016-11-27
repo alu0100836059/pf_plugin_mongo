@@ -2,14 +2,14 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Daily UI - Day 1 Sign In</title>
+	<title>Registro</title>
 
 	<!-- Google Fonts -->
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
 
-	<link rel="stylesheet" href="..public/animate.css">
+	<link rel="stylesheet" href="./public/animate.css" type="text/css">
 	<!-- Custom Stylesheet -->
-	<link rel="stylesheet" href="..public/estilo_ejs.css">
+	<link rel="stylesheet" href="./public/estilo_ejs.css" type="text/css">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
@@ -25,24 +25,34 @@
 			<div class="box-header">
 				<h2>Registro</h2>
 			</div>
+			<!--funciona-->
 			<form  id="form_registro" action="/registro" method="post">
-			<!--<label for="Username:">Username</label>-->
+			<!--	hasta aqui funciona-->
+			<label for="Username:">Username</label>
+			<br/>
+			<input type="text" id="username" name="username_reg">
+			<!--funciona-->
+			<!--<label>Username:</label>-->
 			<!--<br/>-->
-			<!--<input type="text" id="username" name="username">-->
-			<label>Username:</label>
-			<br/>
-            <input type="text" name="username_reg" />
-			<br/>
-			<!--<label for="Password:">Password</label>-->
+   <!--         <input type="text" name="username_reg" />-->
 			<!--<br/>-->
-			<!--<input type="password" id="password" name="password">-->
-			<label>Password:</label>
-            <input type="password" name="password_reg" />
+			<!--hasta aqui funciona-->
+			<label for="Password:">Password</label>
 			<br/>
-			<!--<button type="submit" value="submit">Sign In</button>-->
-			<input type="submit" value="Submit" />
+			<input type="password" id="password" name="password_reg">
+			<!--funciona-->
+			<!--<label>Password:</label>-->
+   <!--         <input type="password" name="password_reg" />-->
 			<br/>
+			<!--hasta aqui funciona-->
+			<button type="submit">Registrarse</button>
+			<!--funciona-->
+			<!--<input type="submit" value="Submit" />-->
+			<!--hasta aqui funciona-->
+			<br/>
+			<!--funciona-->
 			</form>
+			<!--hasta aqui funciona-->
 		</div>
 		
 	</div>

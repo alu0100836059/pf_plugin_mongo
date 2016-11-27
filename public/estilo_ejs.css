@@ -8,7 +8,7 @@ body {
 	color: #666;
 }
 
-h1#title {
+#title {
 	font-family: 'Roboto Slab', serif;
 	font-weight: 300;
 	font-size: 3.2em;
@@ -22,7 +22,7 @@ h1#title {
 	top: 0px;
 }
 
-h1#title span span {
+#title span span {
 	font-weight: 400;
 }
 
@@ -44,7 +44,7 @@ a:hover {
 	color: #aeaeae;
 }
 
-p.small {
+.small {
 	font-size: 0.8em;
 	margin: 20px 0 0;
 }
