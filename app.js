@@ -185,6 +185,32 @@ app.get('/registro',
   function(req, res){
     res.render('registro');
 });
+//////////////////////////// AQUIIIIII  //////////////////////////////////////
+// Obteniendo datos de registro
+// var formulario = document.forms['form_registro'];
+// var password_reg = formulario['password_reg'].value;
+// var username_reg = formulario['username_reg'].value;
+
+app.post('/registro', function(req, res){ // Comprobar
+
+  var hash = User.userSchema.methods.generateHash(password_reg);
+  console.log("\n\n Hash GENERADO: "+hash)
+    var user_prueba = new User({
+        "email": req.query.username_reg,
+        "password": hash
+
+    });
+    
+  var user_reg = user_prueba.save(function (err) {
+    if (err) { console.log(`Hubieron errores al guardar user:\n${err}`); return err; }
+    console.log(`Usuario guardado desde REGISTRO: ${user_prueba}`);
+  });
+  
+  // Promise.all([user1], [user2]).then( function(value){ 
+  //   console.log(util.inspect(value, {depth: null}));  
+  //   //mongoose.connection.close(); 
+  // });
+});
 
 // app.post('/login',
 //     passport.authenticate('local', {
