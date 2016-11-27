@@ -207,6 +207,7 @@ app.post('/registro', function(req, res, next){
   });
   
   console.log("\n\nLLEGAMOS HASTA DESPUES DEL GUARDADO");
+  res.redirect('login');
   ////////////////////
   // var hash = User.userSchema.methods.generateHash(pssw);
   // console.log("\n\n Hash GENERADO: "+hash)
