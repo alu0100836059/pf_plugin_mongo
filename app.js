@@ -191,20 +191,35 @@ app.get('/registro',
 // var password_reg = formulario['password_reg'].value;
 // var username_reg = formulario['username_reg'].value;
 
-app.post('/registro', function(req, res){ // Comprobar
-
-  var hash = User.userSchema.methods.generateHash(password_reg);
-  console.log("\n\n Hash GENERADO: "+hash)
-    var user_prueba = new User({
-        "email": req.query.username_reg,
-        "password": hash
-
-    });
-    
-  var user_reg = user_prueba.save(function (err) {
-    if (err) { console.log(`Hubieron errores al guardar user:\n${err}`); return err; }
-    console.log(`Usuario guardado desde REGISTRO: ${user_prueba}`);
+app.post('/registro', function(req, res, next){ 
+  var pssw = req.body.password_reg;
+  var name = req.body.username_reg;
+  
+  ////////////////////
+  var newUser = new User();
+  newUser.email = name;
+  newUser.password = newUser.generateHash(pssw);//Generamos la contraseña con bcryptnodejs
+      
+  // save the user
+  newUser.save(function(err) {
+      if (err)
+          throw err;
   });
+  
+  console.log("\n\nLLEGAMOS HASTA DESPUES DEL GUARDADO");
+  ////////////////////
+  // var hash = User.userSchema.methods.generateHash(pssw);
+  // console.log("\n\n Hash GENERADO: "+hash)
+  //   var user_prueba = new User({
+  //       "email": name,
+  //       "password": hash
+
+  //   });
+    
+  // var user_reg = user_prueba.save(function (err) {
+  //   if (err) { console.log(`Hubieron errores al guardar user:\n${err}`); return err; }
+  //   console.log(`Usuario guardado desde REGISTRO: ${user_prueba}`);
+  // });
   
   // Promise.all([user1], [user2]).then( function(value){ 
   //   console.log(util.inspect(value, {depth: null}));  
