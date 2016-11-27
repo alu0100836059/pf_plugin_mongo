@@ -16,7 +16,6 @@
 <body>
 	<% if (!user) { %>
 	<h1 id="title" class="hidden"><span id="logo">Bienvenido a los <span>Apuntes de SYTW</span></span></h1>
-	<!--<p>Por favor, acceda al <a href="/login">log in</a><p>-->
 	<br/><br/><br/><br/><br/>
 		<div class="botones_reg animated fadeInUp">
 			<!--<div class="box-header">-->
@@ -29,7 +28,18 @@
 			<!--</div>-->
 		</div>
 <% } else { %>
-	
-	<p>Hello, <%= user.username %> enjoy the <a href="https://alu0100836059.github.io/Apuntes_SYTW/">book</a>.</p>
-<% } %>
+	<h1 id="title" class="hidden"><span id="logo"><span>Autenticación correcta</span></span></h1>
+	<br/><br/><br/><br/><br/>
+		<div class="botones_reg animated fadeInUp">
+			<!--<div class="box-header">-->
+			<!--<a href="/login">Log in</a>-->
+			<!--</div>-->
+		<!--</div>-->
+		<!--<div class="login-box animated fadeInUp">-->
+			<!--<div class="box-header">-->
+			<a id="acceso" href="https://alu0100836059.github.io/Apuntes_SYTW/">Apuntes SYTW</a>
+			<!--</div>-->
+		</div>
+	<!--<p>Hello, <%= user.username %> enjoy the <a href="https://alu0100836059.github.io/Apuntes_SYTW/">book</a>.</p>-->
+<!--<% } %>-->
 </body>

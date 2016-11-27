@@ -15,7 +15,7 @@ body {
 	color: white;
 	text-shadow: 0 0 10px rgba(0,0,0,0.8);
 	margin: 0 auto;
-	padding-top: 180px;
+	padding-top: 100px;
 	max-width: 300px;
 	text-align: center;
 	position: relative;
@@ -137,6 +137,24 @@ a:hover {
 	outline: none;
 	text-align: center;
 	margin-left: 27%;
+
+}
+
+#acceso {
+	margin-top: 10px;
+	border: 0;
+	border-radius: 2px;
+	color: white;
+	padding: 10px;
+	text-transform: uppercase;
+	font-weight: 400;
+	font-size: 2em;
+	letter-spacing: 1px;
+	background-color: #665851;
+	cursor:pointer;
+	outline: none;
+	text-align: center;
+	margin-left: 42%;
 
 }
 
