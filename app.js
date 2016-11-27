@@ -180,6 +180,12 @@ app.get('/login',
     res.render('login');
 });
 
+
+app.get('/registro',
+  function(req, res){
+    res.render('registro');
+});
+
 // app.post('/login',
 //     passport.authenticate('local', {
 //       successRedirect: '/',
