@@ -61,7 +61,7 @@ var hash2 = userSchema.methods.generateHash("1234pepe");
     console.log(`Saved: ${user_prueba_jaco}`);
   });
   
-  Promise.all([user1], [user2]).then( function(value){ 
+  Promise.all([user1],[user2]).then( function(value){ 
     console.log(util.inspect(value, {depth: null}));  
     //mongoose.connection.close(); 
   });

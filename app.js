@@ -122,7 +122,7 @@ process.nextTick(function() {
       // Buscamos por el email para ver si existe
       
         User.findOne({ 'email' :  username }, function(err, user) {
-          console.log("Usuario dentro de findone: "+user)
+          console.log("Usuario dentro de findone: "+user);
           // console.log("Entramos a buscar usuario -> "+ user.email || '');
           //   console.log("Entramos a buscar usuario y su password en mongo es -> "+ user.password || '');
             if (err){
@@ -201,13 +201,11 @@ app.post('/registro', function(req, res, next){
   newUser.email = name;
   newUser.password = newUser.generateHash(pssw);//Generamos la contraseña con bcryptnodejs
       
-  // save the user
   newUser.save(function(err) {
       if (err)
           throw err;
   });
   
-  console.log("\n\nLLEGAMOS HASTA DESPUES DEL GUARDADO");
   res.redirect('/login');
   ////////////////////
   // var hash = User.userSchema.methods.generateHash(pssw);
@@ -262,11 +260,31 @@ app.post('/login/password', function(req, res, next) {
   console.log("\nnew_pass_2: " + new_pass_2);
   console.log("\nNombre: " + name);
   
-  if(new_pass == new_pass_2)
-  res.redirect('/login');
-  else
-  res.redirect('/err');
-  
+  if(new_pass == new_pass_2){
+    
+    User.findOne({'email': name}, function(err, user){
+      // encripta ok
+      var hash_2 = bcrypt.hashSync(new_pass);
+      console.log("\n\nContraseña antigua: "+ user.password);
+      console.log("\n\nContraseña antigua hasheada antes update: "+ hash_2);
+      var _id = user._id;
+      console.log("\n\nUser_id: "+_id);
+      // var hash_2 = user.generateHash(new_pass);
+      if (err){
+        res.redirect('/err');
+      }
+      User.db.lista_usuarios.update(
+        {'_id': _id},
+        {"$set":{'password': hash_2}});
+        console.log("\n\nNueva CONTRASEÑA: "+ user.password);
+        res.redirect('/login');
+    });
+    // user.password = hash_2;
+    // });
+     }else
+     {
+       res.redirect('/err');
+     }
 });
 
 // app.get('/loginSuccess', function(req, res, next) {
