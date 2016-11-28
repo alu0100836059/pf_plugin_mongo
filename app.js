@@ -267,24 +267,42 @@ app.post('/login/password', function(req, res, next) {
       var hash_2 = bcrypt.hashSync(new_pass);
       console.log("\n\nContraseña antigua: "+ user.password);
       console.log("\n\nContraseña antigua hasheada antes update: "+ hash_2);
-      var _id = user._id;
-      console.log("\n\nUser_id: "+_id);
+      // var _id = user._id;
+      // console.log("\n\nUser_id: "+_id);
       // var hash_2 = user.generateHash(new_pass);
       if (err){
         res.redirect('/err');
       }
-      User.db.lista_usuarios.update(
-        {'_id': _id},
-        {"$set":{'password': hash_2}});
-        console.log("\n\nNueva CONTRASEÑA: "+ user.password);
-        res.redirect('/login');
-    });
+      user.password = hash_2;
+      user.save(function(err) {
+        if (err) throw err;
+        
+        console.log("\n\nModificada contraseña: "+ user)
+      });
+  //     /// bueno///
+  //     User.findOneAndUpdate({ username: name }, { password: hash_2 }, function(err, user) {
+  // if (err) throw err;
+
+  // // we have the updated user returned to us
+  // console.log(user);
+// });
+/////////////
+    //   User.db.lista_usuarios.update(
+    //     {'_id': _id},
+    //     {"$set":{'password': hash_2}});
+    //     console.log("\n\nNueva CONTRASEÑA: "+ user.password);
+    //     res.redirect('/login');
+    // });
     // user.password = hash_2;
     // });
-     }else
-     {
+    });
+    res.redirect('/login');
+    
+  }
+     else
+     
        res.redirect('/err');
-     }
+     
 });
 
 // app.get('/loginSuccess', function(req, res, next) {
