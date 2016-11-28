@@ -192,6 +192,7 @@ app.get('/registro',
 // var username_reg = formulario['username_reg'].value;
 
 app.post('/registro', function(req, res, next){ 
+  
   var pssw = req.body.password_reg;
   var name = req.body.username_reg;
   
@@ -207,7 +208,7 @@ app.post('/registro', function(req, res, next){
   });
   
   console.log("\n\nLLEGAMOS HASTA DESPUES DEL GUARDADO");
-  res.redirect('login');
+  res.redirect('/login');
   ////////////////////
   // var hash = User.userSchema.methods.generateHash(pssw);
   // console.log("\n\n Hash GENERADO: "+hash)
@@ -249,7 +250,24 @@ app.get('/loginFailure', function(req, res, next) {
 
 app.get('/login/password', function(req, res, next) {
     res.render('cambio_pass');
-})
+});
+
+app.post('/login/password', function(req, res, next) {
+  var new_pass = req.body.password_new;
+  var new_pass_2 = req.body.password_new_2;
+  var name = req.body.username;
+  
+  console.log("Estamos en /login/password:::\n");
+  console.log("new_pass: " + new_pass);
+  console.log("\nnew_pass_2: " + new_pass_2);
+  console.log("\nNombre: " + name);
+  
+  if(new_pass == new_pass_2)
+  res.redirect('/login');
+  else
+  res.redirect('/err');
+  
+});
 
 // app.get('/loginSuccess', function(req, res, next) {
 //   res.send('Successfully authenticated');
