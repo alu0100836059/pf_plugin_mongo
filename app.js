@@ -247,6 +247,10 @@ app.get('/loginFailure', function(req, res, next) {
     res.send('Failed to authenticate');
 });
 
+app.get('/login/password', function(req, res, next) {
+    res.render('cambio_pass');
+})
+
 // app.get('/loginSuccess', function(req, res, next) {
 //   res.send('Successfully authenticated');
 // });
