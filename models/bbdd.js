@@ -1,6 +1,3 @@
-// app/models/user.js
-// load the things we need
-
 var util = require('util');
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
@@ -9,7 +6,7 @@ mongoose.connect('mongodb://localhost/lista_usuarios', function(err, res) {
       if(err) {
           console.log('ERROR: connecting to Database MongoDB. ' + err);
       }else{
-    console.log("Conexion con exito a MONGO DATA BASE")
+    console.log("Conexion con exito a MONGO DATA BASE");
       }
 });
 
@@ -26,7 +23,7 @@ userSchema.methods.generateHash = function(password) {
   return bcrypt.hashSync(password);
 };
 
-// chequea si el  password es validp
+// chequea si el  password es valido
 userSchema.methods.validPassword = function(password) {
     console.log("COMPARAMOS"+bcrypt.compareSync(password, this.password));
     return bcrypt.compareSync(password, this.password);
