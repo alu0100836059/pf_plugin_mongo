@@ -1,6 +1,6 @@
 {
   "name": "gitbook-start-mongo-noejaco",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "LocalStrategy y base de datos MongoDB",
   "main": "gitbook-start-mongo.js",
   "scripts": {
@@ -64,6 +64,7 @@
     "gulp": "~3.9.1",
     "gulp-gh-pages": "^0.5.4",
     "gulp-shell": "~0.5.2",
+    "heroku-client": "^3.0.0-beta3",
     "minimist": "^1.2.0",
     "mongoose": "^4.6.8",
     "octonode": "^0.7.6",
@@ -98,6 +99,7 @@
     "gulp-install": "~0.6.0",
     "gulp-run": "^1.7.1",
     "gulp-shell": "^0.5.2",
+    "heroku-client": "^3.0.0-beta3",
     "inquirer": "^1.2.2",
     "minimatch": "^3.0.3",
     "minimist": "^1.2.0",
