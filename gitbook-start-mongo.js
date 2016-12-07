@@ -1,7 +1,14 @@
-var fs = require('fs');
+// Comentado, incluido en fs-extra
+// var fs = require('fs');
+
 var path = require('path');
 var child = require("child_process");
-var fs_extended = require('fs-extended');
+
+// Comentado fs_extended porque no encuentra el módulo: deprecated!?
+// var fs_extended = require('fs-extended');
+
+var fs = require('fs-extra');
+
 var prompt = require("prompt");
 var heroku = require('heroku-client');
 
@@ -20,32 +27,32 @@ function initialize(directorio) {
             heroku.deploy();
      });`;
 
-    fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
+     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
         if(err)
         console.log(err);
         console.log("Se ha copiado app.js");
      });
 
-      fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
+     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
         if(err)
         console.log(err);
      });
 
      // Copiando el contenido necesario para la base de datos
      // Carpeta models con bbdd.js
-     fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){
+     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){
        if(err)
        console.log(err);
      });
 
      // Carpeta data con las bases de datos administradas
-     fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
+     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
        if(err)
        console.log(err);
      });
 
      // Archivo mongod para la puesta en marcha de la bbdd
-     fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
+     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
          if(err)
          console.log(err);
       });
@@ -58,7 +65,7 @@ function initialize(directorio) {
         }
     });
 
-    fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
+    fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
         if(err)
         console.log(err);
      });

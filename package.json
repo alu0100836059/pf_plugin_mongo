@@ -1,6 +1,6 @@
 {
   "name": "gitbook-start-mongo-noejaco",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "LocalStrategy y base de datos MongoDB",
   "main": "gitbook-start-mongo.js",
   "scripts": {
@@ -53,7 +53,7 @@
     "express": "^4.14.0",
     "express-session": "^1.11.3",
     "fs": "0.0.1-security",
-    "fs-extra": "^0.22.1",
+    "fs-extra": "^1.0.0",
     "gh-pages": "^0.3.1",
     "git-url-parse": "^6.0.7",
     "gitbook": "^2.1.0",
