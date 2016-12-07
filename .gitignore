@@ -37,4 +37,4 @@ node_modules/
 ./publish
 
 # Base de datos
-./data
+data/
