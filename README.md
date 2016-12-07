@@ -27,7 +27,7 @@ _Nota: Se hará uso de la base de datos ___MongoDB____
 ### Pasos a seguir:
 
 #### Instalación del plugin
-Una vez instalado el paquete principal, deberemos al mismo de un package.json, para ello escribiremos en consola:
+Una vez instalado el paquete principal, deberemos proveer al mismo de un package.json, para ello escribiremos en consola:
 ~~~
 npm init -y
 ~~~
