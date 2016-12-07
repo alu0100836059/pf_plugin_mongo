@@ -16,37 +16,44 @@ function initialize(directorio) {
     console.log("\nEspere mientras el proceso termina ...")
 
     var contenido = `gulp.task("deploy-heroku-oauth" ,function(){
-            var heroku = require("gitbook-start-heroku-token-oauth-noejaco17");
+            var heroku = require("gitbook-start-mongo-noejaco");
             heroku.deploy();
      });`;
-    //  fs.copyFile(path.join(__dirname,'..','book.json'),"./" + directorio + "/book.json",function(err){
-    //       if(err)
-    //       console.log(err);
-    //     });
-    //Copia el server.js
-    fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
+    /
+    fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
         if(err)
         console.log(err);
      });
 
-      fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
+      fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
         if(err)
         console.log(err);
      });
 
-    //  fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','public'),path.join(process.cwd(), 'public'),function(err){
-    //     if(err)
-    //     console.log(err);
-    //  });
+     // Copiando el contenido necesario para la base de datos
+     fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){
+       if(err)
+       console.log(err);
+     });
+
+     fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
+       if(err)
+       console.log(err);
+     });
+
+     fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
+         if(err)
+         console.log(err);
+      });
+
 
     //añadimos la tarea
     fs.writeFileSync(path.resolve(process.cwd()+"/"+directorio,'gulpfile.js'), contenido,  {'flag':'a'},  function(err) {
         if (err) {
-            return console.error(err);
+        console.error(err);
         }
-
-
     });
+
     fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
         if(err)
         console.log(err);

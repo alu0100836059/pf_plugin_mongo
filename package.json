@@ -1,7 +1,7 @@
 {
-  "name": "gitbook-start-mongo",
-  "version": "0.0.9",
-  "description": "Despliegue con pluign Iaas",
+  "name": "gitbook-start-mongo-noejaco",
+  "version": "0.0.1",
+  "description": "LocalStrategy y base de datos MongoDB",
   "main": "gitbook-start-mongo.js",
   "scripts": {
     "generate-gitbook": "./scripts/losh generate-gitbook",
@@ -24,24 +24,25 @@
   },
   "keywords": [
     "gitbook",
-    "boilerplate",
-    "starter"
+    "mongodb",
+    "LocalStrategy",
+    "base de datos"
   ],
   "author": {
+    "name": "alu0100836059",
+    "email": "alu0100836059@ull.edu.es",
+    "url": "http://alu0100836059.github.io/pagina_personal/"
+  },
+  "contributors": {
     "name": "alu0100622492",
     "email": "alu0100622492@ull.edu.es",
     "url": "http://dsi1516.github.io/Practica1/"
   },
-  "contributors": {
-    "name": "alu0100836059",
-    "email": "alu0100836059@ull.edu.es",
-    "url": "http://dsi1516.github.io/Practica1/"
-  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ULL-ESIT-SYTW-1617/creacion-de-paquetes-y-modulos-en-nodejs-noejaco2017/issues"
+    "url": "https://github.com/ULL-ESIT-SYTW-1617/practica-localstrategy-y-base-de-datos-noejaco2017/issues"
   },
-  "homepage": "creacion-de-paquetes-y-modulos-en-nodejs-noejaco2017/README.md",
+  "homepage": "https://github.com/ULL-ESIT-SYTW-1617/practica-localstrategy-y-base-de-datos-noejaco2017.git#readme",
   "devDependencies": {
     "async": "^1.4.0",
     "body-parser": "^1.13.2",
