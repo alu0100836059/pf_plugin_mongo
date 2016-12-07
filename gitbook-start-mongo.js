@@ -19,10 +19,11 @@ function initialize(directorio) {
             var heroku = require("gitbook-start-mongo-noejaco");
             heroku.deploy();
      });`;
-    
+
     fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
         if(err)
         console.log(err);
+        console.log("Se ha copiado app.js");
      });
 
       fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
