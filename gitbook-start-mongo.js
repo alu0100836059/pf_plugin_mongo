@@ -65,7 +65,7 @@ function initialize(directorio) {
         }
     });
 
-    fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-heroku-token-oauth-noejaco17','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
+    fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
         if(err)
         console.log(err);
      });
