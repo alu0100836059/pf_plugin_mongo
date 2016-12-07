@@ -31,16 +31,19 @@ function initialize(directorio) {
      });
 
      // Copiando el contenido necesario para la base de datos
+     // Carpeta models con bbdd.js
      fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){
        if(err)
        console.log(err);
      });
 
+     // Carpeta data con las bases de datos administradas
      fs.copyDir(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
        if(err)
        console.log(err);
      });
 
+     // Archivo mongod para la puesta en marcha de la bbdd
      fs_extended.copyFile(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
          if(err)
          console.log(err);

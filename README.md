@@ -1,56 +1,51 @@
-# Práctica: Autenticación OAuth con Passport
+# Práctica: LocalStrategy y base de datos
 
 
 ![imagen1][logo]
 [logo]: https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQmTdns2SIHRywqRrwjOmWCewbAPJKjv5s_iblApWlTryhkwB1n
 
+![imagen2][logo2]
+[logo2]: http://1.bp.blogspot.com/-FagQLEI_Zhc/VnAzE9L8e3I/AAAAAAAAAFk/DWPqvL0ZXo8/s1600/mongodb.jpg
+
+
 
 ## Descripción de la práctica
+El servidor proveído por el plugin (iaas o heroku) deberá autenticar al lector del libro usando LocalStrategy y una base de datos en la que se guarda información acerca de los usuarios.
+Se utilizará projects de Github en el seguimiento y desarrollo de esta práctica.
+_Nota: Se hará uso de la base de datos ___MongoDB____
 
-### Objetivo:
-El servidor proveído por el plugin (sea iaaso heroku) deberá autenticar que el lector del libro pertenece a una organización dada de GitHub (por ejemplo ULL-ESIT-SYTW-1617). Si es el caso que pertenece podrá seguir leyendo el libro, sino será redirigido a la ruta de autenticación.
 
-Puede partir de los repos de los plugins que ha usado en prácticas anteriores o crear unos nuevos
-
+#### Paquetes necesarios
+  * Plugin principal
+    * [instalación](https://www.npmjs.com/package/gitbook-start-plugin-general-noejaco17)
+  * Node.js
+  * npm
+  * MongoDB:
+    * [tuto-instalación-ubuntu](http://www.mongodbspain.com/es/2014/08/30/install-mongodb-on-ubuntu-14-04/)
+    * [tuto-instalación-windows](http://es.slideshare.net/MarcoAntonioTuzCastillo/manual-de-como-instalar-mongo-db-en-windows)
 
 ### Pasos a seguir:
 
 #### Instalación del plugin
-Para ello nos serviremos del paquete [npm-gitbook-start](https://www.npmjs.com/package/gitbook-start-team-noejaco2017-2.0) y seguiremos las instrucciones indicadas.
+Una vez instalado el paquete principal, deberemos al mismo de un package.json, para ello escribiremos en consola:
+~~~
+npm init -y
+~~~
+Esto nos generará un package.json, con la opción -y evitamos tener que interactuar con el prompt de npm puesto que en este caso no necesitamos configuración ninguna.
 
-Una vez finalizado este paso, tendremos un servidor Express desplegado en la IP indicada así como nuevas tareas añadidas al fichero __gulpfile.js__.
-#### Paquetes necesarios
-Deberemos contar con Node.js y npm instalados en nuestra máquina.
+Llegados a este punto ya podemos comenzar con la instalación del plugin dedicado a LocalStrategy y MongoDB, lo haremos mediante el siguiente comando:
+~~~
+[sudo] npm i --save gitbook-start-mongo-noejaco
+~~~
 
 Instalación de los paquetes y dependencias necesarias para el correcto funcionamiento:
 ~~~
 $ npm install
 ~~~
 
-#### Despliegue del libro
-A continuación debemos desplegar el libro a través de la nueva tarea generada.
-
-Para ello ejecutamos por consola:
-~~~
-$ gulp deploy
-~~~
-
-
-#### Desplegar el servidor Express
-En la línea de comandos ingresamos:
-~~~
-node app.js
-~~~
-Esto nos permitirá ingresar en el prompt nuestro nombre de usuario y nuestra contraseña, una vez ingresados, correrá el servidor y nos proporcionará información acerca de la ubicación del mismo.
-#### Acceso al libro
-Como último paso deberemos acceder a la ubicación del servidor proporcionada en el paso anterior.
-Lo que veremos será una página de logueo en la que haremos click sobre `login` para acceder al libro.
-
-
-
 ### MongoDB with c9
 
-sudo apt-get install -y mongodb-org
+
 
 MongoDB is preinstalled in your workspace. To run MongoDB, run the following below (passing the correct parameters to it). Mongodb data will be stored in the folder data.
 $ mkdir data
