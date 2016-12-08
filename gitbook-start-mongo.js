@@ -38,6 +38,11 @@ function initialize(directorio) {
         console.log(err);
      });
 
+     // Copiando la carpeta public con los estilos personalizados
+     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','public'),path.join(process.cwd()+"/"+directorio, 'public'),function(err){
+        if(err)
+        console.log(err);
+     });
      // Copiando el contenido necesario para la base de datos
      // Carpeta models con bbdd.js
      fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){

@@ -166,14 +166,21 @@ app.get('/profile',
     res.render('profile',{id: req.user._id, username: req.user.email});
 });
 
-var port = process.env.PORT || 8080;
-var ip = process.env.IP || '0.0.0.0';
-var addr = `${ip}:${port}`;
+// Para su ejecucion desde c9.io
+// var port = process.env.PORT || 8080;
+//var ip = process.env.IP || '0.0.0.0';
+//var addr = `${ip}:${port}`;
 //app.set('port', (process.env.PORT || 8080));
 
+// app.listen(port,ip,function(){
+//     console.log(`chat server listening at ${addr,ip}`);
 
 
-app.listen(port,ip,function(){
-    console.log(`chat server listening at ${addr,ip}`);
+
+app.set('port', (process.env.PORT || 8080));
+
+
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'));
 });
 module.exports = app;
