@@ -27,32 +27,32 @@ function initialize(directorio) {
             heroku.deploy();
      });`;
 
-     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
+     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
         if(err)
         console.log(err);
         console.log("Se ha copiado app.js");
      });
 
-     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
+     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','views'),path.join(process.cwd()+"/"+directorio, 'views'),function(err){
         if(err)
         console.log(err);
      });
 
      // Copiando el contenido necesario para la base de datos
      // Carpeta models con bbdd.js
-     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){
+     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','models'), path.join(process.cwd()+"/"+directorio, 'models'), function(err){
        if(err)
        console.log(err);
      });
 
      // Carpeta data con las bases de datos administradas
-     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
+     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
        if(err)
        console.log(err);
      });
 
      // Archivo mongod para la puesta en marcha de la bbdd
-     fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
+     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
          if(err)
          console.log(err);
       });
@@ -65,7 +65,7 @@ function initialize(directorio) {
         }
     });
 
-    fs.copySync(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
+    fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
         if(err)
         console.log(err);
      });
@@ -101,8 +101,7 @@ function deploy() {
 function datos_usuario_token(directorio){
      //pedimos por pantall el nombre de la app y el token
       var git = require('simple-git')(path.join(process.cwd()));
-      //console.log("hfhfhfhfhf   " + path.join(process.cwd()));
-       prompt.get([{
+      prompt.get([{
               name: 'nombre_app',
               required: true
             },{
