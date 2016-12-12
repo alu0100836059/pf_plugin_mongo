@@ -35,13 +35,42 @@ Esto nos generará un package.json, con la opción -y evitamos tener que interac
 
 Llegados a este punto ya podemos comenzar con la instalación del plugin dedicado a LocalStrategy y MongoDB, lo haremos mediante el siguiente comando:
 ~~~
-[sudo] npm i --save gitbook-start-mongo-noejaco
+[sudo] npm i[nstall] --save gitbook-start-mongo-noejaco
 ~~~
 
-Instalación de los paquetes y dependencias necesarias para el correcto funcionamiento:
+Finalizada la instalación podremos ya ejecutar la opción --mongodb de nuestro paquete principal. Para ello escribimos en consola el siguiente comando:
 ~~~
-$ npm install
+gitbook-start --mongodb mongo --directorio nombre_directorio --heroku nombre_app
 ~~~
+Cuando acabe presionaremos la tecla intro y la aplicación nos pedirá por consola los datos de nuestra aplicación así como los de github.
+Una vez introducidos se nos habrá creado el directorio con nombre: nombre_directorio. Deberemos acceder a él (cd nombre_directorio) e instalar los paquetes necesarios a través de:
+~~~
+npm i[nstall]
+~~~
+
+___Nota___: En caso de dar problemas de no encontrar los módulos debido a un conflicto de paquetes, ejecutar su instalación manualmente- Esto puede suceder con un número muy reducido de paquetes. Para su instalación:
+~~~
+npm install --save nombre_paquete
+~~~
+
+Finalizada la instalación tendremos lo necesario para arrancar nuestra aplicación mediante:
+
+Node, de forma local:
+~~~
+node app.js
+~~~
+
+A continuación en el navegador accedemos a: localhost:8080
+
+Heroku:
+~~~
+gulp deploy-heroku-oauth
+~~~
+
+A continuación nos dirigimos a la página oficial de Heroku y accedemos a nuestra aplicación.
+
+
+
 
 ### MongoDB with c9
 
@@ -84,4 +113,4 @@ $ mongo (show db)(use lista)(show collections)
 ## Autores
 [Noé Campos](http://dsi1516.github.io/Practica1/)
 
-[Jacobo](https://ull-esit-sytw-1617.github.io/tareas-iniciales-noejaco2017/)
+[Jacobo](http://alu0100836059.github.io/pagina_personal/)
