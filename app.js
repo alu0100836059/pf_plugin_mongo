@@ -11,6 +11,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require("bcrypt-nodejs");
 var github = require('octonode');
 var url=require('url');
+var mongoose = require("mongoose");
 
 //#################### LOCAL STRATEGY WITH MONGODB
 app.set('views', __dirname + '/views');
@@ -22,6 +23,27 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/public', express.static(__dirname+'/public'));
 
+// mongoose.connect(process.env.MONGOLAB_ONYX_URI, function(err, res){
+//   if(err){
+//     console.log("Falló la conexion con mongodbLAB");
+//   }else{
+//     console.log("Conexión establecida");
+
+//   }
+// });
+
+
+
+// mongoose.connect(process.env.MONGOLAB_ONYX_URI, options);
+
+// var conn = mongoose.connection;
+// //
+// conn.on('error', console.error.bind(console, 'connection error:'));
+// //
+// conn.once('open', function() {
+
+
+
 passport.serializeUser(function(user, done) {
     console.log("SERIALIZER USER"+user);
     done(null, user);
@@ -32,7 +54,17 @@ passport.deserializeUser(function(user, done) {
       done(null, user);
 });
 
+
 var User = require('./models/bbdd.js');
+console.log("HAY ALGO EN USER????????"+ User);
+//var User = mongoose.model('User');
+//var User = require(path.resolve(process.cwd(),"./models/bbdd.js"));
+//var User = mongoose.model(process.env.MONGOLAB_ONYX_URI);
+// var User =require('mongodb://heroku_xmctthpj:s1kgd3jt1aogoahshmrsmjr1qn@ds119508.mlab.com:19508/heroku_xmctthpj');
+//var User = process.env.MONGODB_URI ;
+
+//var User =  process.env.MONGODB_URI || 'mongodb://heroku_b5dq9n3f:fhmra89oe8gfpn3lchtiffna38@ds151208.mlab.com:51208/heroku_b5dq9n3f';
+
 
 passport.use(new LocalStrategy(function(username, password, done) {
 process.nextTick(function() {
@@ -41,8 +73,36 @@ process.nextTick(function() {
       console.log("USERNAME"+username);
       console.log("PASS"+password);
 
-      User.findOne({ 'email' :  username }, function(err, user) {
-        console.log("Usuario dentro de findone: "+user);
+
+var mongodbUri = process.env.MONGODB_URI || 'mongodb://heroku_b5dq9n3f:fhmra89oe8gfpn3lchtiffna38@ds151208.mlab.com:51208/heroku_b5dq9n3f';
+
+//
+
+//mongoose.connect(mongodbUri);
+
+var conn =mongoose.createConnection(mongodbUri);
+//
+conn.on('error', console.error.bind(console, 'connection error en BUSCANDO usuarios en la bbdd:'));
+//
+conn.once('open', function() {
+
+    console.log("La Conexion con la bbdd ha sido satisfactoria PASSPORT =)");
+    console.log("ME CAGO USER VALOR"+User);
+  //var User = require('./models/bbdd.js');
+
+  // conn.stdout.on('data', function (data) {
+  //     console.log('stdout: ' + data);
+  //   });
+  //   conn.stderr.on('data', function (data) {
+  //     console.log('stderr: ' + data);
+  //   });
+  //   conn.on('exit', function (code) {
+  //     console.log('mongodump exited with code ' + code);
+  //   });
+
+  //NI FIND NI FONDONE Oo
+      User.find({ 'email' :  username }, function(err, user) {
+        //console.log("Usuario dentro de findone: "+user);
         if (err){
             console.log("Ha ocurrido un error");
               return done(err);
@@ -61,6 +121,7 @@ process.nextTick(function() {
           return done(null, user);
         });
     });
+  });
 }));
 
 
@@ -83,19 +144,62 @@ app.get('/registro',
     res.render('registro');
 });
 
+////////ESQUEMA MODELS DEBIDO A FALLO CON LA EXPORTACION DE MODELS QUE NO TIENE NINGUN SENTIDO
+var userSchema1 = mongoose.Schema({
+        email : String,
+        password : String
+  });
+
+userSchema1.methods.generateHash = function(password) {
+  // return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  return bcrypt.hashSync(password);
+};
+
+// chequea si el  password es valido
+userSchema1.methods.validPassword = function(password) {
+    console.log("COMPARAMOS"+bcrypt.compareSync(password, this.password));
+    return bcrypt.compareSync(password, this.password);
+};
+var Userp  = mongoose.model('User1', userSchema1);
+
+//////////////////////
 app.post('/registro', function(req, res, next){
 
   var pssw = req.body.password_reg;
   var name = req.body.username_reg;
-  var newUser = new User();
+  var mongodbUri = process.env.MONGODB_URI || 'mongodb://heroku_b5dq9n3f:fhmra89oe8gfpn3lchtiffna38@ds151208.mlab.com:51208/heroku_b5dq9n3f';
+var conn =mongoose.createConnection(mongodbUri);
+//
+conn.on('error', console.error.bind(console, 'connection error en BUSCANDO usuarios en la bbdd:'));
+//
+conn.once('open', function() {
+
+
+  console.log("VALOR DE USER "+req.body.email);
+  var newUser = new Userp();
   newUser.email = name;
   newUser.password = newUser.generateHash(pssw);//Generamos la contraseña con bcryptnodejs
 
+
+  // conn.insert({ song: 'One Sweet Day' },
+  //     { $set: { artist: 'Mariah Carey ft. Boyz II Men' } },
+  //     function (err, result) {
+  //       if(err) throw err;
+  // });
+
+  // newUser.insert(newUser, function(err, result) {
+  //   if(err) throw err;
+  //   console.log("RESULT DE INSERT"+result);
+  // });
+//save
+console.log("GUARDAMOS EL USUARIO"+newUser.email);
   newUser.save(function(err) {
       if (err)
           throw err;
+          console.log("Saved newuser");
   });
-
+});
+  console.log("REDIRIFO A LOGIN LUEGO REGISTRO");
   res.redirect('/login');
 });
 
@@ -167,20 +271,22 @@ app.get('/profile',
 });
 
 // Para su ejecucion desde c9.io
-// var port = process.env.PORT || 8080;
-//var ip = process.env.IP || '0.0.0.0';
-//var addr = `${ip}:${port}`;
-//app.set('port', (process.env.PORT || 8080));
+ var port = process.env.PORT || 8080;
+// var ip = process.env.IP || '0.0.0.0';
+// var addr = `${ip}:${port}`;
+// app.set('port', (process.env.PORT || 8080));
 
 // app.listen(port,ip,function(){
 //     console.log(`chat server listening at ${addr,ip}`);
 
+app.listen(port);
+
+console.log('The magic happens on port localhost:' + port);
+
+//app.set('port', (process.env.PORT || 8080));
 
 
-app.set('port', (process.env.PORT || 8080));
-
-
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'));
-});
+// app.listen(app.get('port'), function() {
+//   console.log("Node app is running at localhost:" + app.get('port'));
+//});
 module.exports = app;
