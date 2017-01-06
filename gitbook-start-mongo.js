@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 // Comentado, incluido en fs-extra
 // var fs = require('fs');
 
@@ -17,11 +19,6 @@ var heroku = require('heroku-client');
 
 
 function initialize(directorio) {
-
-//    var contenido = `gulp.task("deploy-heroku-mongo" ,function(){
-            //var heroku = require("gitbook-start-mongo-noejaco");
-            //heroku.deploy();
-     //});`;
 
      var contenido ='\ngulp.task("deploy-heroku-mongo", function () {'+
         '\n\tvar heroku = require("gitbook-start-mongo-noejaco");'+
