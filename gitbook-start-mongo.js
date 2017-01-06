@@ -18,14 +18,16 @@ var heroku = require('heroku-client');
 
 function initialize(directorio) {
 
+//    var contenido = `gulp.task("deploy-heroku-mongo" ,function(){
+            //var heroku = require("gitbook-start-mongo-noejaco");
+            //heroku.deploy();
+     //});`;
 
-    console.log("\n============ Generando tarea gulp ============")
-    console.log("\nEspere mientras el proceso termina ...")
-
-    var contenido = `gulp.task("deploy-heroku-oauth" ,function(){
-            var heroku = require("gitbook-start-mongo-noejaco");
-            heroku.deploy();
-     });`;
+     var contenido ='\ngulp.task("deploy-heroku-mongo", function () {'+
+        '\n\tvar heroku = require("gitbook-start-mongo-noejaco");'+
+        '\n\tvar url = paquete.repository.url;'+
+        '\n\n\ heroku.deploy();'+
+        '\n});\n\n';
 
      fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
         if(err)
@@ -70,12 +72,13 @@ function initialize(directorio) {
         }
     });
 
+    // Procfile para heroku
     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','Procfile'),path.join(process.cwd()+"/"+directorio, 'Procfile'),function(err){
         if(err)
         console.log(err);
      });
 
-    datos_usuario_token(directorio);
+    //datos_usuario(directorio);
 
 };
 
@@ -101,67 +104,6 @@ function deploy() {
 
 
 };
-
-
-function datos_usuario_token(directorio){
-     //pedimos por pantall el nombre de la app y el token
-      var git = require('simple-git')(path.join(process.cwd()));
-      prompt.get([{
-              name: 'nombre_app',
-              required: true
-            },{
-              name: 'token_app',
-              required: true
-            },{
-                name: 'repositorio'
-            },{
-                name: 'id_client',
-                require: true
-            },{
-                name: 'secret_client',
-                require: true
-
-            },{
-                name: 'organizacion',
-                require: true
-
-            }], function (err, result) {
-            //
-            // Log the results.
-            //
-            console.log('Sus datos son:');
-            console.log('  nombre: ' + result.nombre_app);
-            console.log('  token: ' + result.token_app);
-            console.log('  repositorio: ' + result.repositorio);
-            console.log('  id_client: ' + result.id_client);
-            console.log('  secret_client: ' + result.secret_client);
-            console.log('  organizacion ' + result.organizacion);
-
-            //variable con el contenido de config.json
-            var json = '{\n "Heroku":{\n\t"nombre_app": "'+result.nombre_app+'",\n\t "token_app": "'+result.token_app+'"\n\t}\n}';
-            var configuracion = '{\n "Config":{\n\t"nombre_app": "'+result.nombre_app+'",\n\t "id_client": "'+result.id_client+'",\n\t "secret_client": "'+result.secret_client+'",\n\t "organizacion": "'+result.organizacion+'"\n\t}\n}';
-
-
-            fs.mkdirSync(path.join(process.cwd(), ".token_heroku"));
-            fs.writeFileSync(path.join(process.cwd(),".token_heroku","token.json"),json);
-            fs.writeFileSync(path.join(process.cwd()+"/"+directorio,"aplicacion.json"),configuracion);
-
-            var token = require(path.join(process.cwd(), ".token_heroku","token.json"));
-            var pack= require(path.join(process.cwd(), 'package.json'));
-
-            var her = new heroku({ token : token.Heroku.token_app });
-
-                her.post('/apps', {body: {name: token.Heroku.nombre_app}} ).then(app => {
-
-                    //git.init().addRemote('heroku', result.repositorio).add('.').commit('Primer commit').push('heroku','master');
-
-
-
-                });
-
-          });
-
-}
 
 module.exports = {
   initialize,
