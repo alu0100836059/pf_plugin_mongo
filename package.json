@@ -1,6 +1,6 @@
 {
   "name": "gitbook-start-mongo-noejaco",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "LocalStrategy y base de datos MongoDB",
   "main": "gitbook-start-mongo.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "ssh": "./ssh pull-iaas"
   },
   "bin": {
-    "gitbook-start-mongo": "gitbook-start-mongo.js"
+    "gitbook-start-mongo-noejaco": "gitbook-start-mongo.js"
   },
   "repository": {
     "type": "git",
@@ -52,7 +52,6 @@
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.3.5",
     "credential": "^1.0.0",
-    "dropbox": "^2.4.0",
     "ejs": "*",
     "express": "^4.14.0",
     "express-ejs-layouts": "^2.2.0",
@@ -62,9 +61,6 @@
     "gh-pages": "^0.3.1",
     "gitbook": "^2.1.0",
     "gitbook-cli": "^0.3.4",
-    "gitbook-start-plugin-heroku-noejaco2017": "0.0.36",
-    "gitbook-start-plugin-iaas-ull-es-noejaco2017": "*",
-    "gitbook-start-team-noejaco2017-2.0": "*",
     "graceful-fs": "^4.1.0",
     "gulp": "^3.9.1",
     "gulp-gh-pages": "^0.5.4",

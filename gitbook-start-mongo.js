@@ -1,16 +1,8 @@
 #! /usr/bin/env node
 
-// Comentado, incluido en fs-extra
-// var fs = require('fs');
-
 var path = require('path');
 var child = require("child_process");
-
-// Comentado fs_extended porque no encuentra el módulo: deprecated!?
-// var fs_extended = require('fs-extended');
-
 var fs = require('fs-extra');
-
 var prompt = require("prompt");
 var heroku = require('heroku-client');
 
@@ -23,7 +15,7 @@ function initialize(directorio) {
      var contenido ='\ngulp.task("deploy-heroku-mongo", function () {'+
         '\n\tvar heroku = require("gitbook-start-mongo-noejaco");'+
         '\n\tvar url = paquete.repository.url;'+
-        '\n\n\ heroku.deploy();'+
+        '\n\n\heroku.deploy();'+
         '\n});\n\n';
 
      fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','app.js'),path.join(process.cwd()+"/"+directorio, 'app.js'),function(err){
@@ -50,10 +42,11 @@ function initialize(directorio) {
      });
 
      // Carpeta data con las bases de datos administradas
-     fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
-       if(err)
-       console.log(err);
-     });
+     // Posible problema cantidad de datos JS FATAL ERROR bad allocation
+     //fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','data'), path.join(process.cwd()+"/"+directorio, 'data'), function(err){
+       //if(err)
+       //console.log(err);
+     //});
 
      // Archivo mongod para la puesta en marcha de la bbdd
      fs.copy(path.join(process.cwd(),'node_modules','gitbook-start-mongo-noejaco','mongod'),path.join(process.cwd()+"/"+directorio, 'mongod'),function(err){
